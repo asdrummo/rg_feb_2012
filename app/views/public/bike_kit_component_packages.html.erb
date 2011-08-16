@@ -1,0 +1,7 @@
+<% @page_title = 'ComponentPackage Selection' %>
+<%= render(:partial => 'public/partials/bike_kits_progress')%>
+<% if session[:frame_model]%>
+<%= render(:partial => 'public/partials/component_packages_table')%>
+<% else %>
+<h2 class="center"> please go back and select a <%= link_to('frame model', {:action => 'show_models'}, :class => "remove_item") %> before selecting a model.</h2>
+<% end %>

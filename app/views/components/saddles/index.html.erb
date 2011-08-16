@@ -1,0 +1,47 @@
+<h1>Listing components_saddles</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_saddles.each do |components_saddle| %>
+  <tr>
+    <td><%= components_saddle.client_id %></td>
+    <td><%= components_saddle.product_id %></td>
+    <td><%= components_saddle.sku %></td>
+    <td><%= components_saddle.name %></td>
+    <td><%= components_saddle.description %></td>
+    <td><%= components_saddle.image_path %></td>
+    <td><%= components_saddle.vendor %></td>
+    <td><%= components_saddle.brand %></td>
+    <td><%= components_saddle.material %></td>
+    <td><%= components_saddle.color %></td>
+    <td><%= components_saddle.finish %></td>
+    <td><%= components_saddle.cost %></td>
+    <td><%= components_saddle.price %></td>
+    <td><%= link_to 'Show', components_saddle %></td>
+    <td><%= link_to 'Edit', edit_components_saddle_path(components_saddle) %></td>
+    <td><%= link_to 'Destroy', components_saddle, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Saddle', new_components_saddle_path %>

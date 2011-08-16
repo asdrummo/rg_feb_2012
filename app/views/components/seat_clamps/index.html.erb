@@ -1,0 +1,47 @@
+<h1>Listing components_seat_clamps</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_seat_clamps.each do |components_seat_clamp| %>
+  <tr>
+    <td><%= components_seat_clamp.client_id %></td>
+    <td><%= components_seat_clamp.product_id %></td>
+    <td><%= components_seat_clamp.sku %></td>
+    <td><%= components_seat_clamp.name %></td>
+    <td><%= components_seat_clamp.description %></td>
+    <td><%= components_seat_clamp.image_path %></td>
+    <td><%= components_seat_clamp.vendor %></td>
+    <td><%= components_seat_clamp.brand %></td>
+    <td><%= components_seat_clamp.material %></td>
+    <td><%= components_seat_clamp.color %></td>
+    <td><%= components_seat_clamp.finish %></td>
+    <td><%= components_seat_clamp.cost %></td>
+    <td><%= components_seat_clamp.price %></td>
+    <td><%= link_to 'Show', components_seat_clamp %></td>
+    <td><%= link_to 'Edit', edit_components_seat_clamp_path(components_seat_clamp) %></td>
+    <td><%= link_to 'Destroy', components_seat_clamp, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Seat clamp', new_components_seat_clamp_path %>

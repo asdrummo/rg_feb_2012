@@ -1,0 +1,246 @@
+body { background-color: #666666; color: #333; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { 
+	color: #000;
+	text-decoration: none;
+}
+
+.float_right {
+	float:right;
+}
+.clear {
+	clear:both;
+}
+#bodywrap {
+	width:900px;
+	min-height:600px;
+	margin:auto;
+	background-color: #fff;
+	padding:0 20px 0 20px;
+}
+#footer {
+	width:900px;
+	margin:auto;
+	background-color: #fff;
+	padding:0 20px 10px 20px;
+	text-align:center;
+}
+/* header styling */
+#header {
+
+}
+
+#login {
+	text-align:right;	
+}
+#cart {
+	text-align:right;
+}
+#title {
+	text-align:center;
+	font-size: 36px;
+	line-height:0px;
+}
+
+/* navigation */
+#nav_container{
+
+height: 25px;
+padding: 0;
+z-index:69;
+}
+
+#navlist {
+	text-align:center;
+	padding:0;
+
+}
+
+#navlist li {
+padding: 0;
+margin:10px;
+list-style: none;
+display:inline;
+text-transform: uppercase;
+font-size: 16px;
+font-weight: 900;
+
+
+}
+
+#navlist li a {
+	padding:0;
+	margin:0;
+	text-decoration: none;
+}
+
+#navlist .active {
+	border-bottom: 3px solid black;
+}
+
+/* side menu */
+#side_menu {
+	float:left;
+}
+/*--------- content styling ----- */
+table.center {margin-left:auto; margin-right:auto; border-collapse: collapse;}
+table.padded td {padding:10px}
+.center {text-align:center;
+}
+.left {text-align:left;}
+.odd {background: #E3E3E3;}
+.even {background: #ffffff;}
+.active_progress {
+	font-weight:900;
+	text-decoration:underline;
+}
+.error a.error_link {text-align: center; color: red;}
+#content {
+padding-top:20px;
+}
+
+#features {
+	width:800px;
+	text-align:center;
+	vertical-align:middle;
+	
+}
+.feature_cell {
+	border:1px solid black;
+	height:200px;
+	margin: 15px;
+	padding:10px;
+	vertical-align: middle;
+}
+#do_it_yourself {
+	width:400px;
+	text-align:left;
+	vertical-align:middle;
+}
+.diy_cell {
+	border:1px solid black;
+	height:350px;
+	width:200px;
+	margin: 15px;
+	padding:10px;
+}
+
+#workshops {
+}
+#workshop_progress {
+	text-align:center;
+	padding-top:0;
+	width:800px;
+}
+#workshop_progress li {
+	padding: 0 10px 0 10px;
+	list-style: none;
+	display:inline;
+}
+
+.model_image {
+	border:1px solid black;
+	width:50px;
+	height:50px;
+}
+/* shopping cart */
+#cart{
+	width: 800px; 
+	border-collapse: collapse;
+	text-align:left;
+}
+#cart_header {
+	text-align:center;
+	text-transform:uppercase;
+}
+#cart th {
+	padding-bottom:10px;
+	border-bottom:2px dashed gray;
+}
+#cart td {
+	padding:10px;
+}
+a.remove_item  {
+	color: red;
+	text-decoration: underline;
+}
+#cart_total td {
+	text-align:right;
+	font-size: 20px;
+	color: #68A162;
+}
+#cart_links a {
+	font-size: 15px;
+}
+.item_title {
+
+	background-color:#fff;
+	border-top:none;
+}
+.item_title p {
+	
+	writing-mode: bt-lr;
+		font-size:30px;
+}
+table.invoice_table {
+	text-align: center;
+	margin-left:auto; 
+	margin-right:auto; 
+	border-collapse: collapse;
+}
+.invoice_label {
+	text-align: center;
+	margin:auto;
+	color: red;
+}
+/* standard issue rails styling to be modded later */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+.notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}

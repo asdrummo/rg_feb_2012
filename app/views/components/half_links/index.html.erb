@@ -1,0 +1,49 @@
+<h1>Listing components_half_links</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Width</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_half_links.each do |components_half_link| %>
+  <tr>
+    <td><%= components_half_link.client_id %></td>
+    <td><%= components_half_link.product_id %></td>
+    <td><%= components_half_link.sku %></td>
+    <td><%= components_half_link.name %></td>
+    <td><%= components_half_link.description %></td>
+    <td><%= components_half_link.image_path %></td>
+    <td><%= components_half_link.vendor %></td>
+    <td><%= components_half_link.brand %></td>
+    <td><%= components_half_link.material %></td>
+    <td><%= components_half_link.color %></td>
+    <td><%= components_half_link.finish %></td>
+    <td><%= components_half_link.cost %></td>
+    <td><%= components_half_link.price %></td>
+    <td><%= components_half_link.width %></td>
+    <td><%= link_to 'Show', components_half_link %></td>
+    <td><%= link_to 'Edit', edit_components_half_link_path(components_half_link) %></td>
+    <td><%= link_to 'Destroy', components_half_link, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Half link', new_components_half_link_path %>

@@ -1,0 +1,57 @@
+<h1>Listing components_chainrings</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Bcd</th>
+    <th>Num bolts</th>
+    <th>Teeth</th>
+    <th>Chain width</th>
+    <th>Front deraileur type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_chainrings.each do |components_chainring| %>
+  <tr>
+    <td><%= components_chainring.client_id %></td>
+    <td><%= components_chainring.product_id %></td>
+    <td><%= components_chainring.sku %></td>
+    <td><%= components_chainring.name %></td>
+    <td><%= components_chainring.description %></td>
+    <td><%= components_chainring.image_path %></td>
+    <td><%= components_chainring.vendor %></td>
+    <td><%= components_chainring.brand %></td>
+    <td><%= components_chainring.material %></td>
+    <td><%= components_chainring.color %></td>
+    <td><%= components_chainring.finish %></td>
+    <td><%= components_chainring.cost %></td>
+    <td><%= components_chainring.price %></td>
+    <td><%= components_chainring.bcd %></td>
+    <td><%= components_chainring.num_bolts %></td>
+    <td><%= components_chainring.teeth %></td>
+    <td><%= components_chainring.chain_width %></td>
+    <td><%= components_chainring.front_deraileur_type %></td>
+    <td><%= link_to 'Show', components_chainring %></td>
+    <td><%= link_to 'Edit', edit_components_chainring_path(components_chainring) %></td>
+    <td><%= link_to 'Destroy', components_chainring, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Chainring', new_components_chainring_path %>

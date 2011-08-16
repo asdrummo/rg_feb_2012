@@ -1,0 +1,29 @@
+<h1>Listing component_packages</h1>
+
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @component_packages.each do |component_package| %>
+  <tr>
+    <td><%= component_package.product_id %></td>
+    <td><%= component_package.name %></td>
+    <td><%= component_package.description %></td>
+    <td><%= component_package.price %></td>
+    <td><%= link_to 'Show', component_package %></td>
+    <td><%= link_to 'Edit', edit_component_package_path(component_package) %></td>
+    <td><%= link_to 'Destroy', component_package, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Component Package', new_component_package_path %>

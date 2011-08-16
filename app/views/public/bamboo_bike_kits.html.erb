@@ -1,0 +1,10 @@
+<% @page_title = 'Bamboo Bike Kits Selection' %>
+<div id="bamboo_bike_kits">
+<%= render(:partial => 'public/partials/bike_kits_progress')%>
+
+<% if @size_error == 'true' %>
+<div class="error"><h2>please select size to continue</h2></div>
+<% end %>
+<%= render(:partial => 'public/partials/kit_models_table')%>
+
+</div><!-- end bamboo_bike_kits -->

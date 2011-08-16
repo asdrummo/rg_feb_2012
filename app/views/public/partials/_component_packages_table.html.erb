@@ -1,0 +1,38 @@
+<div id="component_packages">
+
+
+<table class="center padded">
+	<tr>
+		<th>&nbsp;</th>
+		<th>name</th>
+		<th>description</th>
+		<th>price</th>
+		<th>&nbsp;</th>
+	</tr>
+<% @component_packages.each do |c| %>
+	<% if c.frame_model_id == session[:frame_model].id %>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td>
+			<p><%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %></p>
+		</td>
+		<td>
+			<p><%= c.name %></p>
+		</td>
+				
+		<td>
+		<p class="left"><%= raw c.description %></p>
+		</td>
+		
+		<td>
+			<%= number_to_currency(c.price) %>
+		</td>
+		<td>
+	
+			<p><%= link_to('Select', :action => 'submit_component_packages', :id => c.id) %></p>
+		</td>
+	</tr>
+	<% end %>
+<% end %>
+</table>
+<div class="center"><%= link_to('skip component packages', :action => 'show_finishing') %></div>
+</div><!-- end Component Package Selection -->

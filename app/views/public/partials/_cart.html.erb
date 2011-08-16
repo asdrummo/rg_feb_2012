@@ -1,0 +1,129 @@
+<table id="cart" class="center">
+<tr>
+	<td></td>
+	<td colspan="6" class="center"><h2>Your Shopping Cart</h2></td>
+</tr>
+	<tr id="cart_header">
+		<td></td>
+		<th colspan="2">Reservation Details</th>
+		
+		<th colspan="2">Bike Build</th>
+		<th>Component Package</th>
+	
+		<th>Price</th>
+	</tr>
+<% for item in @cart.items %>
+<% if item.frame_model && item.workshop %>
+<tr class="<%= cycle('odd', 'even') %>">
+	<td class="item_title">
+	<%= image_tag("workshop.png", :size => "", :alt => "", :class => "item_title") %>
+	</td>
+	<td colspan="2">
+	  	<% if Workshop.find(item.workshop.id).quantity == 0  %>
+			sorry, this reservation has filled up while you were shopping! please remove from cart and select another reservation
+		<% @soldout = 'true' %>
+		<% else %>
+		workshop id: <%= Workshop.find(item.workshop.id).quantity %><br />
+		experience: <%= item.workshop.experience %><br />
+		location: <%= item.workshop.location %><br />
+		dates:	  	<%= item.workshop.start_date.to_date.strftime("%m/%d/%Y") %> to <br />
+			<%= item.workshop.end_date.to_date.strftime("%m/%d/%Y") %>
+		<% end %>
+	</td>
+	<td colspan="2">
+		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %><br />
+		<%= item.frame_model.name %>(<%= number_to_currency(item.frame_model.price) %>)<br />
+		size:<%= item.frame_model_size.name %>(<%= number_to_currency(item.frame_model_size.price) %>)<br />
+		top tube style: <%= item.top_tube_style.name %>(<%= number_to_currency(item.top_tube_style.price)%>)<br />
+		gears: <%= item.gear.name %>(<%= number_to_currency(item.gear.price)%>)
+	</td>
+	<td>
+		<% if item.component_package %>
+		<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
+		<%= raw item.component_package.description %>
+		<% @component_package_id = item.component_package.id %>
+		<% @component_package_price = item.component_package.price %>
+		<% else %>
+		no component package selected
+		<% @component_package_id = 'false' %>
+		<% @component_package_price = 0 %>
+		<% end %>	
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.frame_model.price + item.frame_model_size.price + item.gear.price + item.top_tube_style.price + @component_package_price) %></p>
+		<p><%= link_to('remove', {:action => 'remove_frame_model_from_cart', :id => item.frame_model.id, :size_id => item.frame_model_size.id, :workshop_id => item.workshop.id, :top_tube_style_id => item.top_tube_style.id, :gear_id => item.gear.id, :component_package_id => @component_package_id}, :class => 'remove_item') %></p>
+	</td>
+</tr>
+
+<% elsif item.frame_model && item.workshop == nil %>
+<tr class="<%= cycle('odd', 'even') %>">
+	<td class="item_title">
+	<%= image_tag("kit.png", :size => "", :alt => "", :class => "item_title") %>
+	</td>
+	<td colspan="2">
+		N/A
+	</td>
+	<td colspan="2">
+		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %><br />
+		<%= item.frame_model.name %>(<%= number_to_currency(item.frame_model.price) %>)<br />
+		size:<%= item.frame_model_size.name %>(<%= number_to_currency(item.frame_model_size.price) %>)<br />
+		top tube style: <%= item.top_tube_style.name %>(<%= number_to_currency(item.top_tube_style.price)%>)<br />
+		gears: <%= item.gear.name %>(<%= number_to_currency(item.gear.price)%>)
+	</td>
+	<td>
+		<% if item.component_package %>
+		<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
+		<%= raw item.component_package.description %>
+		<% @component_package_id = item.component_package.id %>
+		<% @component_package_price = item.component_package.price %>
+		<% else %>
+		no component package selected
+		<% @component_package_id = 'false' %>
+		<% @component_package_price = 0 %>
+		<% end %>	
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.frame_model.price + item.frame_model_size.price + item.gear.price + item.top_tube_style.price + @component_package_price) %></p>
+		<p><%= link_to('remove', {:action => 'remove_frame_model_from_cart', :id => item.frame_model.id, :size_id => item.frame_model_size.id, :top_tube_style_id => item.top_tube_style.id, :gear_id => item.gear.id, :component_package_id => @component_package_id}, :class => 'remove_item') %></p>
+	</td>
+</tr>
+
+
+<% elsif item.accessory %>
+<tr class="<%= cycle('odd', 'even') %>">
+	<td>
+		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
+	</td>
+	<td>
+		<p><%= item.accessory.name %></p>
+	</td>
+	<td>
+		&nbsp;
+	</td>
+	<td>
+		
+	</td>
+	<td>
+	</td>
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.accessory.price) %></p>
+		<p><%= link_to('remove', {:action => 'remove_accessory_from_cart', :id => item.accessory.id}, :class => "remove_item") %></p>
+	</td>
+</tr>
+<% end %>
+<% end %>
+	<tr id="cart_total">
+		<td></td>
+		<td></td>
+		<td colspan="4">Shopping Cart Total</td>
+		
+		<td><%= number_to_currency(@cart.total_price) %></td>
+	</tr>
+</table>

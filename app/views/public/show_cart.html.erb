@@ -1,0 +1,9 @@
+<% @page_title = 'Shopping Cart' %>
+
+
+<%= render(:partial => 'public/partials/cart')%>
+<br />
+<div id="cart_links" class="center">
+<%= link_to('Continue Shopping', :action => 'index') %> | <%= link_to('Checkout', :action => 'checkout') %> |
+ <%= link_to('Empty Cart', {:action => 'empty_cart'}, :confirm => 'Are you Sure?') %>
+</div><!-- end cart links -->

@@ -1,0 +1,33 @@
+<% @page_title = 'Checkout'%>
+<h1 class="center">Checkout</h1>
+<% if params[:sold_out] %>
+Please removed reservation from cart to continue with payment
+<% end %>
+<%= render(:partial => 'public/partials/cart')%>
+<% if session[:customer_id] %>
+<%= render(:partial => 'public/partials/payment', :customer => @customer, :amount => @amount) %>
+<%= link_to('Psudo Payment', :controller => 'payments', :action => 'show_receipt') %>
+
+<% else %>
+<table class="center">
+<tr>
+<td>
+
+	Sign in <br />
+	<%= render(:partial => 'public/partials/login_form') %><br />
+	-or-
+	<br />
+	<%= link_to('Register', :action => 'register' ) %>
+</td>
+<td style="border-left: 1px solid black; padding-left: 5px">
+	New Customer Sign Up:<br />
+
+	<%= render(:partial => 'public/partials/register_form', :customer => @customer) %>
+</td>
+</tr>
+</table>
+
+<% end %>
+
+
+

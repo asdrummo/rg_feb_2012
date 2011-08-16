@@ -1,0 +1,47 @@
+<h1>Listing components_rim_strips</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_rim_strips.each do |components_rim_strip| %>
+  <tr>
+    <td><%= components_rim_strip.client_id %></td>
+    <td><%= components_rim_strip.product_id %></td>
+    <td><%= components_rim_strip.sku %></td>
+    <td><%= components_rim_strip.name %></td>
+    <td><%= components_rim_strip.description %></td>
+    <td><%= components_rim_strip.image_path %></td>
+    <td><%= components_rim_strip.vendor %></td>
+    <td><%= components_rim_strip.brand %></td>
+    <td><%= components_rim_strip.material %></td>
+    <td><%= components_rim_strip.color %></td>
+    <td><%= components_rim_strip.finish %></td>
+    <td><%= components_rim_strip.cost %></td>
+    <td><%= components_rim_strip.price %></td>
+    <td><%= link_to 'Show', components_rim_strip %></td>
+    <td><%= link_to 'Edit', edit_components_rim_strip_path(components_rim_strip) %></td>
+    <td><%= link_to 'Destroy', components_rim_strip, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rim strip', new_components_rim_strip_path %>

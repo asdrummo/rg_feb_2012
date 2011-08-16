@@ -1,0 +1,57 @@
+<h1>Listing components_front_wheels</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Tube width</th>
+    <th>Size</th>
+    <th>Trim width</th>
+    <th>Front brake type</th>
+    <th>Hub width</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_front_wheels.each do |components_front_wheel| %>
+  <tr>
+    <td><%= components_front_wheel.client_id %></td>
+    <td><%= components_front_wheel.product_id %></td>
+    <td><%= components_front_wheel.sku %></td>
+    <td><%= components_front_wheel.name %></td>
+    <td><%= components_front_wheel.description %></td>
+    <td><%= components_front_wheel.image_path %></td>
+    <td><%= components_front_wheel.vendor %></td>
+    <td><%= components_front_wheel.brand %></td>
+    <td><%= components_front_wheel.material %></td>
+    <td><%= components_front_wheel.color %></td>
+    <td><%= components_front_wheel.finish %></td>
+    <td><%= components_front_wheel.cost %></td>
+    <td><%= components_front_wheel.price %></td>
+    <td><%= components_front_wheel.tube_width %></td>
+    <td><%= components_front_wheel.size %></td>
+    <td><%= components_front_wheel.trim_width %></td>
+    <td><%= components_front_wheel.front_brake_type %></td>
+    <td><%= components_front_wheel.hub_width %></td>
+    <td><%= link_to 'Show', components_front_wheel %></td>
+    <td><%= link_to 'Edit', edit_components_front_wheel_path(components_front_wheel) %></td>
+    <td><%= link_to 'Destroy', components_front_wheel, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Front wheel', new_components_front_wheel_path %>

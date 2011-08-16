@@ -1,0 +1,59 @@
+<h1>Listing components_cogs</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Num bolts</th>
+    <th>Teeth</th>
+    <th>Chain width</th>
+    <th>Rear deraileur type</th>
+    <th>Spline thread type</th>
+    <th>Cog number</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_cogs.each do |components_cog| %>
+  <tr>
+    <td><%= components_cog.client_id %></td>
+    <td><%= components_cog.product_id %></td>
+    <td><%= components_cog.sku %></td>
+    <td><%= components_cog.name %></td>
+    <td><%= components_cog.description %></td>
+    <td><%= components_cog.image_path %></td>
+    <td><%= components_cog.vendor %></td>
+    <td><%= components_cog.brand %></td>
+    <td><%= components_cog.material %></td>
+    <td><%= components_cog.color %></td>
+    <td><%= components_cog.finish %></td>
+    <td><%= components_cog.cost %></td>
+    <td><%= components_cog.price %></td>
+    <td><%= components_cog.num_bolts %></td>
+    <td><%= components_cog.teeth %></td>
+    <td><%= components_cog.chain_width %></td>
+    <td><%= components_cog.rear_deraileur_type %></td>
+    <td><%= components_cog.spline_thread_type %></td>
+    <td><%= components_cog.cog_number %></td>
+    <td><%= link_to 'Show', components_cog %></td>
+    <td><%= link_to 'Edit', edit_components_cog_path(components_cog) %></td>
+    <td><%= link_to 'Destroy', components_cog, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cog', new_components_cog_path %>

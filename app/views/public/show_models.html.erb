@@ -1,0 +1,36 @@
+<% @page_title = 'Model Selection' %>
+<%= render(:partial => 'public/partials/workshop_progress')%>
+<div id="models">
+<% if not session[:frame_model_size] %>
+no size stored
+<% else %>
+size:<%= session[:frame_model_size] %>
+<% end %>
+<br />
+<% if not session[:top_tube_selection] %>
+no top tube selection stored
+<% else %>
+top tube:<%= session[:top_tube_selection] %>
+<% end %>
+<br />
+<% if not session[:gear_selection] %>
+no rear deraileur selection stored
+<% else %>
+gear:<%= session[:gear_selection] %>
+<% end %>
+<br />
+session[:frame_model_size]: <%= session[:frame_model_size] %><br />
+session[:workshop]: <%= session[:workshop] %><br />
+@size_error: <%= @size_error %><br />
+<% if @size_error == 'true' %>
+<div class="error"><h2>please select size to continue</h2></div>
+<% end %>
+
+<% if session[:workshop]%>
+
+<%= render(:partial => 'public/partials/models_table')%>
+
+<% else %>
+<h2 class="center"> please go back and select a <%= link_to('reservation', {:action => 'reservations'}, :class => "remove_item") %> before selecting a model.</h2>
+<% end %>
+</div><!-- end Model Selection -->

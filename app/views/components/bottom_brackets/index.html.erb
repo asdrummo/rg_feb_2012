@@ -1,0 +1,63 @@
+<h1>Listing components_bottom_brackets</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Threading</th>
+    <th>Num bolts</th>
+    <th>Spacing</th>
+    <th>Bolt</th>
+    <th>Taper</th>
+    <th>Width</th>
+    <th>Shell width</th>
+    <th>Qfactor</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_bottom_brackets.each do |components_bottom_bracket| %>
+  <tr>
+    <td><%= components_bottom_bracket.client_id %></td>
+    <td><%= components_bottom_bracket.product_id %></td>
+    <td><%= components_bottom_bracket.sku %></td>
+    <td><%= components_bottom_bracket.name %></td>
+    <td><%= components_bottom_bracket.description %></td>
+    <td><%= components_bottom_bracket.image_path %></td>
+    <td><%= components_bottom_bracket.vendor %></td>
+    <td><%= components_bottom_bracket.brand %></td>
+    <td><%= components_bottom_bracket.material %></td>
+    <td><%= components_bottom_bracket.color %></td>
+    <td><%= components_bottom_bracket.finish %></td>
+    <td><%= components_bottom_bracket.cost %></td>
+    <td><%= components_bottom_bracket.price %></td>
+    <td><%= components_bottom_bracket.threading %></td>
+    <td><%= components_bottom_bracket.num_bolts %></td>
+    <td><%= components_bottom_bracket.spacing %></td>
+    <td><%= components_bottom_bracket.bolt %></td>
+    <td><%= components_bottom_bracket.taper %></td>
+    <td><%= components_bottom_bracket.width %></td>
+    <td><%= components_bottom_bracket.shell_width %></td>
+    <td><%= components_bottom_bracket.qfactor %></td>
+    <td><%= link_to 'Show', components_bottom_bracket %></td>
+    <td><%= link_to 'Edit', edit_components_bottom_bracket_path(components_bottom_bracket) %></td>
+    <td><%= link_to 'Destroy', components_bottom_bracket, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bottom bracket', new_components_bottom_bracket_path %>

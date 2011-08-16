@@ -1,0 +1,7 @@
+<ul id="workshop_progress">
+		<h2 class="center">Your Workshop</h2>
+	<li class="<%= @date %>"><%= link_to('1. Select Date', :action => 'reservations') %></li>
+	<li class="<%= @model %>"><%= link_to('2. Select Model', :action => 'show_models') %></li>
+	<li class="<%= @component_package %>"><%= link_to('3. Add Components', :action => 'show_component_packages') %></li>
+	<li class="<%= @finish %>"><%= link_to('4. Finishing Touches', :action => 'show_finishing') %></li>
+</ul>

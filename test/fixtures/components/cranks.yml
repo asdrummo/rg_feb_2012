@@ -1,0 +1,39 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  client_id: 1
+  product_id: MyString
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: 9.99
+  num_bolts: 1
+  bcd: 9.99
+  taper: MyString
+  front_deraleur_type: MyString
+
+two:
+  client_id: 1
+  product_id: MyString
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: 9.99
+  num_bolts: 1
+  bcd: 9.99
+  taper: MyString
+  front_deraleur_type: MyString

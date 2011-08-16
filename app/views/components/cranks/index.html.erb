@@ -1,0 +1,55 @@
+<h1>Listing components_cranks</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Num bolts</th>
+    <th>Bcd</th>
+    <th>Taper</th>
+    <th>Front deraleur type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_cranks.each do |components_crank| %>
+  <tr>
+    <td><%= components_crank.client_id %></td>
+    <td><%= components_crank.product_id %></td>
+    <td><%= components_crank.sku %></td>
+    <td><%= components_crank.name %></td>
+    <td><%= components_crank.description %></td>
+    <td><%= components_crank.image_path %></td>
+    <td><%= components_crank.vendor %></td>
+    <td><%= components_crank.brand %></td>
+    <td><%= components_crank.material %></td>
+    <td><%= components_crank.color %></td>
+    <td><%= components_crank.finish %></td>
+    <td><%= components_crank.cost %></td>
+    <td><%= components_crank.price %></td>
+    <td><%= components_crank.num_bolts %></td>
+    <td><%= components_crank.bcd %></td>
+    <td><%= components_crank.taper %></td>
+    <td><%= components_crank.front_deraleur_type %></td>
+    <td><%= link_to 'Show', components_crank %></td>
+    <td><%= link_to 'Edit', edit_components_crank_path(components_crank) %></td>
+    <td><%= link_to 'Destroy', components_crank, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Crank', new_components_crank_path %>

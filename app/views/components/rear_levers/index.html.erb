@@ -1,0 +1,57 @@
+<h1>Listing components_rear_levers</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Clamp diamter high</th>
+    <th>Clamp diameter low</th>
+    <th>Bar type</th>
+    <th>Rear brake type</th>
+    <th>Rear brake pull</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_rear_levers.each do |components_rear_lever| %>
+  <tr>
+    <td><%= components_rear_lever.client_id %></td>
+    <td><%= components_rear_lever.product_id %></td>
+    <td><%= components_rear_lever.sku %></td>
+    <td><%= components_rear_lever.name %></td>
+    <td><%= components_rear_lever.description %></td>
+    <td><%= components_rear_lever.image_path %></td>
+    <td><%= components_rear_lever.vendor %></td>
+    <td><%= components_rear_lever.brand %></td>
+    <td><%= components_rear_lever.material %></td>
+    <td><%= components_rear_lever.color %></td>
+    <td><%= components_rear_lever.finish %></td>
+    <td><%= components_rear_lever.cost %></td>
+    <td><%= components_rear_lever.price %></td>
+    <td><%= components_rear_lever.clamp_diamter_high %></td>
+    <td><%= components_rear_lever.clamp_diameter_low %></td>
+    <td><%= components_rear_lever.bar_type %></td>
+    <td><%= components_rear_lever.rear_brake_type %></td>
+    <td><%= components_rear_lever.rear_brake_pull %></td>
+    <td><%= link_to 'Show', components_rear_lever %></td>
+    <td><%= link_to 'Edit', edit_components_rear_lever_path(components_rear_lever) %></td>
+    <td><%= link_to 'Destroy', components_rear_lever, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rear lever', new_components_rear_lever_path %>

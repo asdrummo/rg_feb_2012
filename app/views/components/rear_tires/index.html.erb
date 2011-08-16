@@ -1,0 +1,57 @@
+<h1>Listing components_rear_tires</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Size</th>
+    <th>Width</th>
+    <th>Max size</th>
+    <th>Rear wheel size</th>
+    <th>Rear wheel trim width</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_rear_tires.each do |components_rear_tire| %>
+  <tr>
+    <td><%= components_rear_tire.client_id %></td>
+    <td><%= components_rear_tire.product_id %></td>
+    <td><%= components_rear_tire.sku %></td>
+    <td><%= components_rear_tire.name %></td>
+    <td><%= components_rear_tire.description %></td>
+    <td><%= components_rear_tire.image_path %></td>
+    <td><%= components_rear_tire.vendor %></td>
+    <td><%= components_rear_tire.brand %></td>
+    <td><%= components_rear_tire.material %></td>
+    <td><%= components_rear_tire.color %></td>
+    <td><%= components_rear_tire.finish %></td>
+    <td><%= components_rear_tire.cost %></td>
+    <td><%= components_rear_tire.price %></td>
+    <td><%= components_rear_tire.size %></td>
+    <td><%= components_rear_tire.width %></td>
+    <td><%= components_rear_tire.max_size %></td>
+    <td><%= components_rear_tire.rear_wheel_size %></td>
+    <td><%= components_rear_tire.rear_wheel_trim_width %></td>
+    <td><%= link_to 'Show', components_rear_tire %></td>
+    <td><%= link_to 'Edit', edit_components_rear_tire_path(components_rear_tire) %></td>
+    <td><%= link_to 'Destroy', components_rear_tire, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rear tire', new_components_rear_tire_path %>

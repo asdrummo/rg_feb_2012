@@ -1,0 +1,31 @@
+<h1>Listing frame_models</h1>
+
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @frame_models.each do |frame_model| %>
+  <tr>
+    <td><%= frame_model.product_id %></td>
+    <td><%= frame_model.name %></td>
+    <td><%= frame_model.description %></td>
+    <td><%= frame_model.image_path %></td>
+    <td><%= frame_model.price %></td>
+    <td><%= link_to 'Show', frame_model %></td>
+    <td><%= link_to 'Edit', edit_frame_model_path(frame_model) %></td>
+    <td><%= link_to 'Destroy', frame_model, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Frame model', new_frame_model_path %>

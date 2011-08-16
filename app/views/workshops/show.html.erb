@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Client:</b>
+  <%= @workshop.client_id %>
+</p>
+
+<p>
+  <b>Experience:</b>
+  <%= @workshop.experience %>
+</p>
+<p>
+  <b>Address:</b>
+  <%= @workshop.address %>
+</p>
+<p>
+  <b>Location:</b>
+  <%= @workshop.location %>
+</p>
+
+<p>
+  <b>Start Date:</b>
+  <%= @workshop.start_date %>
+</p>
+
+<p>
+  <b>End Date:</b>
+  <%= @workshop.end_date %>
+</p>
+<p>
+  <b>Price:</b>
+  <%= @workshop.price %>
+</p>
+<p>
+  <b>Quantity:</b>
+  <%= @workshop.quantity %>
+</p>
+
+
+<%= link_to 'Edit', edit_workshop_path(@workshop) %> |
+<%= link_to 'Back', workshops_path %>

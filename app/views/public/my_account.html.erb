@@ -1,0 +1,27 @@
+<%= link_to('edit profile', edit_customer_path(@customer))%>
+
+<%=  @customer.id %>
+open orders:
+<% if @orders %>
+	<% @orders.each do |o| %>
+	order_id: <%= o.id %><br />
+	<% order_items = LineItem.where(:order_id =>o.id)
+		order_items.each do |item|  %>
+			<% if item.workshop_id %>
+				<%= Workshop.find(item.workshop_id).experience %>
+				<%= %><br />
+			<% elsif item.frame_model %>
+				<%= FrameModel.find(item.frame_model_id).name %>
+				<%= %><br />
+			<% elsif item.component_package %>
+				<%= ComponentPackage.find(item.component_package_id).name %>
+				<%= %><br />
+			<% elsif item.accessory %>
+				<%= Accessory.find(item.accessory.id).name %>
+				<%= %><br />
+				<% end %>
+			
+			
+		<% end %>
+	<% end %>
+<% end %>

@@ -1,0 +1,48 @@
+
+<div id="nav_container">
+
+<ul id="navlist">
+	<% if @nav_id == "do_it_yourself" %>
+	<li class="active">
+	<% else %>
+	<li>
+	<% end %>
+	<a href="do_it_yourself">Do it yourself</a>
+	</li>
+	
+	<% if @nav_id == "bikes_to_buy" %>
+	<li class="active">buy a bike
+	<% else %>
+	<li><a href="bikes_to_buy">buy a bike</a>
+	<% end %>
+	</li>
+	
+	<% if @nav_id == "show_components" %>
+	<li class="active">components
+	<% else %>
+	<li><a href="show_components">components</a>
+	<% end %>
+	</li>
+	
+	<% if @nav_id == "" %>
+	<li class="active">serivces
+	<% else %>
+	<li><a href="#">services</a>
+	<% end %>
+	</li>
+	
+	<% if @nav_id == "" %>
+	<li class="active">finishing
+	<% else %>
+	<li><a href="#">gear</a>
+	<% end %>
+	</li>
+	
+	<% if @nav_id == "" %>
+	<li class="active">blog
+	<% else %>
+	<li><a href="#">blog</a>
+	<% end %>
+	</li>
+</ul>
+</div>

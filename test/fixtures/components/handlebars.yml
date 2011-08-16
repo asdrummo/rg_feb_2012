@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  client_id: 1
+  product_id: MyString
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: 9.99
+  clamp_diamter: 9.99
+  tube: 9.99
+  type: MyString
+  stem_clamp_diamter: 9.99
+  max_turn_size: 9.99
+
+two:
+  client_id: 1
+  product_id: MyString
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: 9.99
+  clamp_diamter: 9.99
+  tube: 9.99
+  type: MyString
+  stem_clamp_diamter: 9.99
+  max_turn_size: 9.99

@@ -1,0 +1,31 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  client_id: 1
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  product_id: 1
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: MyString
+
+two:
+  client_id: 1
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  product_id: 1
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: MyString

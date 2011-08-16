@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title %> | Drummlins</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="bodywrap">	
+<div id="header">
+	<% if !flash[:notice].blank? %>
+		<div class="notice">
+			<%= flash[:notice] %>
+		</div><!-- end notice -->
+	<% end %>
+	
+
+<div id="login" class="float_right">
+<% if session[:user_id] %>
+	<div class="">
+		Logged in as: <%= link_to(session[:username], users_path) %>&nbsp;|&nbsp;
+		<%= link_to('Log Out', logout_url) %>
+	</div><!-- end login -->
+<% else %>
+	<div class="float_right">
+		<%= link_to('Login', :controller => 'admin', :action => 'login') %>
+	</div><!-- end logout -->
+<% end %>
+
+</div><!-- end login div -->
+<div class="clear"></div>
+	
+	
+<div id="title">
+	<h1><%= link_to('DRUMMLIN\'S', root_url) %><h1>
+</div><!-- end title -->
+</div><!-- end header -->
+
+<div id="content">
+<%= yield %>
+</div><!-- end content -->
+</div><!-- end bodywrap div -->
+<div id="footer">
+<%= link_to('admin area', admin_menu_url) %> | <%= link_to('admin components', components_menu_url) %>
+</div>
+</body>
+</html>
+

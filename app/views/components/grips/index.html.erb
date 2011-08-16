@@ -1,0 +1,49 @@
+<h1>Listing components_grips</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Size</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_grips.each do |components_grip| %>
+  <tr>
+    <td><%= components_grip.client_id %></td>
+    <td><%= components_grip.product_id %></td>
+    <td><%= components_grip.sku %></td>
+    <td><%= components_grip.name %></td>
+    <td><%= components_grip.description %></td>
+    <td><%= components_grip.image_path %></td>
+    <td><%= components_grip.vendor %></td>
+    <td><%= components_grip.brand %></td>
+    <td><%= components_grip.material %></td>
+    <td><%= components_grip.color %></td>
+    <td><%= components_grip.finish %></td>
+    <td><%= components_grip.cost %></td>
+    <td><%= components_grip.price %></td>
+    <td><%= components_grip.size %></td>
+    <td><%= link_to 'Show', components_grip %></td>
+    <td><%= link_to 'Edit', edit_components_grip_path(components_grip) %></td>
+    <td><%= link_to 'Destroy', components_grip, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Grip', new_components_grip_path %>

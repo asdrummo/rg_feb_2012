@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Product:</b>
+  <%= @accessory.product_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @accessory.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @accessory.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @accessory.price %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%= @accessory.size %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @accessory.color %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @accessory.client_id %>
+</p>
+
+<p>
+  <b>Image path:</b>
+  <%= @accessory.image_path %>
+</p>
+
+
+<%= link_to 'Edit', edit_accessory_path(@accessory) %> |
+<%= link_to 'Back', accessories_path %>

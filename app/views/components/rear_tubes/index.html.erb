@@ -1,0 +1,57 @@
+<h1>Listing components_rear_tubes</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Size</th>
+    <th>Rear wheel size</th>
+    <th>Rear wheel trim width</th>
+    <th>Rear tire width</th>
+    <th>Rear tire size</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_rear_tubes.each do |components_rear_tube| %>
+  <tr>
+    <td><%= components_rear_tube.client_id %></td>
+    <td><%= components_rear_tube.product_id %></td>
+    <td><%= components_rear_tube.sku %></td>
+    <td><%= components_rear_tube.name %></td>
+    <td><%= components_rear_tube.description %></td>
+    <td><%= components_rear_tube.image_path %></td>
+    <td><%= components_rear_tube.vendor %></td>
+    <td><%= components_rear_tube.brand %></td>
+    <td><%= components_rear_tube.material %></td>
+    <td><%= components_rear_tube.color %></td>
+    <td><%= components_rear_tube.finish %></td>
+    <td><%= components_rear_tube.cost %></td>
+    <td><%= components_rear_tube.price %></td>
+    <td><%= components_rear_tube.size %></td>
+    <td><%= components_rear_tube.rear_wheel_size %></td>
+    <td><%= components_rear_tube.rear_wheel_trim_width %></td>
+    <td><%= components_rear_tube.rear_tire_width %></td>
+    <td><%= components_rear_tube.rear_tire_size %></td>
+    <td><%= link_to 'Show', components_rear_tube %></td>
+    <td><%= link_to 'Edit', edit_components_rear_tube_path(components_rear_tube) %></td>
+    <td><%= link_to 'Destroy', components_rear_tube, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rear tube', new_components_rear_tube_path %>
