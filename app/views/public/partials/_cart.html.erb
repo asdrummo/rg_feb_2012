@@ -98,19 +98,19 @@
 <% elsif item.accessory %>
 <tr class="<%= cycle('odd', 'even') %>">
 	<td>
-		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
+		<%= image_tag("accessory.png", :size => "", :alt => "", :class => "item_title") %>
 	</td>
-	<td>
+	<td colspan="2">
+		
+	</td>
+	<td colspan="2"><%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
 		<p><%= item.accessory.name %></p>
 	</td>
 	<td>
-		&nbsp;
+		<p><%= item.accessory.description %></p>
 	</td>
-	<td>
-		
-	</td>
-	<td>
-	</td>
+
+
 	<td>
 		<p>quantity: <%= item.quantity %></p>
 		<p>subtotal: <%= number_to_currency(item.accessory.price) %></p>
