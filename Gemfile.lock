@@ -45,7 +45,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mysql2 (0.3.7)
+    mysql2 (0.2.7)
     pg (0.11.0)
     polyglot (0.3.2)
     rack (1.2.3)
@@ -85,7 +85,7 @@ DEPENDENCIES
   admin_data
   braintree (~> 2.10.2)
   mail
-  mysql2
+  mysql2 (= 0.2.7)
   pg
   rails (= 3.0.7)
   thin
