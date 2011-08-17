@@ -1,5 +1,5 @@
 class CustomersController < ApplicationController
-  before_filter :confirm_logged_in, :except => [:edit]
+  before_filter :confirm_logged_in, :except => [:edit_info, :edit_password, :show_customer]
 
   layout 'standard'
   # GET /customers
@@ -23,6 +23,15 @@ class CustomersController < ApplicationController
       format.xml  { render :xml => @customer }
     end
   end
+  
+  def show_customer
+      @customer = Customer.find(params[:id])
+
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @customer }
+      end
+    end
 
   # GET /customers/new
   # GET /customers/new.xml
@@ -40,7 +49,10 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     authorize_customer_access(@customer.id)
   end
-  
+  def edit_info
+    @customer = Customer.find(params[:id])
+    authorize_customer_access(@customer.id)
+  end
   def edit_password
     
     @customer = Customer.find(params[:id])
@@ -75,6 +87,21 @@ class CustomersController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  def update_info
+
+    @customer = Customer.find(params[:id])
+
+    respond_to do |format|
+      if @customer.update_attributes(params[:customer])
+        format.html { render('show_customer', :notice => 'Customer was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit_info" }
         format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
       end
     end

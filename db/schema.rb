@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815041718) do
+ActiveRecord::Schema.define(:version => 20110817194859) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -640,12 +640,12 @@ ActiveRecord::Schema.define(:version => 20110815041718) do
     t.string   "city"
     t.string   "state"
     t.string   "zip_code"
-    t.integer  "phone_number"
+    t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "country"
     t.string   "username",        :limit => 25
-    t.string   "email",           :limit => 100, :default => "", :null => false
+    t.string   "email",           :limit => 100, :null => false
     t.string   "hashed_password", :limit => 40
     t.string   "salt",            :limit => 40
   end
@@ -721,7 +721,7 @@ ActiveRecord::Schema.define(:version => 20110815041718) do
     t.string   "first_name",      :limit => 25
     t.string   "last_name",       :limit => 50
     t.string   "username",        :limit => 25
-    t.string   "email",           :limit => 100, :default => "", :null => false
+    t.string   "email",           :limit => 100, :null => false
     t.string   "hashed_password", :limit => 40
     t.string   "salt",            :limit => 40
     t.datetime "created_at"
