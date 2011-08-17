@@ -20,6 +20,9 @@ Drummlins::Application.routes.draw do
   match 'customers/:id/edit_info' => 'customers#edit_info', :as => :edit_info
   match 'customers/:id/edit_login' => 'customers#edit_login', :as => :edit_login
   match 'customers/:id/show' => 'customers#show_customer', :as => :show_customer
+  match 'public/do_it_yourself' => 'public#do_it_yourself', :as => :do_it_yourself
+  match 'public/show_components' => 'public#show_components', :as => :show_components
+  match 'public/bikes_to_buy' => 'public#bikes_to_buy', :as => :bikes_to_buy
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

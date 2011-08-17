@@ -7,25 +7,28 @@
 	<% else %>
 	<li>
 	<% end %>
-	<a href="do_it_yourself">Do it yourself</a>
+	<%= link_to('Do it Yourself', do_it_yourself_url)%>
 	</li>
 	
 	<% if @nav_id == "bikes_to_buy" %>
-	<li class="active">buy a bike
+	<li class="active">
 	<% else %>
-	<li><a href="bikes_to_buy">buy a bike</a>
+	<li>
+	
 	<% end %>
+	<%= link_to('Buy a Bike', bikes_to_buy_url)%>
 	</li>
 	
 	<% if @nav_id == "show_components" %>
-	<li class="active">components
+	<li class="active">
 	<% else %>
-	<li><a href="show_components">components</a>
+	<li>
 	<% end %>
+	<%= link_to('Components', show_components_url)%>
 	</li>
 	
 	<% if @nav_id == "" %>
-	<li class="active">serivces
+	<li class="active">
 	<% else %>
 	<li><a href="#">services</a>
 	<% end %>
