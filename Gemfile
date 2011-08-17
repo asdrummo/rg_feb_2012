@@ -7,7 +7,7 @@ gem 'thin'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-
+gem 'pg'
 
 # Use unicorn as the web server
 # gem 'unicorn'
