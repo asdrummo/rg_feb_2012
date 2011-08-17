@@ -8,6 +8,7 @@ gem 'thin'
 
 gem 'mysql2'
 gem 'pg'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
