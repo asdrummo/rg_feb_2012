@@ -1,15 +1,30 @@
-<%= link_to('edit profile', edit_customer_path(@customer))%>
+<% @page_title = 'My Account'%>
+Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br />
+<%= link_to('edit profile', edit_customer_path(@customer)) %><br />
+<%= link_to('edit login/password', edit_password_path(@customer)) %><br />
 
-<%=  @customer.id %>
-open orders:
+
+my orders:<br />
 <% if @orders %>
 	<% @orders.each do |o| %>
-	order_id: <%= o.id %><br />
+	order #: <%= o.id %> (braintree will generate something like this: <%= o.invoice_number %>)<br />
+	date: <%= o.created_at.strftime("%B %d, %Y at %I:%M %p %Z") %><br />
 	<% order_items = LineItem.where(:order_id =>o.id)
 		order_items.each do |item|  %>
 			<% if item.workshop_id %>
-				<%= Workshop.find(item.workshop_id).experience %>
-				<%= %><br />
+			<b>Workshop</b><br />
+				Type: <%= Workshop.find(item.workshop_id).experience %><br />
+				Location: <%= Workshop.find(item.workshop_id).location %><br />
+				Date: <%= Workshop.find(item.workshop_id).start_date.to_date.strftime("%m/%d/%Y") %>-<%= Workshop.find(item.workshop_id).end_date.to_date.strftime("%m/%d/%Y") %><br />
+				Build: <%= FrameModel.find(item.frame_model_id).name %><br />
+				Component Package:
+				<% if item.component_package %>
+					<%= ComponentPackage.find(item.component_package_id).name %>
+				<% else %>
+					No Component Package
+				<% end %>
+				<br />
+				Price: <%= number_to_currency(item.price) %>
 			<% elsif item.frame_model %>
 				<%= FrameModel.find(item.frame_model_id).name %>
 				<%= %><br />

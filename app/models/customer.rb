@@ -10,7 +10,7 @@ class Customer < ActiveRecord::Base
   before_save :create_hashed_password
   after_save :clear_password
   
-  validates_presence_of :email, :password
+  validates_presence_of :email, :password, :on => :update_password
   validates_uniqueness_of :email
   
   EMAIL_REGEX = /^[A-ZA-Z0-9._%+-]+@[A-ZA-Z0-9.-]+\.[A-Z]{2,4}$/i

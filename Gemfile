@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.7'
 
-
+gem 'thin'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -31,6 +31,8 @@ gem 'mysql2'
 # end
 gem "braintree", "~> 2.10.2"
 gem "mail"
+gem 'admin_data'
+
 
 
 

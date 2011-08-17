@@ -25,7 +25,7 @@
 <div id="login" class="float_right">
 <% if session[:first_name] %>
 	<div class="">
-		Logged in as: <%= link_to(session[:first_name], :action => 'my_account') %>&nbsp|&nbsp
+		Logged in as: <%= link_to(session[:first_name], :controller => 'public', :action => 'my_account') %>&nbsp|&nbsp
 		<%= link_to('Log Out', :action => 'logout') %>
 	</div><!-- end login -->
 <% else %>

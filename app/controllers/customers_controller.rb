@@ -40,6 +40,12 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     authorize_customer_access(@customer.id)
   end
+  
+  def edit_password
+    
+    @customer = Customer.find(params[:id])
+    authorize_customer_access(@customer.id)
+  end
 
   # POST /customers
   # POST /customers.xml
@@ -60,6 +66,7 @@ class CustomersController < ApplicationController
   # PUT /customers/1
   # PUT /customers/1.xml
   def update
+
     @customer = Customer.find(params[:id])
 
     respond_to do |format|
@@ -73,6 +80,20 @@ class CustomersController < ApplicationController
     end
   end
 
+  def update_password
+
+    @customer = Customer.find(params[:id])
+
+    respond_to do |format|
+      if @customer.update_attributes(params[:customer])
+        format.html { redirect_to(@customer, :notice => 'Customer was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
   # DELETE /customers/1
   # DELETE /customers/1.xml
   def destroy
