@@ -1,10 +1,10 @@
 <% @page_title = 'My Account'%>
-Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br />
-<%= link_to('edit profile', edit_customer_path(@customer)) %><br />
+Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><br />
+<%= link_to('edit profile', edit_customer_path(@customer)) %><br /><br />
 <%= link_to('edit login/password', edit_password_path(@customer)) %><br />
-
-
-my orders:<br />
+<br />
+<br />
+<b>My Orders:</b><br />
 <% if @orders %>
 	<% @orders.each do |o| %>
 	order #: <%= o.id %> (braintree will generate something like this: <%= o.invoice_number %>)<br />
