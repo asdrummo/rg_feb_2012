@@ -382,7 +382,11 @@ class PublicController < ApplicationController
       session[:customer_id] = authorized_user.id
       session[:first_name] = authorized_user.first_name
       flash[:notice] = "You are now logged in"
+      if params[:redirect] == "index"
+        render(:index)
+      else
         redirect_to(:back)
+      end
       
       
     else

@@ -1,7 +1,7 @@
 <% @page_title = 'My Account'%>
 Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><br />
 <%= link_to('edit profile', edit_info_path(@customer)) %><br /><br />
-<%= link_to('edit login/password', edit_password_path(@customer)) %><br />
+<%= link_to('edit login/password', edit_login_path(@customer)) %><br />
 <br />
 <br />
 <b>My Orders:</b><br />

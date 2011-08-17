@@ -53,7 +53,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     authorize_customer_access(@customer.id)
   end
-  def edit_password
+  def edit_login
     
     @customer = Customer.find(params[:id])
     authorize_customer_access(@customer.id)
@@ -107,16 +107,17 @@ class CustomersController < ApplicationController
     end
   end
 
-  def update_password
+  def update_login
 
     @customer = Customer.find(params[:id])
 
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
-        format.html { redirect_to(@customer, :notice => 'Customer was successfully updated.') }
+        flash[:notice] = 'Login was successfully updated.'
+        format.html { redirect_to(:controller => 'public', :action => 'my_account') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "edit_login" }
         format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
       end
     end
