@@ -1,0 +1,18 @@
+<% @page_title = 'Bikes to Buy' %>
+<%= render(:partial => 'public/partials/side_menu') %>
+<% if @component != nil %>
+<%= render(:partial => 'public/partials/component') %>
+<% else %>
+	<table id="do_it_yourself" class="center">
+		<tr>
+			<td><div class="diy_cell">
+				
+				<h2 class="center">Browse our Components</h2>
+				<p>component info</p><br /><br />
+				</div>
+			</td>
+
+		</tr>
+
+	</table>
+<% end %>

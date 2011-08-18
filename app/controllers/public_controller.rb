@@ -3,6 +3,8 @@ class PublicController < ApplicationController
   before_filter :find_or_create_cart, :except => [:index]
   before_filter :find_or_create_customer, :only => [:checkout]
   
+
+  
   def error_forbidden
     render('public/403')
   end
@@ -17,6 +19,21 @@ class PublicController < ApplicationController
   
   def show_components
     @nav_id = 'show_components'
+    @component = params[:type]
+    
+    if @component == 'Bottom Bracket'
+    @components  = Components::BottomBracket.find(:all)
+    end
+    
+    if @component == 'Brakes'
+      @components = Components::FrontBrake.find(:all)
+    end
+    
+    if request.xml_http_request?
+      render :partial => 'public/partials/component',  :layout => false 
+    else
+
+    end
   end
   
   def reservations

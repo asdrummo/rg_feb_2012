@@ -205,6 +205,17 @@ table.invoice_table {
 	margin:auto;
 	color: red;
 }
+/* components (grid) */
+#component_grid {
+	margin:auto;
+	padding: 20px;
+	text-align:center;
+
+}
+.item {
+	float:left;
+	padding:5px;
+}
 /* standard issue rails styling to be modded later */
 div.field, div.actions {
 	margin-bottom: 5px;
@@ -218,8 +229,8 @@ div.field, div.actions {
 .field_with_errors {
   color: red;
 	margin-bottom: -15px;
-
 }
+
 
 #error_explanation {
   width: 450px;
