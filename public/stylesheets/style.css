@@ -108,6 +108,7 @@ table.padded td {padding:10px}
 }
 .error a.error_link {text-align: center; color: red;}
 #content {
+	
 padding-top:20px;
 }
 
@@ -157,7 +158,8 @@ padding-top:20px;
 }
 /* shopping cart */
 #cart{
-	width: 800px; 
+	width: 800px;
+ 
 	border-collapse: collapse;
 	text-align:left;
 }
@@ -204,6 +206,10 @@ table.invoice_table {
 	text-align: center;
 	margin:auto;
 	color: red;
+}
+
+:link img {
+	border:none;
 }
 /* components (grid) */
 #component_grid {

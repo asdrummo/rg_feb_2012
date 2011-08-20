@@ -1,41 +1,22 @@
 <% @page_title = 'Bikes to Buy' %>
-	<div id="side_menu">
-		<h3>MATERIALS</h3>
-	<ul>
-		<li>Bamboo</li>
-		<li>Steal</li>
-	</ul>
+
+
 	
-		<h3>Size</h3>
-	<ul>
-		<li>Custom</li>
-		<li>Premade</li>
-	</ul>
-		<h3>Model</h3>
-	<ul>
-		<li>track</li>
-		<li>coaster</li>
-		<li>local</li>
-		<li>road</li>
-		<li>single speed</li>
-		<li>commuter</li>
-		<li>MTB</li>
-		<li>BMX</li>
-		<li>polo</li>
-		<li>mixi</li>
-	</ul>
-	
-	
-	</div>
-	<table id="do_it_yourself" class="center">
+<%= render(:partial => 'public/partials/bikes_side_menu') %>
+<% if @bike != nil %>
+<%= render(:partial => 'public/partials/bikes_to_buy') %>
+<% else %>
+	<table class="center">
 		<tr>
-			<td><div class="diy_cell">
-				
+			<td>
+			
 				<h2 class="center">Browse our Bikes</h2>
-				<p>basically an intro on what bikes we offer. benefits of custom bike frames. get started by selecting an option on the left.</p><br /><br />
-				</div>
+				<p class="left" style="padding:20px">basically an intro on what bikes we offer. benefits of custom bike frames. get started by selecting an option on the left.</p><br /><br />
+		
 			</td>
 
 		</tr>
 
 	</table>
+<% end %>
+<div class="clear"></div>

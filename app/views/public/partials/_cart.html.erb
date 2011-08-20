@@ -1,8 +1,24 @@
+	
+<% if @cart.items.count == 0 %>
+	<table class="center">
+		<tr>
+			<td colspan="7" class="center"><h2>Empty As Satan's Heart</h2></td>
+		</tr>
+	</table>
+<% else %>
 <table id="cart" class="center">
-<tr>
-	<td></td>
-	<td colspan="6" class="center"><h2>Your Shopping Cart</h2></td>
-</tr>
+
+	<tr>
+		<td colspan="7" class="center"><h1>Your Shopping Cart</h1></td>
+	</tr>
+
+<% @cart.items.each do |item| %>
+<% if item.frame_model && item.workshop %>
+
+	<% if @work_count == 0 %>
+	<tr>
+		<td colspan="7" class="center"><h2>Workshops & Kits</h2></td>
+	</tr>
 	<tr id="cart_header">
 		<td></td>
 		<th colspan="2">Reservation Details</th>
@@ -12,13 +28,11 @@
 	
 		<th>Price</th>
 	</tr>
-<% for item in @cart.items %>
-<% if item.frame_model && item.workshop %>
+	<% end %>
+	<% @work_count += 1 %>
 <tr class="<%= cycle('odd', 'even') %>">
-	<td class="item_title">
-	<%= image_tag("workshop.png", :size => "", :alt => "", :class => "item_title") %>
-	</td>
-	<td colspan="2">
+
+	<td colspan="3">
 	  	<% if Workshop.find(item.workshop.id).quantity == 0  %>
 			sorry, this reservation has filled up while you were shopping! please remove from cart and select another reservation
 		<% @soldout = 'true' %>
@@ -59,11 +73,20 @@
 </tr>
 
 <% elsif item.frame_model && item.workshop == nil %>
+<% if @work_count == 0 %>
+<tr id="cart_header">
+	<td></td>
+	<th colspan="2">Reservation Details</th>
+	
+	<th colspan="2">Bike Build</th>
+	<th>Component Package</th>
+
+	<th>Price</th>
+</tr>
+<% end %>
 <tr class="<%= cycle('odd', 'even') %>">
-	<td class="item_title">
-	<%= image_tag("kit.png", :size => "", :alt => "", :class => "item_title") %>
-	</td>
-	<td colspan="2">
+
+	<td colspan="3">
 		N/A
 	</td>
 	<td colspan="2">
@@ -93,17 +116,32 @@
 		<p><%= link_to('remove', {:action => 'remove_frame_model_from_cart', :id => item.frame_model.id, :size_id => item.frame_model_size.id, :top_tube_style_id => item.top_tube_style.id, :gear_id => item.gear.id, :component_package_id => @component_package_id}, :class => 'remove_item') %></p>
 	</td>
 </tr>
+<% end %>
+<% end %>
+<% @cart.items.each do |item| %>
+<% if item.accessory %>
+<% if @comp_count == 0 %>	
+<tr>
+	<td></td>
+	<td colspan="6" class="center"><h2>Components & Accessories</h2></td>
+</tr>
+<tr id="cart_header">
 
+	<th colspan="3">Product Image</th>
+	
+	<th colspan="2">Name</th>
+	<th>Description</th>
 
-<% elsif item.accessory %>
+	<th>Price</th>
+</tr>
+<% end %>
+<% @comp_count += 1 %>	
 <tr class="<%= cycle('odd', 'even') %>">
-	<td>
-		<%= image_tag("accessory.png", :size => "", :alt => "", :class => "item_title") %>
+
+	<td colspan="3">
+		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
 	</td>
 	<td colspan="2">
-		
-	</td>
-	<td colspan="2"><%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
 		<p><%= item.accessory.name %></p>
 	</td>
 	<td>
@@ -119,6 +157,124 @@
 </tr>
 <% end %>
 <% end %>
+<% @cart.items.each do |item| %>
+<% if item.frame_model.nil? && item.accessory.nil? %>
+<% if @comp_count == 0 %>	
+	<tr>
+		<td></td>
+		<td colspan="6" class="center"><h2></h2></td>
+	</tr>
+	<tr id="cart_header">
+
+		<th colspan="3">Product Image</th>
+		
+		<th colspan="2">Name</th>
+		<th>Description</th>
+	
+		<th>Price</th>
+	</tr>
+<% end %>
+<% @comp_count += 1 %>
+	<%if item.bottom_bracket
+		@name = "Bottom Brackets"
+		@component = item.bottom_bracket
+	elsif item.front_brake
+		@name = "Front Brakes"
+		@component = item.front_brake
+	elsif item.rear_brake
+		@name = "Rear Brakes"
+		@component = item.rear_brake
+	elsif item.chain
+		@name = "Chains"
+		@component = item.chain
+	elsif item.chainring
+		@name = "Chainrings"
+		@component = item.chainring
+	elsif item.cog
+		@name = "Cog Cassettes"
+		@component = item.cog
+	elsif item.crank
+		@name = "Cranks"
+		@component = item.crank
+	elsif item.fork
+		@name = "Forks"
+		@component = item.fork
+	elsif item.grip
+		@name = "Grips"
+		@component = item.grip
+	elsif item.half_link
+		@name = "Half Links"
+		@component = item.half_link
+	elsif item.handlebar
+		@name = "Handlbars"
+		@component = item.handlebar
+	elsif item.headset
+		@name = "Headsets"
+		@component = item.headset
+	elsif item.front_lever
+		@name = "Front Levers"
+		@component = item.front_lever
+	elsif item.rear_lever
+		@name = "Rear Levers"
+		@component = item.rear_lever
+	elsif item.pedal
+		@name = "Pedals"
+		@component = item.pedal
+	elsif item.rim_strip
+		@name = "Rim Strips"
+		@component = item.rim_strip
+	elsif item.saddle
+		@name = "Saddles"
+		@component = item.saddle
+	elsif item.seat_clamp
+		@name = "Seat Clamps"
+		@component = item.seat_clamp
+	elsif item.seat_post
+		@name = "Seat Posts"
+		@component = item.seat_post
+	elsif item.stem
+		@name = "Stems"
+		@component = item.stem
+	elsif item.front_tire
+		@name = "Front Tires"
+		@component = item.front_tire
+	elsif item.rear_tire
+		@name = "Rear Tires"
+		@component = item.rear_tire
+	elsif item.front_tube
+		@name = "Front Tubes"
+		@component = item.front_tube
+	elsif item.rear_tube
+		@name = "Rear Tubes"
+		@component = item.rear_tube
+	elsif item.front_wheel
+		@name = "Front Wheels"
+		@component = item.front_wheel
+	elsif item.rear_wheel
+		@name = "Rear Wheels"
+		@component = item.rear_wheel
+	end %>
+		
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td colspan="3">
+			<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
+		</td>
+		<td colspan="2">
+			<p><%= @component.name %></p>
+		</td>
+		<td>
+			<p><%= @component.description %></p>
+		</td>
+
+
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(@component.price) %></p>
+			<p><%= link_to('remove', {:action => 'remove_component_from_cart', :name => @name, :id => @component.id}, :class => "remove_item") %></p>
+		</td>
+<% end %>
+<% end %>
 	<tr id="cart_total">
 		<td></td>
 		<td></td>
@@ -126,4 +282,5 @@
 		
 		<td><%= number_to_currency(@cart.total_price) %></td>
 	</tr>
+<% end %>
 </table>

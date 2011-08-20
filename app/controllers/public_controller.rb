@@ -3,7 +3,101 @@ class PublicController < ApplicationController
   before_filter :find_or_create_cart, :except => [:index]
   before_filter :find_or_create_customer, :only => [:checkout]
   
-
+  def submit_component
+      @component_name = params[:component]
+      @id = params[:id]
+      add_component_to_cart
+      flash[:notice] = 'Item Added to Cart'
+      redirect_to(:back)
+  end
+  
+  def add_component_to_cart
+    find_component
+    @cart.add_component(@component, @name)
+    session[:cart] = @cart
+  end
+  
+  def find_component
+    if @component_name == "Bottom Brackets"
+    @component = Components::BottomBracket.find(@id)
+    @name = "bottom_bracket"
+    elsif @component_name == "Front Brakes"
+      @component = Components::FrontBrake.find(@id)
+      @name = "front_brake"
+    elsif @component_name == 'Rear Brakes'
+      @component = Components::RearBrake.find(@id)
+      @name = "rear_brake"
+    elsif @component_name == 'Chains'
+      @component = Components::Chain.find(@id)
+      @name = "chain"
+    elsif @component_name == 'Chainrings'
+      @component = Components::Chainring.find(@id)
+      @name = "chainring"
+    elsif @component_name == 'Cog Cassettes'
+      @component = Components::Cog.find(@id)
+      @name = "cog"
+    elsif @component_name == 'Cranks'
+      @component = Components::Crank.find(@id)
+      @name = "crank"
+    elsif @component_name == 'Forks'
+      @component = Components::Fork.find(@id)
+      @name = "fork"
+    elsif @component_name == 'Grips'
+      @component = Components::Grip.find(@id)
+      @name = "grip"
+    elsif @component_name == 'Half Links'
+      @component = Components::HalfLink.find(@id)
+      @name = "half_link"
+    elsif @component_name == 'Handlebars'
+      @component = Components::Handlebar.find(@id)
+      @name = "handlebar"
+    elsif @component_name == 'Headsets'
+      @component = Components::Headset.find(@id)
+      @name = "headset"
+    elsif @component_name == 'Front Levers'
+      @component = Components::FrontLever.find(@id)
+      @name = "front_lever"
+    elsif @component_name == 'Rear Levers'
+      @component = Components::RearLever.find(@id)
+      @name = "rear_lever"
+    elsif @component_name == 'Pedals'
+      @component = Components::Pedal.find(@id)
+      @name = "pedal"
+    elsif @component_name == 'Rim Strips'
+      @component = Components::RimStrip.find(@id)
+      @name = "rim_strip"
+    elsif @component_name == 'Saddles'
+      @component = Components::Saddle.find(@id)
+      @name = "saddle"
+    elsif @component_name == 'Seat Clamps'
+      @component = Components::SeatClamp.find(@id)
+      @name = "seat_clamp"
+    elsif @component_name == 'Seat Posts'
+      @component = Components::SeatPost.find(@id)
+      @name = "seat_post"
+    elsif @component_name == 'Stems'
+      @component = Components::Stem.find(@id)
+      @name = "stem"
+    elsif @component_name == 'Front Tires'
+      @component = Components::FrontTire.find(@id)
+      @name = "front_tire"
+    elsif @component_name == 'Rear Tires'
+      @component = Components::RearTire.find(@id)
+      @name = "rear_tire"
+    elsif @component_name == 'Front Tubes'
+      @component = Components::FrontTube.find(@id)
+      @name = "front_tube"
+    elsif @component_name == 'Rear Tubes'
+      @component = Components::RearTube.find(@id)
+      @name = "rear_tube"
+    elsif @component_name == 'Front Wheels'
+      @component = Components::FrontWheel.find(@id)
+      @name = "front_wheel"
+    elsif @component_name == 'Rear Wheels'
+      @component = Components::RearWheel.find(@id)
+      @name = "rear_wheel"
+    end
+  end
   
   def error_forbidden
     render('public/403')
@@ -20,19 +114,65 @@ class PublicController < ApplicationController
   def show_components
     @nav_id = 'show_components'
     @component = params[:type]
-    
-    if @component == 'Bottom Bracket'
-    @components  = Components::BottomBracket.find(:all)
-    end
-    
-    if @component == 'Brakes'
-      @components = Components::FrontBrake.find(:all)
-    end
-    
+    load_components
     if request.xml_http_request?
       render :partial => 'public/partials/component',  :layout => false 
-    else
-
+    end
+  end
+  
+  def load_components
+    if @component == 'Bottom Brackets'
+      @components  = Components::BottomBracket.find(:all)
+    elsif @component == 'Front Brakes'
+      @components = Components::FrontBrake.find(:all)
+    elsif @component == 'Rear Brakes'
+      @components = Components::RearBrake.find(:all)
+    elsif @component == 'Chains'
+    @components = Components::Chain.find(:all)
+    elsif @component == 'Chainrings'
+      @components = Components::Chainring.find(:all)
+    elsif @component == 'Cog Cassettes'
+      @components = Components::Cog.find(:all)
+    elsif @component == 'Cranks'
+      @components = Components::Crank.find(:all)
+    elsif @component == 'Forks'
+      @components = Components::Fork.find(:all)
+    elsif @component == 'Grips'
+      @components = Components::Grip.find(:all)
+    elsif @component == 'Half Links'
+      @components = Components::HalfLink.find(:all)
+    elsif @component == 'Handlebars'
+      @components = Components::Handlebar.find(:all)
+    elsif @component == 'Headsets'
+      @components = Components::Headset.find(:all)
+    elsif @component == 'Front Levers'
+      @components = Components::FrontLever.find(:all)
+    elsif @component == 'Rear Levers'
+      @components = Components::RearLever.find(:all)
+    elsif @component == 'Pedals'
+      @components = Components::Pedal.find(:all)
+    elsif @component == 'Rim Strips'
+      @components = Components::RimStrip.find(:all)
+    elsif @component == 'Saddles'
+      @components = Components::Saddle.find(:all)
+    elsif @component == 'Seat Clamps'
+      @components = Components::SeatClamp.find(:all)
+    elsif @component == 'Seat Posts'
+      @components = Components::SeatPost.find(:all)
+    elsif @component == 'Stems'
+      @components = Components::Stem.find(:all)
+    elsif @component == 'Front Tires'
+      @components = Components::FrontTire.find(:all)
+    elsif @component == 'Rear Tires'
+      @components = Components::RearTire.find(:all)
+    elsif @component == 'Front Tubes'
+      @components = Components::FrontTube.find(:all)
+    elsif @component == 'Rear Tubes'
+      @components = Components::RearTube.find(:all)
+    elsif @component == 'Front Wheels'
+      @components = Components::FrontWheel.find(:all)
+    elsif @component == 'Rear Wheels'
+      @components = Components::RearWheel.find(:all)
     end
   end
   
@@ -132,7 +272,7 @@ class PublicController < ApplicationController
       redirect_to(:action => 'bike_kit_component_packages')
     end
   end
-
+  
 
   
   def show_component_packages
@@ -165,6 +305,8 @@ class PublicController < ApplicationController
   flash[:notice] = 'Item Added to Cart'
   redirect_to(:back)
   end
+  
+
   
   def check_for_reservation
     if session[:workshop]
@@ -240,18 +382,14 @@ class PublicController < ApplicationController
     session[:cart] = @cart
   end
   
-  def add_component_to_cart
-    component = Component.find(params[:id])
-    @cart.add_component(component)
-    session[:cart] = @cart
-  end
+
   
   def add_accessory_to_cart
     accessory = Accessory.find(params[:id])
     @cart.add_accessory(accessory)
     session[:cart] = @cart
   end
-  
+
   def remove_reservation_from_cart
     workshop = Workshop.find(params[:id])
     @cart.remove_reservation(workshop)
@@ -278,9 +416,11 @@ class PublicController < ApplicationController
     redirect_to(:action => 'show_cart')
   end
   
-  def remove_components_from_cart
-    components = Components.find(params[:id])
-    @cart.remove_components(components)
+  def remove_component_from_cart
+    @component_name = params[:name]
+    @id = params[:id]
+    find_component
+    @cart.remove_component(@component, @name)
     session[:cart] = @cart
     flash[:notice] = 'Item Successfully Removed From Cart'
     redirect_to(:action => 'show_cart')
@@ -304,6 +444,8 @@ class PublicController < ApplicationController
   end
   
   def show_cart
+    @comp_count = 0
+    @work_count = 0
   end
   
   def bamboo_bike_kits

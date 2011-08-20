@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817194859) do
+ActiveRecord::Schema.define(:version => 20110820010420) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -691,6 +691,34 @@ ActiveRecord::Schema.define(:version => 20110817194859) do
     t.integer  "frame_model_size_id"
     t.integer  "gear_id"
     t.integer  "top_tube_style_id"
+    t.string   "component_name"
+    t.integer  "bottom_bracket_id"
+    t.string   "front_brake_id"
+    t.string   "rear_brake_id"
+    t.string   "chain_id"
+    t.string   "chainring_id"
+    t.string   "cog_id"
+    t.string   "fork_id"
+    t.string   "grip_id"
+    t.string   "half_link_id"
+    t.string   "handlebar_id"
+    t.string   "headset_id"
+    t.string   "front_lever_id"
+    t.string   "rear_lever_id"
+    t.string   "pedal_id"
+    t.string   "rim_strip_id"
+    t.string   "saddle_id"
+    t.string   "seat_clamp_id"
+    t.string   "seat_post_id"
+    t.string   "front_shifter_id"
+    t.string   "rear_shifter_id"
+    t.string   "stem_id"
+    t.string   "front_tire_id"
+    t.string   "rear_tire_id"
+    t.string   "front_tube_id"
+    t.string   "rear_tube_id"
+    t.string   "front_wheel_id"
+    t.string   "rear_wheel_id"
   end
 
   create_table "orders", :force => true do |t|

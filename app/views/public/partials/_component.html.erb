@@ -3,13 +3,12 @@
 <% @components.each_with_index do |component, count|  %>
 
 	<div class="item">	
-		<%= link_to( image_tag('default.png', :alt => "item", :class => "unselected_item",:rel => "" ),
+		<%= image_tag('default.png', :alt => "item", :class => "",:rel => "",
 		:class => "lightview", :rel => "iframe", :title => component.name)  %><br />
 		<div class="item_name"><%= component.name %><br />
 	    <%= number_to_currency(component.price) %><br />
 		<%= link_to('add to cart', :action => 'submit_component', :component => @component, :id => component.id) %>
 	</div>
-	<%= count %>
 	 <% if count == 4 %>
 	<div class="clear"></div><!-- end clear -->
 	<% end %>
