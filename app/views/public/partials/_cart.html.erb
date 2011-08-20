@@ -20,8 +20,7 @@
 		<td colspan="7" class="center"><h2>Workshops & Kits</h2></td>
 	</tr>
 	<tr id="cart_header">
-		<td></td>
-		<th colspan="2">Reservation Details</th>
+		<th colspan="3">Reservation Details</th>
 		
 		<th colspan="2">Bike Build</th>
 		<th>Component Package</th>
@@ -37,7 +36,7 @@
 			sorry, this reservation has filled up while you were shopping! please remove from cart and select another reservation
 		<% @soldout = 'true' %>
 		<% else %>
-		workshop id: <%= Workshop.find(item.workshop.id).quantity %><br />
+		
 		experience: <%= item.workshop.experience %><br />
 		location: <%= item.workshop.location %><br />
 		dates:	  	<%= item.workshop.start_date.to_date.strftime("%m/%d/%Y") %> to <br />
@@ -74,9 +73,13 @@
 
 <% elsif item.frame_model && item.workshop == nil %>
 <% if @work_count == 0 %>
+<tr>
+
+	<td colspan="7" class="center"><h2>Kits & Workshops</h2></td>
+</tr>
 <tr id="cart_header">
-	<td></td>
-	<th colspan="2">Reservation Details</th>
+
+	<th colspan="3">Reservation Details</th>
 	
 	<th colspan="2">Bike Build</th>
 	<th>Component Package</th>
@@ -84,6 +87,7 @@
 	<th>Price</th>
 </tr>
 <% end %>
+<% @work_count += 1 %>
 <tr class="<%= cycle('odd', 'even') %>">
 
 	<td colspan="3">
@@ -122,8 +126,8 @@
 <% if item.accessory %>
 <% if @comp_count == 0 %>	
 <tr>
-	<td></td>
-	<td colspan="6" class="center"><h2>Components & Accessories</h2></td>
+
+	<td colspan="7" class="center"><h2>Components & Accessories</h2></td>
 </tr>
 <tr id="cart_header">
 
@@ -161,8 +165,8 @@
 <% if item.frame_model.nil? && item.accessory.nil? %>
 <% if @comp_count == 0 %>	
 <tr>
-	<td></td>
-	<td colspan="6" class="center"><h2>Components & Accessories</h2></td>
+
+	<td colspan="7" class="center"><h2>Components & Accessories</h2></td>
 </tr>
 	<tr id="cart_header">
 
@@ -206,7 +210,7 @@
 		@name = "Half Links"
 		@component = item.half_link
 	elsif item.handlebar
-		@name = "Handlbars"
+		@name = "Handlebars"
 		@component = item.handlebar
 	elsif item.headset
 		@name = "Headsets"

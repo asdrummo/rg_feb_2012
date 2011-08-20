@@ -401,7 +401,9 @@ class PublicController < ApplicationController
   def remove_frame_model_from_cart
     frame_model = FrameModel.find(params[:id])
     frame_model_size = FrameModelSize.find(params[:size_id])
-    workshop = Workshop.find(params[:workshop_id])
+    if params[:workshop_id]
+      workshop = Workshop.find(params[:workshop_id])
+    end
     gear = Gear.find(params[:gear_id])
     top_tube_style = TopTubeStyle.find(params[:top_tube_style_id])
     if params[:component_package_id] == 'false'
@@ -481,7 +483,8 @@ class PublicController < ApplicationController
       @customer = Customer.find(session[:customer_id])
     end
     @amount = @cart.total_price
-
+    @comp_count = 0
+    @work_count = 0
   end
   
 

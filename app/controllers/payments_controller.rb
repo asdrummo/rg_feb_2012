@@ -26,8 +26,6 @@ class PaymentsController < ApplicationController
   def show_receipt
     @cart = session[:cart]
     for item in @cart.items
-        if 3 != 3
-        else
         @customer = Customer.find(session[:customer_id])
         @order = Order.new
         @cart = session[:cart]
@@ -37,8 +35,13 @@ class PaymentsController < ApplicationController
         decrement_reservation
         @order.update_attributes(:invoice_number => 'Xt7S8p')
         @cart.empty_all_items
-        end
     end
+  end
+  
+  def show_receipt2
+        @customer = Customer.find(session[:customer_id])
+        @order = Order.find(166)
+        render('show_receipt2')
   end
   
   def decrement_reservation

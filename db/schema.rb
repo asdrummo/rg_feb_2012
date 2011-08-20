@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110820010420) do
+ActiveRecord::Schema.define(:version => 20110820070315) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -605,7 +605,7 @@ ActiveRecord::Schema.define(:version => 20110820010420) do
     t.string   "color"
     t.string   "finish"
     t.decimal  "cost",        :precision => 10, :scale => 0
-    t.string   "price"
+    t.decimal  "price",       :precision => 8,  :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -719,6 +719,7 @@ ActiveRecord::Schema.define(:version => 20110820010420) do
     t.string   "rear_tube_id"
     t.string   "front_wheel_id"
     t.string   "rear_wheel_id"
+    t.integer  "crank_id"
   end
 
   create_table "orders", :force => true do |t|

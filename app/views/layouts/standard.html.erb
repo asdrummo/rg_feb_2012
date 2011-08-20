@@ -17,7 +17,11 @@
 	<div class="float_right">&nbsp;|&nbsp;
 	<%= link_to('View Cart', :action => 'show_cart') %>
 	<% if @cart != nil %>
-		(<%= @cart.items.count %>)
+		<% @quantity = 0 %>
+		<% @cart.items.each do |item| 
+		@quantity += item.quantity %>
+		<% end %>
+	(<%= @quantity %>)
 	<% else %>
 	
 	<% end %>

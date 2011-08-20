@@ -34,6 +34,8 @@ gem 'pg'
 gem "braintree", "~> 2.10.2"
 gem "mail"
 gem 'admin_data'
+gem 'wkhtmltopdf'
+gem 'pdfkit'
 
 
 

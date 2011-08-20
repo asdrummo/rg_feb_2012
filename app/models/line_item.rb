@@ -14,7 +14,7 @@ class LineItem < ActiveRecord::Base
   belongs_to :front_brake, :class_name => 'Components::FrontBrake'
   belongs_to :rear_brake, :class_name => 'Components::RearBrake'
   belongs_to :chain, :class_name => 'Components::Chain'
-  belongs_to :chainring, :class_name => 'Components::ChainRing'
+  belongs_to :chainring, :class_name => 'Components::Chainring'
   belongs_to :cog, :class_name => 'Components::Cog'
   belongs_to :crank, :class_name => 'Components::Crank'
   belongs_to :fork, :class_name => 'Components::Fork'

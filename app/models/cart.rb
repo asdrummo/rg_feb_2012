@@ -144,7 +144,12 @@ class Cart
   end
   
   def remove_frame_model(frame_model, frame_model_size, workshop, gear, top_tube_style)
+    if workshop != nil
     existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.workshop_id == workshop.id) && (item.gear_id == gear.id)}
+    else
+      existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.gear_id == gear.id)}
+    end
+    
     if existing_item && existing_item.quantity > 1
       existing_item.quantity -= 1
     else
@@ -154,6 +159,7 @@ class Cart
   end
   
   def remove_frame_model_and_package(frame_model, frame_model_size, workshop, gear, top_tube_style, component_package )
+
     existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.workshop_id == workshop.id) && (item.gear_id == gear.id) && (item.component_package_id == component_package.id)}
     if existing_item && existing_item.quantity > 1
       existing_item.quantity -= 1
