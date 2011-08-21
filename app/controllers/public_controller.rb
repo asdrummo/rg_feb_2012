@@ -586,8 +586,8 @@ class PublicController < ApplicationController
   def show_invoice
     if session[:customer_id]
     @customer = Customer.find(session[:customer_id])
-    @order = Order.find(params[:id])
-    authorize_customer_access(@order.customer_id)
+    @order = Order.find_by_invoice_number(params[:id])
+    authorize_customer_access(@order)
     else
       redirect_to(:controller => 'public', :action => 'error_forbidden')
     end
@@ -595,8 +595,8 @@ class PublicController < ApplicationController
   
   private
 
-  def authorize_customer_access(id)
-    if session[:customer_id] == id
+  def authorize_customer_access(order)
+    if order.customer_id == session[:customer_id]
     else
         redirect_to(:controller => 'public', :action => 'error_forbidden')
         return false

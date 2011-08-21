@@ -13,7 +13,7 @@ pre {
 }
 
 a { 
-	color: #000;
+	color: blue;
 	text-decoration: none;
 }
 
@@ -53,6 +53,9 @@ a {
 	font-size: 36px;
 	line-height:0px;
 }
+#title a {
+	color: black;
+}
 
 /* navigation */
 #nav_container{
@@ -84,6 +87,7 @@ font-weight: 900;
 	padding:0;
 	margin:0;
 	text-decoration: none;
+	color: black;
 }
 
 #navlist .active {
