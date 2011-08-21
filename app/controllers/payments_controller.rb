@@ -25,17 +25,15 @@ class PaymentsController < ApplicationController
   
   def show_receipt
     @cart = session[:cart]
-    for item in @cart.items
+    @order = Order.new
+
         @customer = Customer.find(session[:customer_id])
-        @order = Order.new
         @cart = session[:cart]
         @order.line_items << @cart.items
         @customer.orders << @order
-        @transaction_id = "Xt7S8p"
         decrement_reservation
-        @order.update_attributes(:invoice_number => 'Xt7S8p')
+        @order.update_attributes(:invoice_number => @order.id, :status => "pending")
         @cart.empty_all_items
-    end
   end
   
   def show_receipt2

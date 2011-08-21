@@ -223,6 +223,16 @@ table.invoice_table {
 	float:left;
 	padding:5px;
 }
+#login_fields {
+	margin-top:100px;
+
+}
+.customer_login {
+	width: 450px;
+	height: 250px;
+	border: 2px solid black;
+	margin:auto;
+}
 /* standard issue rails styling to be modded later */
 div.field, div.actions {
 	margin-bottom: 5px;

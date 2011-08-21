@@ -2,7 +2,8 @@
 
 <div class = "customer_login">
 	<%= form_tag(:action=> 'attempt_login', :redirect => 'index') do %>
-		<table class="">
+		<table class="center">
+			<div id="login_fields">
 			<tr>
 				<td><%= label_tag(:email) %>:</td>
 				<td><%= text_field_tag(:email) %></td>
@@ -15,6 +16,7 @@
 					<td>&nbsp</td>
 					<td><%= submit_tag("login") %></td>
 			</tr>
+			</div>
 		</table>
 		<% end %>
 </div>

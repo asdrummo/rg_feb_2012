@@ -100,7 +100,7 @@ class PublicController < ApplicationController
   end
   
   def error_forbidden
-    render('public/403')
+    render('403')
   end
   
   def do_it_yourself
@@ -519,7 +519,7 @@ class PublicController < ApplicationController
   end
   
   def register
-  
+  @customer = Customer.new
   end
   
   def save_customer
@@ -568,7 +568,6 @@ class PublicController < ApplicationController
   def my_account
   @customer = Customer.find(session[:customer_id])
   @orders = Order.where(:customer_id => session[:customer_id])
-  
   end
   
   private
@@ -582,6 +581,26 @@ class PublicController < ApplicationController
   end
   
   def logged_in_as
-    
   end
+  
+  def show_invoice
+    if session[:customer_id]
+    @customer = Customer.find(session[:customer_id])
+    @order = Order.find(params[:id])
+    authorize_customer_access(@order.customer_id)
+    else
+      redirect_to(:controller => 'public', :action => 'error_forbidden')
+    end
+  end
+  
+  private
+
+  def authorize_customer_access(id)
+    if session[:customer_id] == id
+    else
+        redirect_to(:controller => 'public', :action => 'error_forbidden')
+        return false
+    end
+  end
+  
 end
