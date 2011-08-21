@@ -104,6 +104,7 @@ class PublicController < ApplicationController
   end
   
   def do_it_yourself
+    session[:workshop_cart] = Cart.new
     @nav_id = 'do_it_yourself'
   end
   
@@ -328,14 +329,16 @@ class PublicController < ApplicationController
   
   def add_reservation_to_cart
     @workshop = Workshop.find(params[:id])
-    
-    session[:workshop] = @workshop.location
+    session[:workshop] = @workshop.id
+    @workshop_cart.add_workshop(@workshop)
+    session[:workshop_cart] = @workshop_cart
+     
     
   end
   
   def add_frame_model_to_cart
     @frame_model = FrameModel.find(params[:id])
-    workshop = Workshop.find_by_location(session[:workshop])
+    workshop = Workshop.find(session[:workshop])
     if session[:gear_selection] == nil
       gear = Gear.find(1)
       session[:gear_selection] = gear
@@ -351,6 +354,8 @@ class PublicController < ApplicationController
     
     frame_model_size = FrameModelSize.find_by_name(session[:frame_model_size])
     @cart.add_frame_model(@frame_model, frame_model_size, workshop, gear, top_tube_style)
+    @workshop_cart.add_frame_model_to_workshop(@frame_model, workshop)
+    session[:workshop_cart] = @workshop_cart
     session[:cart] = @cart
   end
   
@@ -474,6 +479,7 @@ class PublicController < ApplicationController
   
   def empty_cart
     @cart.empty_all_items
+    @workshop_cart.empty_all_items
     flash[:notice] = 'Your cart is now empty'
     redirect_to(:action => 'index')
   end
@@ -574,6 +580,7 @@ class PublicController < ApplicationController
   
   def find_or_create_cart
     @cart = session[:cart] ||= Cart.new
+    @workshop_cart = session[:workshop_cart] ||= Cart.new
   end
   
   def find_or_create_customer

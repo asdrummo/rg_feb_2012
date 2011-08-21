@@ -1,6 +1,6 @@
 class ComponentPackagesController < ApplicationController
-  :confirm_logged_in
-  layout 'admin'
+  before_filter :confirm_logged_in, :except => [:show_component_package]
+  layout 'standard'
 
   # GET /component_packages
   # GET /component_packages.xml
@@ -18,6 +18,14 @@ class ComponentPackagesController < ApplicationController
   def show
     @component_package = ComponentPackage.find(params[:id])
 
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @component }
+    end
+  end
+  
+  def show_component_package
+    @component_package = ComponentPackage.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @component }

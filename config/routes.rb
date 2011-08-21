@@ -22,6 +22,7 @@ Drummlins::Application.routes.draw do
   match 'customers/:id/show' => 'customers#show_customer', :as => :show_customer
   match 'public/do_it_yourself' => 'public#do_it_yourself', :as => :do_it_yourself
   match 'public/show_components' => 'public#show_components', :as => :show_components
+  match 'component_packages/:id/show_component_package' => 'component_packages#show_component_package', :as => :show_component_package
   match 'public/bikes_to_buy' => 'public#bikes_to_buy', :as => :bikes_to_buy
   
   # The priority is based upon order of creation:

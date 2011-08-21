@@ -32,11 +32,13 @@
 <tr class="<%= cycle('odd', 'even') %>">
 
 	<td colspan="3">
-	  	<% if Workshop.find(item.workshop.id).quantity == 0  %>
+	  	<% if Workshop.find(item.workshop.id).quantity <= 0  %>
 			sorry, this reservation has filled up while you were shopping! please remove from cart and select another reservation
 		<% @soldout = 'true' %>
+		<% elsif item.quantity > Workshop.find(item.workshop.id).quantity %>
+		you have way too many workshops in your cart. please unload <%= item.quantity - Workshop.find(item.workshop.id).quantity %> items
+		<% @soldout = 'true' %>
 		<% else %>
-		
 		experience: <%= item.workshop.experience %><br />
 		location: <%= item.workshop.location %><br />
 		dates:	  	<%= item.workshop.start_date.to_date.strftime("%m/%d/%Y") %> to <br />
@@ -53,7 +55,9 @@
 	<td>
 		<% if item.component_package %>
 		<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
-		<%= raw item.component_package.description %>
+		<%= raw item.component_package.description %><br />
+		
+		<%= link_to('see components', show_component_package_path(item.component_package), :target => '_blank' ) %><br />
 		<% @component_package_id = item.component_package.id %>
 		<% @component_package_price = item.component_package.price %>
 		<% else %>

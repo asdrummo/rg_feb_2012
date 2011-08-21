@@ -37,11 +37,10 @@ class LineItem < ActiveRecord::Base
   belongs_to :front_wheel, :class_name => 'Components::FrontWheel'
   belongs_to :rear_wheel, :class_name => 'Components::RearWheel'
   
-  def self.new_reservation_based_on(workshop)
+  def self.new_workshop_based_on(workshop)
     line_item = self.new
     line_item.workshop = workshop
     line_item.quantity = 1
-    line_item.price = workshop.price
     return line_item
   end
   
@@ -55,6 +54,13 @@ class LineItem < ActiveRecord::Base
     line_item.quantity = 1
     line_item.price = (frame_model.price + frame_model_size.price + gear.price + top_tube_style.price)
     return line_item
+  end
+  
+  def self.add_frame_model_to_workshop(frame_model, workshop)
+     line_item = self.new
+     line_item.workshop = workshop
+     line_item.frame_model = frame_model
+     return line_item
   end
   
   def self.new_kit_based_on(frame_model, frame_model_size, gear, top_tube_style)
@@ -75,6 +81,8 @@ class LineItem < ActiveRecord::Base
     line_item.price += component_package.price
     return line_item
   end
+  
+ 
   
   def self.new_component_based_on(component, name)
     line_item = self.new

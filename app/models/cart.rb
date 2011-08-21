@@ -12,15 +12,14 @@ class Cart
     @total_price = 0.0
   end
   
-  def add_reservation( workshop )
+  def add_workshop( workshop )
     existing_item = @items.find {|item| item.workshop_id == workshop.id}
     if existing_item
       existing_item.quantity += 1
     else
-      @items << LineItem.new_reservation_based_on(workshop)
+      @items << LineItem.new_workshop_based_on(workshop)
       
     end
-    @total_price += workshop.price
   end
   
   def add_frame_model( frame_model, frame_model_size, workshop, gear, top_tube_style )
@@ -29,10 +28,18 @@ class Cart
       existing_item.quantity += 1
     else
       @items << LineItem.new_frame_model_based_on(frame_model, frame_model_size, workshop, gear, top_tube_style)
+     
     end
     @total_price += (frame_model.price + frame_model_size.price + gear.price + top_tube_style.price)
   end
   
+  def add_frame_model_to_workshop( frame_model, workshop)
+
+       @items << LineItem.add_frame_model_to_workshop( frame_model, workshop )
+
+  end
+  
+    
   def add_kit( frame_model, frame_model_size, gear, top_tube_style )
     existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.gear_id == gear.id) && (item.top_tube_style == top_tube_style.id)}
     if existing_item
@@ -115,7 +122,7 @@ class Cart
       existing_item.component_package =  component_package
       existing_item.price += component_package.price
     else
-      @item.frame_model << LineItem.new_component_package_based_on(component_package, frame_model)
+      @item.frame_model << LineItem.new_component_package_based_on(component_package, frame_model, frame_model_size)
       
     end
     @total_price += component_package.price
