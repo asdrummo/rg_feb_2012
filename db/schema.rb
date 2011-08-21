@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110821081438) do
+ActiveRecord::Schema.define(:version => 20110821185615) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -667,6 +667,7 @@ ActiveRecord::Schema.define(:version => 20110821081438) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "kit",                                       :default => false
+    t.integer  "options"
   end
 
   create_table "gears", :force => true do |t|
@@ -732,9 +733,9 @@ ActiveRecord::Schema.define(:version => 20110821081438) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id",                       :null => false
-    t.text     "data",       :limit => 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "data",       :limit => 2147483647
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"

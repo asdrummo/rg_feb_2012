@@ -2,13 +2,15 @@
 Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><br />
 <%= link_to('edit profile', edit_info_path(@customer)) %><br /><br />
 <%= link_to('edit login/password', edit_login_path(@customer)) %><br />
-<br />
-<br />
-<b>My Orders:</b><br />
+
+
 <% if @orders.count > 0 %>
 <% total = 0 %>
-<table class="center">
+<table id="orders" class="center">
 	<tr>
+		<td colspan="5"><h2>My Orders:</h2></td>
+	</tr>
+	<tr id="orders_header" >
 		<th>date</th>
 		<th>order #</th>
 		<th>price</th>
@@ -18,7 +20,7 @@ Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><b
 	</tr>
 	<% @orders.each do |order| %>
 	<% order_no = order.invoice_number %>
-	<tr>
+	<tr class="<%= cycle('odd', 'even') %>">
 		<td><%= order.created_at.strftime("%m/%d/%y") %></td>
 		<td><%= link_to(order.invoice_number, :action => 'show_invoice', :id => order.invoice_number) %></td>
 		<% order.line_items.each do |item| %>

@@ -537,8 +537,8 @@ class PublicController < ApplicationController
       session[:first_name] = @customer.first_name
        redirect_to(:back)
       else
-         flash[:notice] = 'Registration Fail!'
-        render('checkout')
+        flash[:notice] = 'Registration Failed!'
+           render('register')
       end
   end
   

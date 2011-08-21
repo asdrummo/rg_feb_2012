@@ -227,15 +227,38 @@ table.invoice_table {
 	float:left;
 	padding:5px;
 }
+
+/* login & registration */
 #login_fields {
 	margin-top:100px;
-
 }
+
 .customer_login {
 	width: 450px;
 	height: 250px;
 	border: 2px solid black;
 	margin:auto;
+}
+
+/* my account */
+
+#orders{
+	width: 600px;
+	border-collapse: collapse;
+	text-align:center;
+}
+
+#orders_header {
+	text-align:center;
+	text-transform:uppercase;
+}
+#orders th {
+	padding-bottom:10px;
+	border-bottom:2px dashed gray;
+}
+
+#orders td {
+	padding:10px;
 }
 /* standard issue rails styling to be modded later */
 div.field, div.actions {

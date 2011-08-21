@@ -23,6 +23,15 @@
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
+
+
+	<%= f.label :options %><br /> 
+	<% if @frame_model.options %>
+	<%= f.select :options, options_for_select([['Size Only', 1], ['Size & Gears', 2], ['Size & Top Tube', 3], ['Size & Top Tube & Gears', 4]], @frame_model.options)%>
+	<% else %>
+	<%= f.select :options, options_for_select([['Size Only', 1], ['Size & Gears', 2], ['Size & Top Tube', 3], ['Size & Top Tube & Gears', 4]]) %>
+	<% end %>
+
   <div class="field">
     <%= f.label :image_path %><br />
     <%= f.text_field :image_path %>

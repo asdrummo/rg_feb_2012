@@ -22,22 +22,24 @@
 		</td>
 		
 		<td>
+			
 			<%= form_tag do %>
 				<%= select_tag :frame_model_size, options_from_collection_for_select(@frame_model_sizes, "id", "name"), :include_blank => @size_selection, :onchange => remote_function(:url => {:action => 'show_models'},:with => "'frame_model_size=' + this.value") %>
 			<% end %>
-			<br />
-			<% if m.name == 'Local' %>
+		
+			<% if m.options && m.options >= 3 %>
 
 				<%= form_tag do %>
 					<%= select_tag :top_tube, options_from_collection_for_select(@top_tube_styles, "id", "name"), :include_blank => @top_tube_selection, :onchange => remote_function(:url => {:action => 'show_models'},:with => "'top_tube_selection=' + this.value") %>
 				<% end %>
-				
+			<% end %>
+			<% if m.options && ((m.options == 2) || (m.options == 4)) %>	
 				<%= form_tag do %>
 					<%= select_tag :rear_deraileur, options_from_collection_for_select(@gears, "id", "name"), :include_blank => @gear_selection, :onchange => remote_function(:url => {:action => 'show_models'},:with => "'gear_selection=' + this.value") %>
-					
 				<% end %>
-	
 			<% end %>
+			
+
 		</td>
 			
 		<td>
