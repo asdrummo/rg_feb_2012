@@ -117,7 +117,7 @@ class PublicController < ApplicationController
     @component = params[:type]
     load_components
     items_per_page = 10
-    if :query != nil 
+    if params[:query] != nil 
       sort = case params['sort']
              when "name"  then "name ASC"
              when "qty"   then "quantity ASC"
