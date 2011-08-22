@@ -116,64 +116,135 @@ class PublicController < ApplicationController
     @nav_id = 'show_components'
     @component = params[:type]
     load_components
+    items_per_page = 10
+    if :query != nil 
+      sort = case params['sort']
+             when "name"  then "name ASC"
+             when "qty"   then "quantity ASC"
+             when "price" then "price ASC"
+             when "name_reverse"  then "name DESC"
+             when "qty_reverse"   then "quantity DESC"
+             when "price_reverse" then "price DESC"
+             end
+
+      conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
+
+      @total = @component_path.count(:conditions => conditions)
+      @components = @component_path.where(conditions).order(sort)
+     end
     if request.xml_http_request?
       render :partial => 'public/partials/component',  :layout => false 
     end
   end
   
+  def sort_components
+    @nav_id = 'show_components'
+    @component = params[:component]
+
+    items_per_page = 10
+
+    sort = case params['sort']
+           when "name"  then "name ASC"
+           when "qty"   then "quantity ASC"
+           when "price" then "price DESC"
+           when "name_reverse"  then "name DESC"
+           when "qty_reverse"   then "quantity DESC"
+           when "price_reverse" then "price DESC"
+           end
+
+    conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
+    
+    load_components
+    @total = @component_path.count(:conditions => conditions)
+    @components = @component_path.where(conditions).order(sort)
+  
+    if request.xml_http_request?
+      render :partial => 'public/partials/component', :layout => false
+    else
+      render('index')
+    end
+
+  end
+  
   def load_components
     if @component == 'Bottom Brackets'
       @components  = Components::BottomBracket.find(:all)
+      @component_path = Components::BottomBracket
     elsif @component == 'Front Brakes'
       @components = Components::FrontBrake.find(:all)
+      @component_path = Components::FrontBrake
     elsif @component == 'Rear Brakes'
       @components = Components::RearBrake.find(:all)
+      @component_path = Components::RearBrake
     elsif @component == 'Chains'
     @components = Components::Chain.find(:all)
+    @component_path = Components::Chain
     elsif @component == 'Chainrings'
       @components = Components::Chainring.find(:all)
+      @component_path = Components::Chainring
     elsif @component == 'Cog Cassettes'
       @components = Components::Cog.find(:all)
+      @component_path = Components::Cog
     elsif @component == 'Cranks'
       @components = Components::Crank.find(:all)
+      @component_path = Components::Crank
     elsif @component == 'Forks'
       @components = Components::Fork.find(:all)
+      @component_path = Components::Fork
     elsif @component == 'Grips'
       @components = Components::Grip.find(:all)
+      @component_path = Components::Grip
     elsif @component == 'Half Links'
       @components = Components::HalfLink.find(:all)
+      @component_path = Components::HalfLink
     elsif @component == 'Handlebars'
       @components = Components::Handlebar.find(:all)
+      @component_path = Components::Handlebar
     elsif @component == 'Headsets'
       @components = Components::Headset.find(:all)
+      @component_path = Components::Headset
     elsif @component == 'Front Levers'
       @components = Components::FrontLever.find(:all)
+      @component_path = Components::FrontLever
     elsif @component == 'Rear Levers'
       @components = Components::RearLever.find(:all)
+      @component_path = Components::RearLever
     elsif @component == 'Pedals'
       @components = Components::Pedal.find(:all)
+      @component_path = Components::Pedal
     elsif @component == 'Rim Strips'
       @components = Components::RimStrip.find(:all)
+      @component_path = Components::RimStrip
     elsif @component == 'Saddles'
       @components = Components::Saddle.find(:all)
+      @component_path = Components::Saddle
     elsif @component == 'Seat Clamps'
       @components = Components::SeatClamp.find(:all)
+      @component_path = Components::SeatClamp
     elsif @component == 'Seat Posts'
       @components = Components::SeatPost.find(:all)
+      @component_path = Components::SeatPost
     elsif @component == 'Stems'
       @components = Components::Stem.find(:all)
+      @component_path = Components::Stem
     elsif @component == 'Front Tires'
       @components = Components::FrontTire.find(:all)
+      @component_path = Components::FrontTire
     elsif @component == 'Rear Tires'
       @components = Components::RearTire.find(:all)
+      @component_path = Components::RearTire
     elsif @component == 'Front Tubes'
       @components = Components::FrontTube.find(:all)
+      @component_path = Components::FrontTube
     elsif @component == 'Rear Tubes'
       @components = Components::RearTube.find(:all)
+      @component_path = Components::RearTube
     elsif @component == 'Front Wheels'
       @components = Components::FrontWheel.find(:all)
+      @component_path = Components::FrontWheel
     elsif @component == 'Rear Wheels'
       @components = Components::RearWheel.find(:all)
+      @component_path = Components::RearWheel
     end
   end
   

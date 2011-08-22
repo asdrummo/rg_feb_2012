@@ -70,6 +70,9 @@ class Components::BottomBracketsController < ApplicationController
       end
     end
   end
+  
+
+  
 
   # DELETE /components/bottom_brackets/1
   # DELETE /components/bottom_brackets/1.xml

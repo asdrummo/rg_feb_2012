@@ -51,14 +51,14 @@
 	<% end %>
 
 
-		<% if @frame_model.sizes %>
-			<% model_sizes = @frame_model.sizes.split('x') 
-			@pre_selected_sizes = []
-			model_sizes.each do |x|
-			@pre_selected_sizes << FrameModelSize.find(x)
-			end
-			%>
-		<% end %>
+	<% if @frame_model.sizes %>
+		<% model_sizes = @frame_model.sizes.split('x') 
+		@pre_selected_sizes = []
+		model_sizes.each do |x|
+		@pre_selected_sizes << FrameModelSize.find(x)
+		end
+		%>
+	<% end %>
 	<%= f.label :sizes %><br /> 
 	<% sizes_array = FrameModelSize.all.map { |size| [size.name, size.id] }%>
 	<% if @frame_model.sizes %>

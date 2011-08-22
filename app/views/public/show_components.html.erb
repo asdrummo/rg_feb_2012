@@ -1,7 +1,10 @@
 <% @page_title = 'Browse Components' %>
 <%= render(:partial => 'public/partials/components_side_menu') %>
 <% if @component != nil %>
+<%= render(:partial => "public/partials/sort") %>
+<div id="table">
 <%= render(:partial => 'public/partials/component') %>
+</div>
 <% else %>
 	<table class="center">
 		<tr>

@@ -30,7 +30,9 @@ module ApplicationHelper
       result.safe_concat validation_errors(method)
       result
     end
+    
 
+    
     protected
 
     def determine_value(method)
