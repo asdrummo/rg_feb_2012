@@ -1,9 +1,9 @@
 module PublicHelper
-  def sort_link_helper(text, param)
+  def sort_link_helper(text, param, component)
     key = param
     key += "_reverse" if params[:sort] == param
     options = {
-        :url => {:action => 'sort_components', :sort => key},
+        :url => {:action => 'sort_components', :sort => key, :component => component},
         :update => 'component_grid',
         :before => "Element.show('spinner')",
         :success => "Element.hide('spinner')"
