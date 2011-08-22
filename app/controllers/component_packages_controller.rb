@@ -36,7 +36,6 @@ class ComponentPackagesController < ApplicationController
   # GET /component_packages/new.xml
   def new
     @component_package = ComponentPackage.new
- 
      @frame_models = FrameModel.find(:all)
      @seat_posts = Components::SeatPost.find(:all)
      @seat_clamps = Components::SeatClamp.find(:all)

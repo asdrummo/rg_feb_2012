@@ -59,9 +59,28 @@ class FrameModelsController < ApplicationController
   # PUT /frame_models/1.xml
   def update
     @frame_model = FrameModel.find(params[:id])
-
+    if params[:gears]
+    gears = params[:gears].join
+    end
     respond_to do |format|
       if @frame_model.update_attributes(params[:frame_model])
+        if params[:gears]
+          array = []
+          params[:gears].each do |x|
+          array << x
+          end
+          gears = array.join("x")
+          @frame_model.update_attributes(:gears => gears)
+        end
+        if params[:sizes]
+            array = []
+            params[:sizes].each do |x|
+            array << x
+            end
+            sizes = array.join("x")
+            @frame_model.update_attributes(:sizes => sizes)
+        end
+        
         format.html { redirect_to(@frame_model, :notice => 'Frame model was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -70,6 +89,7 @@ class FrameModelsController < ApplicationController
       end
     end
   end
+  
 
   # DELETE /frame_models/1
   # DELETE /frame_models/1.xml

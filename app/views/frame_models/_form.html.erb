@@ -31,7 +31,41 @@
 	<% else %>
 	<%= f.select :options, options_for_select([['Size Only', 1], ['Size & Gears', 2], ['Size & Top Tube', 3], ['Size & Top Tube & Gears', 4]]) %>
 	<% end %>
+	
+	
+	<br />
+	<% gears_array = Gear.all.map { |gear| [gear.name, gear.id] }%>
+	<% if @frame_model.gears %>
+		<% model_gears = @frame_model.gears.split('x') 
+		@pre_selected_gears = []
+		model_gears.each do |x|
+		@pre_selected_gears << Gear.find(x)
+		end
+		%>
+	<% end %>
+	<%= f.label :gears %><br /> 
+	<% if @frame_model.gears %>
+    <%= select_tag 'gears[]', options_for_select(gears_array, @pre_selected_gears.map {|g| g.id}),{ :multiple => true, :size => 5 } %> <br />
+	<% else %>
+	<%= select_tag 'gears[]', options_for_select(gears_array),{ :multiple => true, :size => 5 } %> <br />
+	<% end %>
 
+
+		<% if @frame_model.sizes %>
+			<% model_sizes = @frame_model.sizes.split('x') 
+			@pre_selected_sizes = []
+			model_sizes.each do |x|
+			@pre_selected_sizes << FrameModelSize.find(x)
+			end
+			%>
+		<% end %>
+	<%= f.label :sizes %><br /> 
+	<% sizes_array = FrameModelSize.all.map { |size| [size.name, size.id] }%>
+	<% if @frame_model.sizes %>
+    <%= select_tag 'sizes[]', options_for_select(sizes_array, @pre_selected_sizes.map {|s| s.id} ),{ :multiple => true, :size => 5 } %>
+	<% else %>
+	<%= select_tag 'sizes[]', options_for_select(sizes_array),{ :multiple => true, :size => 5 } %>
+	<% end %>
   <div class="field">
     <%= f.label :image_path %><br />
     <%= f.text_field :image_path %>

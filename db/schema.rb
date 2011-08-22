@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110821185615) do
+ActiveRecord::Schema.define(:version => 20110821233516) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -668,6 +668,8 @@ ActiveRecord::Schema.define(:version => 20110821185615) do
     t.datetime "updated_at"
     t.boolean  "kit",                                       :default => false
     t.integer  "options"
+    t.string   "gears"
+    t.string   "sizes"
   end
 
   create_table "gears", :force => true do |t|

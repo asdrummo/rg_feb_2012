@@ -198,7 +198,7 @@ class PublicController < ApplicationController
     @model = 'active_progress'
     @frame_model_sizes = FrameModelSize.find(:all, :order => 'id ASC') 
     @top_tube_styles = TopTubeStyle.find(:all, :order => 'id ASC')
-    @gears = Gear.find(:all, :order => 'id ASC')
+
     save_size
     save_top_tube
     save_gear
