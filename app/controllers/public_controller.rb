@@ -117,7 +117,7 @@ class PublicController < ApplicationController
     @component = params[:type]
     load_components
     items_per_page = 10
-  
+
       sort = case params['sort']
              when "name"  then "name ASC"
              when "qty"   then "quantity ASC"
@@ -128,10 +128,10 @@ class PublicController < ApplicationController
              end
 
       conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
-     
+      if @component 
       @total = @component_path.count(:conditions => conditions)
       @components = @component_path.where(conditions).order(sort)
-   
+      end
 
     if request.xml_http_request?
       render :partial => 'public/partials/component',  :layout => false 
