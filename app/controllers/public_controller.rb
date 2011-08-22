@@ -128,9 +128,10 @@ class PublicController < ApplicationController
              end
 
       conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
-
+      if @component 
       @total = @component_path.count(:conditions => conditions)
       @components = @component_path.where(conditions).order(sort)
+      end
      end
     if request.xml_http_request?
       render :partial => 'public/partials/component',  :layout => false 
