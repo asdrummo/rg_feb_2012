@@ -30,8 +30,15 @@ a {
 	background-color: #fff;
 	padding:0 20px 0 20px;
 }
+#admin_bodywrap {
+	min-width:900px;
+	min-height:600px;
+	margin:auto;
+	background-color: #fff;
+	padding:0 20px 0 20px;
+}
 #footer {
-	width:900px;
+	min-width:900px;
 	margin:auto;
 	background-color: #fff;
 	padding:0 20px 10px 20px;
