@@ -127,7 +127,7 @@ class PublicController < ApplicationController
              when "price_reverse" then "price DESC"
              end
 
-      conditions = ["name LIKE ?", "%#{params[:query].downcase}%"] unless params[:query].nil?
+             conditions = ["LOWER(name) LIKE ?", "%#{params[:query].downcase}%"] unless params[:query].nil?
       
       
       if @component 
@@ -155,8 +155,8 @@ class PublicController < ApplicationController
            when "price_reverse" then "price DESC"
            end
 
-    conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
-    
+    conditions = ["LOWER(name) LIKE ?", "%#{params[:query].downcase}%"] unless params[:query].nil?
+
     load_components
     @total = @component_path.count(:conditions => conditions)
     @components = @component_path.where(conditions).order(sort)
