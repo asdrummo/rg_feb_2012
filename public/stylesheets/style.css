@@ -38,6 +38,13 @@ a {
 	padding:0 20px 0 20px;
 }
 #footer {
+	width:900px;
+	margin:auto;
+	background-color: #fff;
+	padding:0 20px 10px 20px;
+	text-align:center;
+}
+#admin_footer {
 	min-width:900px;
 	margin:auto;
 	background-color: #fff;
