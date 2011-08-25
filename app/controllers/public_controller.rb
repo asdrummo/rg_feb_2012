@@ -121,7 +121,7 @@ class PublicController < ApplicationController
       sort = case params['sort']
              when "name"  then "name ASC"
              when "qty"   then "quantity ASC"
-             when "price" then "price ASC"
+             when "price" then "price DESC"
              when "name_reverse"  then "name DESC"
              when "qty_reverse"   then "quantity DESC"
              when "price_reverse" then "price DESC"

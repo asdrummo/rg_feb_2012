@@ -1,5 +1,5 @@
 <% @page_title = @component %>
-<div id="component_grid">
+<div id="component_grid" style="">
 <% @components.each_with_index do |component, count|  %>
 
 	<div class="item">	
@@ -8,10 +8,13 @@
 		<div class="item_name"><%= component.name %><br />
 	    <%= number_to_currency(component.price) %><br />
 		<%= link_to('add to cart', :action => 'submit_component', :component => @component, :id => component.id) %>
+		</div>
 	</div>
 	 <% if count == 4 %>
-	<div class="clear"></div><!-- end clear -->
+
+	<!-- end clear -->
 	<% end %>
-</div>
+
 <% end %>
+<div class="clear"></div>
 </div><!-- end component grid -->

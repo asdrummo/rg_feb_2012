@@ -1,15 +1,15 @@
 <div class="sort">
-	<div id="sort_info"><p>
-	<form name="sform" action="" style="display:inline;">
-	<label for="item_name">search: </label>
-	<%= text_field_tag("query", params['query'],  :size => 10 ) %>
-	<%= hidden_field_tag("type", @component) %>
-	
-	
+	<div id="sort_info" ><p>
+			<form name="sform" action="" style="display:inline;">
+			<label for="item_name">search: </label>
+			<%= text_field_tag("query", params['query'],  :size => 10 ) %>
+			<%= hidden_field_tag("type", @component) %>
 
-	
-&nbsp;&nbsp;
-or sort: 
+
+
+
+		&nbsp;&nbsp;
+		or sort:
 	
 	<%= sort_link_helper "Name", "name", @component %>&nbsp|&nbsp
 	<%= sort_link_helper "Price", "price", @component %>

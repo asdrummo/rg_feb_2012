@@ -4,7 +4,7 @@ module PublicHelper
     key += "_reverse" if params[:sort] == param
     options = {
         :url => {:action => 'sort_components', :sort => key, :component => component},
-        :update => 'component_grid',
+        :update => 'table',
         :before => "Element.show('spinner')",
         :success => "Element.hide('spinner')"
     }
