@@ -3,7 +3,7 @@
 <% @components.each_with_index do |component, count|  %>
 
 	<div class="item">	
-		<%= image_tag('default.png', :alt => "item", :class => "",:rel => "",
+		<%= image_tag(component.image_path, :alt => "item", :class => "",:rel => "",
 		:class => "lightview", :rel => "iframe", :title => component.name)  %><br />
 		<div class="item_name"><%= component.name %><br />
 	    <%= number_to_currency(component.price) %><br />

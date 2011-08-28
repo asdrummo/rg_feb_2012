@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110821233516) do
+ActiveRecord::Schema.define(:version => 20110825155704) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -733,6 +733,18 @@ ActiveRecord::Schema.define(:version => 20110821233516) do
     t.string   "status"
   end
 
+  create_table "photos", :force => true do |t|
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.integer  "bottom_bracket_id"
+    t.integer  "front_brake_id"
+  end
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id",                       :null => false
     t.datetime "created_at"
@@ -759,6 +771,7 @@ ActiveRecord::Schema.define(:version => 20110821233516) do
     t.string   "salt",            :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "client_id"
   end
 
   create_table "workshops", :force => true do |t|

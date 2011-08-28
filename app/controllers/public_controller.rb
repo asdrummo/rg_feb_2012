@@ -127,7 +127,7 @@ class PublicController < ApplicationController
              when "price_reverse" then "price DESC"
              end
 
-             conditions = ["LOWER(name) LIKE ?", "%#{params[:query].downcase}%"] unless params[:query].nil?
+      conditions = ["LOWER(name) LIKE ?", "%#{params[:query].downcase}%"] unless params[:query].nil?
       
       
       if @component 

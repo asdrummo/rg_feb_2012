@@ -1,4 +1,4 @@
-<%= form_for(@components_bottom_bracket) do |f| %>
+<%= form_for(@components_bottom_bracket, :html => {:multipart => true}) do |f| %>
   <% if @components_bottom_bracket.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@components_bottom_bracket.errors.count, "error") %> prohibited this components_bottom_bracket from being saved:</h2>
@@ -11,10 +11,7 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :client_id %><br />
-    <%= f.text_field :client_id %>
-  </div>
+    <%= f.hidden_field :client_id, :value => @user.client_id%>
   <div class="field">
     <%= f.label :product_id %><br />
     <%= f.text_field :product_id %>
@@ -35,10 +32,19 @@
     <%= f.label :image_path %><br />
     <%= f.text_field :image_path %>
   </div>
+
+
 	<div class="field">
-    <%= f.label :image_path %><br />
-    <%= add_image(f) %>
-  </div>
+    <%= f.label :photo %><br />
+    <%= add_photo(f) %>
+	<%= render(:partial => "list_photos", :locals => { :f => f}) %>
+	</div>
+
+
+
+
+		
+		
   <div class="field">
     <%= f.label :vendor %><br />
     <%= f.text_field :vendor %>

@@ -31,7 +31,6 @@ module ApplicationHelper
       result
     end
     
-
     
     protected
 

@@ -1,5 +1,6 @@
 class Components::BottomBracketsController < ApplicationController
   before_filter :confirm_logged_in
+  before_filter :find_user
   layout 'admin'
   # GET /components/bottom_brackets
   # GET /components/bottom_brackets.xml
@@ -38,6 +39,7 @@ class Components::BottomBracketsController < ApplicationController
   def edit
     @components_bottom_bracket = Components::BottomBracket.find(params[:id])
   end
+  
 
   # POST /components/bottom_brackets
   # POST /components/bottom_brackets.xml
@@ -60,14 +62,18 @@ class Components::BottomBracketsController < ApplicationController
   def update
     @components_bottom_bracket = Components::BottomBracket.find(params[:id])
 
-    respond_to do |format|
-      if @components_bottom_bracket.update_attributes(params[:components_bottom_bracket])
-        format.html { redirect_to(@components_bottom_bracket, :notice => 'Bottom bracket was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @components_bottom_bracket.errors, :status => :unprocessable_entity }
-      end
+      respond_to do |format|
+       
+        if @components_bottom_bracket.update_attributes(params[:components_bottom_bracket])
+          if @components_bottom_bracket.image_path.blank?
+               @components_bottom_bracket.update_attributes(:image_path => "components/defaults/bottom_bracket.png")
+           end
+          format.html { redirect_to(@components_bottom_bracket, :notice => 'Bottom bracket was successfully updated.') }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @components_bottom_bracket.errors, :status => :unprocessable_entity }
+        end
     end
   end
   
@@ -85,4 +91,24 @@ class Components::BottomBracketsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def delete_photo
+    @components_bottom_bracket = Components::BottomBracket.find(params[:id])     
+    photo = Photo.find(params[:photo])
+     if photo.destroy #Will queue the attachment to be deleted
+       flash[:notice] = "photo deleted"
+       redirect_to :back
+      else 
+      
+          flash[:notice] = "nothing happened"
+            redirect_to :back
+        end
+  end
+  
+  private 
+  
+def find_user
+  @user = User.find(session[:user_id])
+end
+
 end
