@@ -1,22 +1,24 @@
 <% @page_title = 'Browse Components' %>
-<%= render(:partial => 'public/partials/components_side_menu') %>
-<% if @component != nil %>
-<%= render(:partial => "public/partials/sort") %>
-<div id="table">
-<%= render(:partial => 'public/partials/component') %>
-</div>
-<% else %>
-	<table class="center">
-		<tr>
-			<td>
-				
-				<h2 class="center">Browse our Components</h2>
-				<p>component info</p><br /><br />
-				</div>
-			</td>
+<table id="show_components">
+<tr>
+	<td id="component_nav">
+		<%= render(:partial => 'public/partials/components_side_menu') %>
+	</td>
+	<td id="main_comp_window">
+	<% if @component != nil %>
+		<%= render(:partial => "public/partials/sort") %>
+		<div id="table">
+			<%= render(:partial => 'public/partials/component') %>
+		</div><!-- end table div -->
 
-		</tr>
-
-	</table>
+<% else %>	
+			
+			  
+				<h2 class="center">Recently Added Components</h2>
+				<%= render(:partial => "public/partials/sort") %>
+				<%= render(:partial => 'public/partials/component') %>
 <% end %>
+	</td>
+</tr>
+</table>
 <div class="clear"></div>

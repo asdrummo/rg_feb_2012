@@ -1,0 +1,45 @@
+<% order.line_items.each do |item| %>
+
+<% if item.accessory && ( item.client_id = @user.client_id )%>
+<% if order_count == 0 %>
+<tr>
+<td colspan="3"><% order_no = order.invoice_number %>
+	<%= order_no %>
+	</td>
+	<td><%= order.created_at.strftime("%m/%d/%y") %></td>
+	<td><%= Customer.find(order.customer_id).first_name %></td>
+</tr>
+<% order_count = 1 %>
+
+<% end %>
+
+<tr class="<%= cycle('odd', 'even') %>">
+
+	<td colspan="3">
+		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
+	</td>
+	<td colspan="2">
+		<p><%= item.accessory.name %></p>
+	</td>
+	<td>
+		<p><%= item.accessory.description %></p>
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.accessory.price) %></p>
+	</td>
+	<td><%= form_tag do %>
+		<%= select_tag :status, options_for_select([["shipped", "shipped"], ["canceled", "canceled"], ["backordered", "backordered"]]), :include_blank => item.status, :onchange => remote_function(:url => {:action => 'orders', :id => item.id}, :with => "'status=' + this.value") %>
+	<% end %></td>
+	<td><%= form_for(item, :url => {:action => 'orders', :id => item.id}) do |f| %> 
+		<%= f.text_field :tracking %>
+		<div class="actions">
+	    <%= f.submit %>
+	  </div></td>
+	<% end %>
+</tr>
+
+<% end %>
+<% end %>

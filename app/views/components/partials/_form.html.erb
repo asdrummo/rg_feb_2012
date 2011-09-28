@@ -1,0 +1,88 @@
+<%= form_for(@component, :html => {:multipart => true}) do |f| %>
+  <% if @component.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@component.errors.count, "error") %> prohibited this component from being saved:</h2>
+
+      <ul>
+      <% @component.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <%= f.hidden_field :client_id, :value => @user.client_id%>
+
+<% if @component_select == 'true'%> 
+
+		<%= form_tag do %>
+			<%= select_tag :component_type, options_for_select(@components_array), :include_blank => "select component", :onchange => 'this.form.submit()' %>
+			
+		
+		<% end %>
+
+
+<% else %>
+<%= f.label :component_type %><br />
+<b><%= @component_type %></b>
+<% end %>
+			<br />
+<%= f.hidden_field :component_type, :value => @component_type %>			
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.text_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sku %><br />
+    <%= f.text_field :sku %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :image_path %><br />
+    <%= f.text_field :image_path %>
+  </div>
+  <div class="field">
+	<%= f.label :photo %><br />
+	<%= add_photo(f) %>
+	<%= render(:partial => "components/partials/list_photos", :locals => { :f => f}) %>
+  </div>
+  <div class="field">
+    <%= f.label :vendor %><br />
+    <%= f.text_field :vendor %>
+  </div>
+  <div class="field">
+    <%= f.label :brand %><br />
+    <%= f.text_field :brand %>
+  </div>
+  <div class="field">
+    <%= f.label :material %><br />
+    <%= f.text_field :material %>
+  </div>
+  <div class="field">
+    <%= f.label :color %><br />
+    <%= f.text_field :color %>
+  </div>
+  <div class="field">
+    <%= f.label :finish %><br />
+    <%= f.text_field :finish %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+<%= render(:partial => "components/partials/specs", :locals => { :f => f}) %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,42 @@
+<% if @accessory.options %>
+<TABLE>
+<tr>
+	<th>
+		color
+	</th>
+	<th>
+		size
+	</th>
+	<th>
+		quantity
+	</th>
+<tr>
+
+<% @accessory.options.each do |option| %>
+<%= form_for(option, :url => {:action => 'edit_option', :option_id => option.id, :id => @accessory.id}) do |g| %>
+<tr>
+	<td>
+	<%= g.text_field :color, :value => option.color %>
+	</td>
+	<td>
+	<%= g.text_field :size, :value => option.size, :size => 2%>
+	</td>
+  	<td>
+	<%= g.text_field :quantity, :value => option.quantity, :size => 2 %>
+	</td>
+	<td>
+	<%= link_to('X', {:controller => 'accessories', :action => 'delete_option', 
+	:id => @accessory.id, :option => option.id}, :confirm => 'Are you sure?', :method => :delete, :class => 'delete_option', :title => 'remove option')  %>
+	</td>
+	<td>
+		<div class="actions">
+		  <%= g.submit('update options') %>
+		</div>
+	</td>
+</tr>
+<% end %>
+
+<% end %>
+
+</table>
+<% end %>

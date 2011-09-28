@@ -37,6 +37,15 @@ module Drummlins
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]    
+    config.filter_parameters += [:password]        
+    config.action_view.field_error_proc = Proc.new do |html_tag, instance|
+      if instance.error_message.kind_of?(Array)
+        %(<div class="field_with_errors">#{html_tag}<br /><span class="validation-error">&nbsp;
+          #{instance.error_message.join(',')}</span></div>).html_safe
+      else
+        %(<div class="field_with_errors">#{html_tag}<br /><span class="validation-error">&nbsp;
+          #{instance.error_message}</span></div>).html_safe
+      end
+    end
   end
 end

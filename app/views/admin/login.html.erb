@@ -1,8 +1,8 @@
 <% @page_title = "Admin Login" %>
-session: <%= session[:user_id] %>
-<div class = "login">
+<div class = "customer_login">
 	<%= form_tag(:controller => 'admin', :action=> 'attempt_login') do %>
-		<table class="">
+		<table class="center">
+			<div id="login_fields">
 			<tr>
 				<td><%= label_tag(:username) %>:</td>
 				<td><%= text_field_tag(:username) %></td>
@@ -15,6 +15,7 @@ session: <%= session[:user_id] %>
 					<td>&nbsp</td>
 					<td><%= submit_tag("login") %></td>
 			</tr>
+			</div>
 		</table>
 		<% end %>
 </div>

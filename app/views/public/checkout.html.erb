@@ -5,9 +5,7 @@ Please removed reservation from cart to continue with payment
 <% end %>
 
 <% if session[:customer_id] %>
-<%= render(:partial => 'public/partials/payment', :customer => @customer, :amount => @amount) %>
-<%= link_to('Psudo Payment', :controller => 'payments', :action => 'show_receipt') %>
-
+<%= render(:partial => 'public/partials/shipping', :customer => @customer) %>
 <% else %>
 <br /><br />
 <table class="center">

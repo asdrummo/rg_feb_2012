@@ -1,7 +1,7 @@
 class Customer < ActiveRecord::Base
   
   has_many :orders
-  
+  has_many :shipping_addresses
   attr_reader :card_type, :credit_card, :card_number, :card_verification, :card_expires_on
   
   attr_accessor :password

@@ -26,42 +26,45 @@
 </p>
 <p>
   <b>Seat Post:</b>
-<% if @component_package.front_lever_id %>
-  <%= Components::SeatPost.find(@component_package.seat_post_id).name %>
+<% if @component_package.seat_post_id %>
+	<%= Component.find(@component_package.seat_post_id).name %>
 <% else %>
-none selected
-<% end %>
-</p>
-<p>
-  <b>Seat Clamp:</b>
-<% if @component_package.front_lever_id %>
-  <%= Components::SeatClamp.find(@component_package.seat_clamp_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
-<p>
-  <b>Stem:</b>
-<% if @component_package.front_lever_id %>
-  <%= Components::Stem.find(@component_package.stem_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
-<p>
-  <b>Handlebars:</b>
-<% if @component_package.front_lever_id %>
-  <%= Components::Handlebar.find(@component_package.handlebar_id).name %>
-<% else %>
-none selected
+	none selected
 <% end %>
 </p>
 
+<p>
+  <b>Seat Clamp:</b>
+<% if @component_package.front_lever_id %>
+<%= Component.find(@component_package.front_lever_id).name %>
+
+<% else %>
+	none selected
+<% end %>
+</p>
+
+<p>
+  <b>Stem:</b>
+<% if @component_package.front_lever_id %>
+<%= Component.find(@component_package.front_lever_id).name %>
+<% else %>
+	none selected
+<% end %>
+</p>
+
+<p>
+  <b>Handlebars:</b>
+<% if @component_package.front_lever_id %>
+	<%= Component.find(@component_package.front_lever_id).name %>
+<% else %>
+none selected
+<% end %>
+</p>
 
 <p>
   <b>Front Lever:</b>
 <% if @component_package.front_lever_id %>
-  <%= Components::FrontLever.find(@component_package.front_lever_id).name %>
+	<%= Component.find(@component_package.front_lever_id).name %>
 <% else %>
 none selected
 <% end %>
@@ -70,7 +73,7 @@ none selected
 <p>
   <b>Rear Lever:</b>
 <% if @component_package.rear_lever_id %>
-  <%= Components::FrontLever.find(@component_package.rear_lever_id).name %>
+	<%= Component.find(@component_package.rear_lever_id).name %>
 <% else %>
 none selected
 <% end %>
@@ -79,39 +82,41 @@ none selected
 <p>
   <b>Fork:</b>
 <% if @component_package.fork_id %>
-  <%= Components::Fork.find(@component_package.fork_id).name %>
+	<%= Component.find(@component_package.fork_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
+
 <p>
   <b>Headset:</b>
 <% if @component_package.headset_id %>
-  <%= Components::Headset.find(@component_package.headset_id).name %>
+	<%= Component.find(@component_package.headset_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
+
 <p>
   <b>Wheels:</b>
 front:
 <% if @component_package.front_wheel_id %>
-  <%= Components::FrontWheel.find(@component_package.front_wheel_id).name %>
+<%= Component.find(@component_package.front_wheel_id).name %>
  <% else %>
 none selected
 <% end %>
   rear:
 <% if @component_package.rear_wheel_id %>
-<%= Components::RearWheel.find(@component_package.rear_wheel_id).name %>
+	<%= Component.find(@component_package.rear_wheel_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
+
 <p>
   <b>Rim Strips:</b>
 <% if @component_package.rim_strip_id %>
-  <%= Components::RimStrip.find(@component_package.rim_strip_id).name %>
-<% else %>
+	<%= Component.find(@component_package.rim_strip_id).name %>
 none selected
 <% end %>
 </p>
@@ -120,36 +125,39 @@ none selected
   <b>Tires:</b>
 front:
 <% if @component_package.front_tire_id %>
-   <%= Components::FrontTire.find(@component_package.front_tire_id).name %> 
+	<%= Component.find(@component_package.front_tire_id).name %>
 <% else %>
 none selected
 <% end %>
+
 	rear: 
 <% if @component_package.rear_tire_id %>
-<%= Components::RearTire.find(@component_package.rear_tire_id).name %>
+<%= Component.find(@component_package.rear_tire_id).name %>
 	<% else %>
 	none selected
 	<% end %>
 </p>
 
+<p>
   <b>Tubes:</b>
   front: 
 <% if @component_package.front_tube_id %>
-	<%= Components::FrontTube.find(@component_package.front_tube_id).name %>
+	<%= Component.find(@component_package.front_tube_id).name %>
 <% else %>
 none selected
 <% end %>
 	rear: 
 	<% if @component_package.rear_tube_id %>
-		<%= Components::RearTube.find(@component_package.rear_tube_id).name %>
+	<%= Component.find(@component_package.rear_tube_id).name %>
 	<% else %>
 	none selected
 	<% end %>
 </p>
+
 <p>
   <b>Cog Cassette:</b>
 <% if @component_package.cog_id %>
-  <%= Components::Cog.find(@component_package.cog_id).name %>
+	<%= Component.find(@component_package.cog_id).name %>
 <% else %>
 none selected
 <% end %>
@@ -158,7 +166,7 @@ none selected
 <p>
   <b>Front Brakes:</b>
 	<% if @component_package.front_brake_id %>
-  <%= Components::FrontBrake.find(@component_package.front_brake_id).name %>
+	<%= Component.find(@component_package.front_brake_id).name %>
 	<% else %>
 	none
 	<% end %>
@@ -167,23 +175,25 @@ none selected
 <p>
   <b>Rear Brakes:</b>
 	<% if @component_package.rear_brake_id %>
-  <%= Components::RearBrake.find(@component_package.rear_brake_id).name %>
+	<%= Component.find(@component_package.rear_brake_id).name %>
 	<% else %>
 	none 
 	<% end %>
 </p>
+
 <p>
   <b>Bottom Bracket:</b>
 <% if @component_package.bottom_bracket_id %>
-  <%= Components::BottomBracket.find(@component_package.bottom_bracket_id).name %>
+	<%= Component.find(@component_package.bottom_bracket_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
+
 <p>
   <b>Crank:</b>
 <% if @component_package.crank_id %>
-  <%= Components::Crank.find(@component_package.crank_id).name %>
+	<%= Component.find(@component_package.crank_id).name %>
 <% else %>
 none selected
 <% end %>
@@ -192,23 +202,25 @@ none selected
 <p>
   <b>Chainring:</b>
 <% if @component_package.chainring_id %>
-  <%= Components::Chainring.find(@component_package.chainring_id).name %>
+	<%= Component.find(@component_package.chainring_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
+
 <p>
   <b>Chain:</b>
 <% if @component_package.chain_id %>
-  <%= Components::Chain.find(@component_package.chain_id).name %>
+	<%= Component.find(@component_package.chain_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
+
 <p>
   <b>Half Link:</b>
 <% if @component_package.half_link_id %>
-  <%= Components::HalfLink.find(@component_package.half_link_id).name %>
+	<%= Component.find(@component_package.half_link_id).name %>
 <% else %>
 none selected
 <% end %>
@@ -217,28 +229,29 @@ none selected
 <p>
   <b>Grips:</b>
 <% if @component_package.grip_id %>
-  <%= Components::Grip.find(@component_package.grip_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
-<p>
-  <b>Pedals:</b>
-<% if @component_package.pedal_id %>
-  <%= Components::Pedal.find(@component_package.pedal_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
-<p>
-  <b>Saddle:</b>
-<% if @component_package.saddle_id %>
-  <%= Components::Saddle.find(@component_package.saddle_id).name %>
+	<%= Component.find(@component_package.grip_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
 
+<p>
+  <b>Pedals:</b>
+<% if @component_package.pedal_id %>
+	<%= Component.find(@component_package.pedal_id).name %>
+<% else %>
+none selected
+<% end %>
+</p>
+
+<p>
+  <b>Saddle:</b>
+<% if @component_package.saddle_id %>
+	<%= Component.find(@component_package.saddle_id).name %>
+<% else %>
+none selected
+<% end %>
+</p>
 
 <%= link_to 'Edit', edit_component_package_path(@component_package) %> |
 <%= link_to 'Back', component_packages_path %>

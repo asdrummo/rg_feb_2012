@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= @page_title %> | Drummlins</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <title><%= @page_title %> | Roam &amp; Gauge</title>
+  <%= stylesheet_link_tag 'style', 'admin_style' %>
+  <%= javascript_include_tag :defaults, 'jquery', 'moo_tools' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -33,7 +33,7 @@
 	
 	
 <div id="title">
-	<h1><%= link_to('DRUMMLIN\'S', root_url) %><h1>
+	<h1><%= link_to('ROAM & GAUGE', root_url) %><h1>
 </div><!-- end title -->
 </div><!-- end header -->
 

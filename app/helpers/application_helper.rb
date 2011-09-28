@@ -31,7 +31,7 @@ module ApplicationHelper
       result
     end
     
-    
+
     protected
 
     def determine_value(method)

@@ -85,7 +85,7 @@ Has Successfully Purchased:<br />
 	<tr class="<%= cycle('odd', 'even') %>">
 
 		<td colspan="3">
-			N/A
+			Bamboo Bike Kit
 		</td>
 		<td colspan="2">
 			<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %><br />
@@ -172,85 +172,7 @@ Has Successfully Purchased:<br />
 	</tr>
 <% end %>
 <% @comp_count += 1 %>
-	<%if item.bottom_bracket
-		@name = "Bottom Brackets"
-		@component = item.bottom_bracket
-	elsif item.front_brake
-		@name = "Front Brakes"
-		@component = item.front_brake
-	elsif item.rear_brake
-		@name = "Rear Brakes"
-		@component = item.rear_brake
-	elsif item.chain
-		@name = "Chains"
-		@component = item.chain
-	elsif item.chainring
-		@name = "Chainrings"
-		@component = item.chainring
-	elsif item.cog
-		@name = "Cog Cassettes"
-		@component = item.cog
-	elsif item.crank
-		@name = "Cranks"
-		@component = item.crank
-	elsif item.fork
-		@name = "Forks"
-		@component = item.fork
-	elsif item.grip
-		@name = "Grips"
-		@component = item.grip
-	elsif item.half_link
-		@name = "Half Links"
-		@component = item.half_link
-	elsif item.handlebar
-		@name = "Handlebars"
-		@component = item.handlebar
-	elsif item.headset
-		@name = "Headsets"
-		@component = item.headset
-	elsif item.front_lever
-		@name = "Front Levers"
-		@component = item.front_lever
-	elsif item.rear_lever
-		@name = "Rear Levers"
-		@component = item.rear_lever
-	elsif item.pedal
-		@name = "Pedals"
-		@component = item.pedal
-	elsif item.rim_strip
-		@name = "Rim Strips"
-		@component = item.rim_strip
-	elsif item.saddle
-		@name = "Saddles"
-		@component = item.saddle
-	elsif item.seat_clamp
-		@name = "Seat Clamps"
-		@component = item.seat_clamp
-	elsif item.seat_post
-		@name = "Seat Posts"
-		@component = item.seat_post
-	elsif item.stem
-		@name = "Stems"
-		@component = item.stem
-	elsif item.front_tire
-		@name = "Front Tires"
-		@component = item.front_tire
-	elsif item.rear_tire
-		@name = "Rear Tires"
-		@component = item.rear_tire
-	elsif item.front_tube
-		@name = "Front Tubes"
-		@component = item.front_tube
-	elsif item.rear_tube
-		@name = "Rear Tubes"
-		@component = item.rear_tube
-	elsif item.front_wheel
-		@name = "Front Wheels"
-		@component = item.front_wheel
-	elsif item.rear_wheel
-		@name = "Rear Wheels"
-		@component = item.rear_wheel
-	end %>
+
 		
 	<tr class="<%= cycle('odd', 'even') %>">
 
@@ -258,16 +180,16 @@ Has Successfully Purchased:<br />
 			<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
 		</td>
 		<td colspan="2">
-			<p><%= @component.name %></p>
+			<p><%= item.component.component_type %>: <%= item.component.name %></p>
 		</td>
 		<td>
-			<p><%= @component.description %></p>
+			<p><%= item.component.description %></p>
 		</td>
 
 
 		<td>
 			<p>quantity: <%= item.quantity %></p>
-			<p>subtotal: <%= number_to_currency(@component.price) %></p>
+			<p>subtotal: <%= number_to_currency(item.component.price) %></p>
 		</td>
 <% end %>
 <% end %>

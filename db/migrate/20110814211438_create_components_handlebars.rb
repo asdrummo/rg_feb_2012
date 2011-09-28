@@ -14,10 +14,10 @@ class CreateComponentsHandlebars < ActiveRecord::Migration
       t.string :finish
       t.decimal :cost, :precision => 8, :scale => 2
       t.decimal :price, :precision => 8, :scale => 2
-      t.decimal :clamp_diamter, :precision => 8, :scale => 2
+      t.decimal :clamp_diameter, :precision => 8, :scale => 2
       t.decimal :tube, :precision => 8, :scale => 2
       t.string :type
-      t.decimal :stem_clamp_diamter, :precision => 8, :scale => 2
+      t.decimal :stem_clamp_diameter, :precision => 8, :scale => 2
       t.decimal :max_turn_size, :precision => 8, :scale => 2
 
       t.timestamps

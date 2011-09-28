@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title %> | Roam &amp; Gauge</title>
+  <%= stylesheet_link_tag 'signup' %>
+  <%= javascript_include_tag 'flexi-background-jquery', :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="container">
+<%= yield %>
+</div><!-- end content -->
+
+</body>
+</html>
+

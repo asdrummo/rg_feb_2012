@@ -1,0 +1,21 @@
+#new_container {
+	width: 450px;
+	margin:auto;
+}
+#new {
+	text-align:left;
+}
+#admin_bodywrap {
+	min-width:900px;
+	min-height:600px;
+	margin:auto;
+	background-color: #fff;
+	padding:0 20px 0 20px;
+}
+#admin_footer {
+	min-width:900px;
+	margin:auto;
+	background-color: #fff;
+	padding:0 20px 10px 20px;
+	text-align:center;
+}

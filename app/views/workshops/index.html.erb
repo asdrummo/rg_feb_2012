@@ -1,7 +1,8 @@
-<h1>Listing workshops</h1>
 
-<table>
-  <tr>
+<div class="center">
+	<h1>Listing workshops</h1>
+<table class="center" style="width:700px">
+  <tr style="text-align:left">
     <th>Client</th>
     <th>Type</th>
 	<th>Address</th>
@@ -14,7 +15,7 @@
   </tr>
 
 <% @workshops.each do |workshop| %>
-  <tr>
+  <tr style="text-align:left" class="<%= cycle('odd', 'even') %>">
     <td><%= workshop.client_id %></td>
     <td><%= workshop.experience %></td>
 	<td><%= workshop.address %></td>
@@ -33,3 +34,4 @@
 <br />
 
 <%= link_to 'New Workshop', new_workshop_path %>
+</div>

@@ -1,5 +1,6 @@
 class ComponentPackagesController < ApplicationController
   before_filter :confirm_logged_in, :except => [:show_component_package]
+  before_filter :find_user
   layout 'standard'
 
   # GET /component_packages
@@ -36,33 +37,7 @@ class ComponentPackagesController < ApplicationController
   # GET /component_packages/new.xml
   def new
     @component_package = ComponentPackage.new
-     @frame_models = FrameModel.find(:all)
-     @seat_posts = Components::SeatPost.find(:all)
-     @seat_clamps = Components::SeatClamp.find(:all)
-     @stems = Components::Stem.find(:all)
-     @handlebars = Components::Handlebar.find(:all)
-     @front_levers = Components::FrontLever.find(:all)
-     @rear_levers = Components::RearLever.find(:all)
-     @forks = Components::Fork.find(:all)
-     @headsets = Components::Headset.find(:all)
-     @front_wheels = Components::FrontWheel.find(:all)
-     @rear_wheels = Components::RearWheel.find(:all)
-     @rim_strips = Components::RimStrip.find(:all)
-     @front_tires = Components::FrontTire.find(:all)
-     @rear_tires = Components::RearTire.find(:all)
-     @front_tubes = Components::FrontTube.find(:all)
-     @rear_tubes = Components::RearTube.find(:all)
-     @cogs = Components::Cog.find(:all)
-     @front_brakes = Components::FrontBrake.find(:all)
-     @rear_brakes = Components::RearBrake.find(:all)
-     @bottom_brackets = Components::BottomBracket.find(:all)
-     @cranks = Components::Crank.find(:all)
-     @chainrings = Components::Chainring.find(:all)
-     @chains = Components::Chain.find(:all)
-     @half_links = Components::HalfLink.find(:all)
-     @grips = Components::Grip.find(:all)
-     @pedals = Components::Pedal.find(:all)
-     @saddles = Components::Saddle.find(:all)
+    list_components
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @component }
@@ -72,35 +47,42 @@ class ComponentPackagesController < ApplicationController
   # GET /component_packages/1/edit
   def edit
     @component_package = ComponentPackage.find(params[:id])
-    @frame_models = FrameModel.find(:all)
-    @seat_posts = Components::SeatPost.find(:all)
-    @seat_clamps = Components::SeatClamp.find(:all)
-    @stems = Components::Stem.find(:all)
-    @handlebars = Components::Handlebar.find(:all)
-    @front_levers = Components::FrontLever.find(:all)
-    @rear_levers = Components::RearLever.find(:all)
-    @forks = Components::Fork.find(:all)
-    @headsets = Components::Headset.find(:all)
-    @front_wheels = Components::FrontWheel.find(:all)
-    @rear_wheels = Components::RearWheel.find(:all)
-    @rim_strips = Components::RimStrip.find(:all)
-    @front_tires = Components::FrontTire.find(:all)
-    @rear_tires = Components::RearTire.find(:all)
-    @front_tubes = Components::FrontTube.find(:all)
-    @rear_tubes = Components::RearTube.find(:all)
-    @cogs = Components::Cog.find(:all)
-    @front_brakes = Components::FrontBrake.find(:all)
-    @rear_brakes = Components::RearBrake.find(:all)
-    @bottom_brackets = Components::BottomBracket.find(:all)
-    @cranks = Components::Crank.find(:all)
-    @chainrings = Components::Chainring.find(:all)
-    @chains = Components::Chain.find(:all)
-    @half_links = Components::HalfLink.find(:all)
-    @grips = Components::Grip.find(:all)
-    @pedals = Components::Pedal.find(:all)
-    @saddles = Components::Saddle.find(:all)
+   list_components
   end
 
+  def list_components
+       @frame_models = FrameModel.find(:all)
+       @seat_posts = Component.find_all_by_component_type("Seat Post")
+       @seat_clamps = Component.find_all_by_component_type("Seat Clamp")
+       @stems = Component.find_all_by_component_type("Stem")
+       @handlebars = Component.find_all_by_component_type("Handlebar")
+       @front_levers = Component.find_all_by_component_type("Front Lever")
+       @front_shifters = Component.find_all_by_component_type("Front Shifter")
+       @rear_levers = Component.find_all_by_component_type("Rear Lever")
+       @forks = Component.find_all_by_component_type("Fork")
+       @headsets = Component.find_all_by_component_type("Headset")
+       @front_deraileurs = Component.find_all_by_component_type("Front Deraileur")
+       @front_wheels = Component.find_all_by_component_type("Front Wheel")
+       @rear_wheels = Component.find_all_by_component_type("Rear Wheel")
+       @rim_strips = Component.find_all_by_component_type("Rim Strip")
+       @front_tires = Component.find_all_by_component_type("Front Tire")
+       @rear_tires = Component.find_all_by_component_type("Rear Tire")
+       @front_tubes = Component.find_all_by_component_type("Front Tube")
+       @rear_tubes = Component.find_all_by_component_type("Rear Tube")
+       @cogs = Component.find_all_by_component_type("Cog")
+       @front_brakes = Component.find_all_by_component_type("Front Brake")
+       @rear_brakes = Component.find_all_by_component_type("Rear Brake")
+       @rear_deraileurs = Component.find_all_by_component_type("Rear Deraileur")
+       @rear_shifters = Component.find_all_by_component_type("Rear Shifter")
+       @bottom_brackets = Component.find_all_by_component_type("Bottom Bracket")
+       @cranks = Component.find_all_by_component_type("Crank")
+       @chainrings = Component.find_all_by_component_type("Chainring")
+       @chains = Component.find_all_by_component_type("Chain")
+       @half_links = Component.find_all_by_component_type("Half Link")
+       @grips = Component.find_all_by_component_type("Grip")
+       @pedals = Component.find_all_by_component_type("Pedal")
+       @saddles = Component.find_all_by_component_type("Saddle")
+  end
   # POST /component_packages
   # POST /component_packages.xml
   def create
@@ -189,5 +171,10 @@ class ComponentPackagesController < ApplicationController
       format.html { redirect_to(component_packages_url) }
       format.xml  { head :ok }
     end
+  end
+    private 
+
+  def find_user
+    @user = User.find(session[:user_id])
   end
 end

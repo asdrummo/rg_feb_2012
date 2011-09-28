@@ -1,0 +1,4 @@
+<% @page_title = 'Payment'%>
+<h1 class="center">Payment</h1>
+<%= render(:partial => 'public/partials/payment', :customer => @customer, :amount => @amount) %>
+<%= link_to('Psudo Payment', :controller => 'payments', :action => 'show_receipt') %>

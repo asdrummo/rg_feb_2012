@@ -1,0 +1,164 @@
+<% @page_title = 'Customer Orders'%>
+
+<% total_price = 0 %>
+<% @orders.each do |order| %>
+<% order_count = 0 %>
+<% order.line_items.each do |item| %>
+<% total_price += (item.price * item.quantity) %>
+<% if (item.frame_model && item.workshop) && (item.client_id = @user.client_id) %>
+<% if order_count == 0 %>
+<%= render(:partial => 'admin/partials/order_info', :locals => {:order_count => order_count, :item => item, :order => order}) %>
+<% order_count += 1 %>
+<% end %>
+</tr>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td colspan="3">
+			experience: <%= item.workshop.experience %><br />
+			location: <%= item.workshop.location %><br />
+			dates:	  	<%= item.workshop.start_date.to_date.strftime("%m/%d/%Y") %> to <br />
+				<%= item.workshop.end_date.to_date.strftime("%m/%d/%Y") %>
+		</td>
+		<td colspan="2">
+			<%= item.frame_model.name %>(<%= number_to_currency(item.frame_model.price) %>)<br />
+			size:<%= item.frame_model_size.name %>(<%= number_to_currency(item.frame_model_size.price) %>)<br />
+			top tube style: <%= item.top_tube_style.name %>(<%= number_to_currency(item.top_tube_style.price)%>)<br />
+			gears: <%= item.gear.name %>(<%= number_to_currency(item.gear.price)%>)
+		</td>
+		<td>
+			<% if item.component_package %>
+			<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
+			<%= raw item.component_package.description %>
+			<% @component_package_id = item.component_package.id %>
+			<% @component_package_price = item.component_package.price %>
+			<% else %>
+			no component package selected
+			<% @component_package_id = 'false' %>
+			<% @component_package_price = 0 %>
+			<% end %>	
+		</td>
+
+
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(item.frame_model.price + item.frame_model_size.price + item.gear.price + item.top_tube_style.price + @component_package_price) %></p>
+			
+		</td>
+		<%= render(:partial => 'admin/partials/order_status', :locals => {:item => item}) %>
+
+	</tr>
+	<% elsif item.frame_model && (item.workshop == nil) && (item.client_id == @user.client_id) %>
+	<% if order_count == 0 %>
+	<%= render(:partial => 'admin/partials/order_info', :locals => {:order_count => order_count, :item => item, :order => order}) %>
+	<% order_count += 1 %>
+	<% end %>
+	
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td colspan="3">
+			N/A
+		</td>
+		<td colspan="2">
+			<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %><br />
+			<%= item.frame_model.name %>(<%= number_to_currency(item.frame_model.price) %>)<br />
+			size:<%= item.frame_model_size.name %>(<%= number_to_currency(item.frame_model_size.price) %>)<br />
+			top tube style: <%= item.top_tube_style.name %>(<%= number_to_currency(item.top_tube_style.price)%>)<br />
+			gears: <%= item.gear.name %>(<%= number_to_currency(item.gear.price)%>)
+		</td>
+		<td>
+			<% if item.component_package %>
+			<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
+			<%= raw item.component_package.description %>
+			<% @component_package_id = item.component_package.id %>
+			<% @component_package_price = item.component_package.price %>
+			<% else %>
+			no component package selected
+			<% @component_package_id = 'false' %>
+			<% @component_package_price = 0 %>
+			<% end %>	
+		</td>
+
+
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(item.frame_model.price + item.frame_model_size.price + item.gear.price + item.top_tube_style.price + @component_package_price) %></p>
+		</td>
+		<%= render(:partial => 'admin/partials/order_status', :locals => {:item => item}) %>
+		
+	</tr>
+
+<% end %><!-- end kits & workshops -->
+<% end %><!-- end kits & workshops -->
+
+<!---------------------------------------->
+
+<% order.line_items.each do |item| %>
+
+<% if item.accessory && ( item.client_id = @user.client_id )%>
+<% if order_count == 0 %>
+<%= render(:partial => 'admin/partials/order_info', :locals => {:order_count => order_count, :item => item, :order => order}) %>
+<% order_count += 1 %>
+<% end %>
+
+<tr class="<%= cycle('odd', 'even') %>">
+
+	<td colspan="3">
+		<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
+	</td>
+	<td colspan="2">
+		<p><%= item.accessory.name %></p>
+	</td>
+	<td>
+		<p><%= item.accessory.description %></p>
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.accessory.price) %></p>
+	</td>
+
+		<%= render(:partial => 'admin/partials/order_status', :locals => {:item => item}) %>
+</tr>
+<% end %>
+<% end %>
+
+<!---------------------------------------->
+
+<% order.line_items.each do |item| %>
+<% if item.component && item.accessory.nil? && (item.client_id = @user.client_id)  %>
+<% if order_count == 0 %>
+<%= render(:partial => 'admin/partials/order_info', :locals => {:order_count => order_count, :item => item, :order => order}) %><% order_count += 1 %>
+<% end %>
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td colspan="3">
+			<%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %>
+		</td>
+		<td colspan="2">
+			<p><%= item.component.component_type %>: <%= item.component.name %></p>
+		</td>
+		<td>
+			<p><%= item.component.description %></p>
+		</td>
+
+
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(item.component.price) %></p>
+		</td>
+		<%= render(:partial => 'admin/partials/order_status', :locals => {:item => item}) %>
+	</tr>
+<% end %>
+<% end %>
+
+
+<tr>	
+	<td colspan="7"><h2>Total Amount Charged: <%= number_to_currency(total_price) %></h2></td>
+</tr>
+<% total_price = 0 %>
+</table>
+</div>	
+<% end %>
+
+
+

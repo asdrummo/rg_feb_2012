@@ -9,8 +9,10 @@
 		<th>price</th>
 		<th>&nbsp;</th>
 	</tr>
+<% i = 0 %>
 <% @component_packages.each do |c| %>
 	<% if c.frame_model_id == session[:frame_model].id %>
+	<% i += 1%>
 	<tr class="<%= cycle('odd', 'even') %>">
 		<td>
 			<p><%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %></p>
@@ -34,6 +36,9 @@
 	</tr>
 	<% end %>
 <% end %>
+<% if i == 0 %>
+<tr><td colspan="5">
+Sorry, There are no Component Packages available at this time for the <b><%= session[:frame_model].name %></b> model you selected.
+</td></tr>
+<% end %>
 </table>
-<div class="center"><%= link_to('skip component packages', :action => 'show_finishing') %></div>
-</div><!-- end Component Package Selection -->

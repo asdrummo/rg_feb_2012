@@ -27,6 +27,7 @@ class PaymentsController < ApplicationController
   end
   
   def show_receipt
+    if @cart != []
     @work_count = 0
     @comp_count = 0
     @cart = session[:cart]
@@ -35,17 +36,35 @@ class PaymentsController < ApplicationController
     @cart = session[:cart]
     @order.line_items << @cart.items
     @customer.orders << @order
-    decrement_reservation
-    @order.update_attributes(:invoice_number => @order.id, :status => "pending")
+    decrement_items
+    @order.update_attributes(:invoice_number => @order.id, :status => "processing", :shipping_id => session[:shipping_id])
+    client_ids = @order.line_items.map(&:client_id).flatten.uniq
+    client_ids.each do |id|
+      client = User.find_by_client_id(id)
+      #ClientOrder.client_order_email(@order, client).deliver
+    end
+    #CustomerOrder.customer_order_email(@order).deliver
     @cart.empty_all_items
+    session[:shipping_id] = nil
+    @backoverride = "true"
+  end
   end
     
-  def decrement_reservation
+  def decrement_items
     for item in @order.line_items
       if item.workshop
         @workshop = Workshop.find(item.workshop.id)
-        @workshop.update_attributes(:quantity => (@workshop.quantity -= 1))
+        @workshop.update_attributes(:quantity => (@workshop.quantity -= item.quantity))
       end
+      if item.accessory
+        
+        @option = Option.find(item.option.id)
+      
+        if @option.quantity 
+        @option.update_attributes(:quantity => (@option.quantity -= item.quantity))
+        end
+      end
+        
     end
   end
 

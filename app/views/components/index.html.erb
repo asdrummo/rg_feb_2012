@@ -1,0 +1,25 @@
+<% @page_title = 'Admin Components'%>
+<div class="center">
+<h1>Listing components</h1>
+<table id="show_components">
+<tr>
+	<td id="component_nav">
+		<%= render(:partial => 'components/partials/components_side_menu') %>
+	</td>
+	<td id="main_comp_window">
+		<div id="table">
+			<%= render(:partial => 'components/partials/component_index') %>
+		</div><!-- end table div -->
+	</td>
+</tr>
+</table>
+
+
+
+
+
+<%= link_to 'New Component', new_component_path %>
+</div>
+
+
+

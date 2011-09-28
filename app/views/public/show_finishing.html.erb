@@ -1,36 +1,7 @@
 <% @page_title = 'Finishing' %>
 <div id="finishing">
 <%= render(:partial => 'public/partials/workshop_progress')%>
-<table class="center padded">
-	<tr>
-		<th>&nbsp;</th>
-		<th>name</th>
-		<th>description</th>
-		<th>price</th>
-		<th>&nbsp;</th>
-	</tr>
-<% @accessories.each do |a| %>
+<%= render(:partial => 'public/partials/finishing')%>
 
-	<tr class="<%= cycle('odd', 'even') %>">
-		<td>
-			<p><%= image_tag("default.png", :size => "50x50", :alt => "", :class => "image") %></p>
-		</td>
-		<td>
-			<p><%= a.name %></p>
-		</td>
-				
-		<td>
-		<p><%= raw a.description %></p>
-		</td>
-		
-		<td>
-			<%= number_to_currency(a.price) %>
-		</td>
-		<td>
-			<p><%= link_to('Add Item', :action => 'submit_accessories', :id => a.id) %></p>
-		</td>
-	</tr>
-<% end %>
-</table>
 <div id="cart_links" class="center"><%= link_to('Checkout', :action => 'checkout') %> or <%= link_to('Continue Shopping', :action => 'index') %></div>
 </div><!-- end Finishing Selection -->

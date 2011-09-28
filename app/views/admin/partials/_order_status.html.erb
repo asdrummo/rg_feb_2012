@@ -1,0 +1,9 @@
+<td><%= form_tag do %>
+	<%= select_tag :status, options_for_select([["processing", "processing"], ["shipped", "shipped"], ["canceled", "canceled"], ["backordered", "backordered"]]), :include_blank => item.status, :onchange => remote_function(:url => {:action => 'orders', :id => item.id}, :with => "'status=' + this.value") %>
+<% end %></td>
+<td><%= form_for(item, :url => {:action => 'orders', :id => item.id}) do |f| %> 
+	<%= f.text_field :tracking %>
+	<div class="actions">
+    <%= f.submit %>	
+  </div></td>
+<% end %>

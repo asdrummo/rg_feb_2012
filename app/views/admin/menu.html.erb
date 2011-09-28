@@ -1,14 +1,24 @@
 <% @page_title = 'Admin Area' %>
-
-<h2>Drummlin's Administration Area</h2>
+<div class="center">
+<table class="center" >
+	<div >
+	<tr><td style="text-align:left">
+<h2>Administration Area</h2>
 <p>
 <%= link_to('Manage Workshops', :controller => 'workshops', :action => 'index') %><br />
 <%= link_to('Manage Frame Models', :controller => 'frame_models', :action => 'index') %><br />	
 <%= link_to('Manage Component Packages', :controller => 'component_packages', :action => 'index') %><br />
-<%= link_to('Manage Components', :controller => 'admin', :action => 'components') %><br />
-<%= link_to('Manage Accessories', :controller => 'accessories', :action => 'index') %><br />	
+<%= link_to('Manage Components', :controller => 'components', :action => 'index') %><br />
+<%= link_to('Manage Accessories', :controller => 'accessories', :action => 'index') %><br />
+<% if @user.privilege == "admin" %>	
 <%= link_to('Manage Users', :controller => 'users', :action => 'index') %><br />
 <%= link_to('Manage Customers', :controller => 'customers', :action => 'index') %><br />
+<% end %>
+<%= link_to('Manage Workshops', :controller => 'workshops', :action => 'index') %><br />
+<%= link_to('Manage Orders', :action => 'orders') %><br />
 </p>
 <br />
 <%= link_to('Log out', :action => 'logout') %><br />
+</td></tr>
+</div></table>
+</div>

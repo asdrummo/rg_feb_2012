@@ -1,8 +1,10 @@
 Drummlins::Application.routes.draw do
 
-  namespace :components do resources :saddles, :pedals, :grips, :half_links, :chains, :chainrings, :cranks, :bottom_brackets, :rear_brakes, :front_brakes, :rear_tubes, :rear_tires, :cogs, :front_tubes, :front_tires, :rim_strips, :rear_wheels, :front_wheels, :headsets, :forks, :front_levers, :rear_levers, :handlebars, :stems, :seat_clamps, :forks, :seat_posts end
 
-  resources :accessories, :component_packages, :frame_models, :workshops, :customers, :users
+  resources :signups
+
+
+  resources :accessories, :component_packages, :frame_models, :workshops, :customers, :users, :components, :options
   
   root :to => 'public#index'
   match 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
@@ -24,6 +26,8 @@ Drummlins::Application.routes.draw do
   match 'public/show_components' => 'public#show_components', :as => :show_components
   match 'component_packages/:id/show_component_package' => 'component_packages#show_component_package', :as => :show_component_package
   match 'public/bikes_to_buy' => 'public#bikes_to_buy', :as => :bikes_to_buy
+    match 'signup', :to => 'signups#signup'
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

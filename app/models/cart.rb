@@ -50,12 +50,12 @@ class Cart
     @total_price += (frame_model.price + frame_model_size.price + gear.price + top_tube_style.price)
   end
   
-  def add_component(component, name)
-    find_existing_item(component, name)
-    if @existing_item
-      @existing_item.quantity += 1
+  def add_component(component)
+    existing_item = @items.find {|item| item.component_id == component.id}
+    if existing_item
+      existing_item.quantity += 1
     else
-      @items << LineItem.new_component_based_on(component, name)
+      @items << LineItem.new_component_based_on(component)
     end
     @total_price += component.price
   end
@@ -75,6 +75,10 @@ class Cart
       @existing_item = @items.find {|item| (item.cog_id == component.id)}
     elsif name == 'crank'
       @existing_item = @items.find {|item| (item.crank_id == component.id)}
+    elsif name == 'front_deraileur'
+      @existing_item = @items.find {|item| (item.front_deraileur_id == component.id)}
+    elsif name == 'rear_deraileur'
+      @existing_item = @items.find {|item| (item.rear_deraileur_id == component.id)}
     elsif name == 'fork'
       @existing_item = @items.find {|item| (item.fork_id == component.id)}
     elsif name == 'grip'
@@ -99,6 +103,10 @@ class Cart
       @existing_item = @items.find {|item| (item.seat_clamp_id == component.id)}
     elsif name == 'seat_post'
       @existing_item = @items.find {|item| (item.seat_post_id == component.id)}
+    elsif name == 'front_shifter'
+      @existing_item = @items.find {|item| (item.front_shifter_id == component.id)}
+    elsif name == 'rear_shifter'
+      @existing_item = @items.find {|item| (item.rear_shifter_id == component.id)}
     elsif name == 'stem'
       @existing_item = @items.find {|item| (item.stem_id == component.id)}
     elsif name == 'front_tire'
@@ -128,12 +136,12 @@ class Cart
     @total_price += component_package.price
   end
   
-  def add_accessory( accessory )
-    existing_item = @items.find {|item| item.accessory_id == accessory.id}
+  def add_accessory( accessory, option )
+    existing_item = @items.find {|item| (item.accessory_id == accessory.id) && (item.option == option)}
     if existing_item
       existing_item.quantity += 1
     else
-      @items << LineItem.new_accessory_based_on(accessory)
+      @items << LineItem.new_accessory_based_on(accessory, option)
       
     end
     @total_price += accessory.price
@@ -165,9 +173,35 @@ class Cart
     @total_price -= frame_model.price + frame_model_size.price + gear.price + top_tube_style.price 
   end
   
+  def remove_kit(frame_model, frame_model_size, gear, top_tube_style)
+    if workshop != nil
+    existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.gear_id == gear.id)}
+    else
+      existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.gear_id == gear.id)}
+    end
+    
+    if existing_item && existing_item.quantity > 1
+      existing_item.quantity -= 1
+    else
+      @items.delete(existing_item)
+    end
+    @total_price -= frame_model.price + frame_model_size.price + gear.price + top_tube_style.price 
+  end
+  
   def remove_frame_model_and_package(frame_model, frame_model_size, workshop, gear, top_tube_style, component_package )
 
     existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.workshop_id == workshop.id) && (item.gear_id == gear.id) && (item.component_package_id == component_package.id)}
+    if existing_item && existing_item.quantity > 1
+      existing_item.quantity -= 1
+    else
+      @items.delete(existing_item)
+    end
+    @total_price -= frame_model.price + frame_model_size.price + gear.price + top_tube_style.price + component_package.price
+  end
+  
+  def remove_kit_and_package(frame_model, frame_model_size, gear, top_tube_style, component_package )
+
+    existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.gear_id == gear.id) && (item.component_package_id == component_package.id)}
     if existing_item && existing_item.quantity > 1
       existing_item.quantity -= 1
     else
@@ -187,12 +221,12 @@ class Cart
     @total_price -= component_package.price
   end
   
-  def remove_component(component, name)
-    find_existing_item(component, name)
-    if @existing_item && @existing_item.quantity > 1
-      @existing_item.quantity -= 1
+  def remove_component(component)
+    existing_item = @items.find {|item| item.component_id == component.id}
+    if existing_item && existing_item.quantity > 1
+      existing_item.quantity -= 1
     else
-      @items.delete(@existing_item)
+      @items.delete(existing_item)
       
     end
     @total_price -= component.price

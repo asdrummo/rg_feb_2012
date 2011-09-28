@@ -1,5 +1,6 @@
 class FrameModelsController < ApplicationController
   before_filter :confirm_logged_in
+  before_filter :find_user
   layout 'admin'
   # GET /frame_models
   # GET /frame_models.xml
@@ -101,5 +102,11 @@ class FrameModelsController < ApplicationController
       format.html { redirect_to(frame_models_url) }
       format.xml  { head :ok }
     end
+  end
+  
+    private 
+
+  def find_user
+    @user = User.find(session[:user_id])
   end
 end

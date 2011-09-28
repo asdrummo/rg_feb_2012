@@ -1,0 +1,43 @@
+<table class="center" style="width:700px">
+  <tr style="text-align:center">
+    <th>Client</th>
+    <th>Component type</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+	<th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th colspan="3">Actions</th>
+  </tr>
+
+<% @components.each do |component| %>
+  <tr style="text-align:center" class="<%= cycle('odd', 'even') %>">
+    <td><%= component.client_id %></td>
+    <td><%= component.component_type %></td>
+    <td><%= component.product_id %></td>
+    <td><%= component.sku %></td>
+    <td><%= component.name %></td>
+	<td><%= component.description %></td>
+    <td><%= component.image_path %></td>
+    <td><%= component.vendor %></td>
+    <td><%= component.brand %></td>
+    <td><%= component.material %></td>
+    <td><%= component.color %></td>
+    <td><%= component.finish %></td>
+    <td><%= component.cost %></td>
+    <td><%= component.price %></td>
+    <td><%= link_to 'Show', component %></td>
+    <td><%= link_to 'Edit', edit_component_path(component) %></td>
+    <td><%= link_to 'Destroy', component, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+<br />
+
+</table>
