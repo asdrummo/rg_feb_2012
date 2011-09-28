@@ -145,8 +145,14 @@ input {
 .field_with_errors {
 	float:left;
 }
+.field_with_errors #signup_email {
+	background-color:yellow;
+	
+}
 .field_with_errors #signup_email, .field_with_errors #signup_name{
-	border:2px solid red;
+
+	opacity: 0.4; 
+	
 }
 
 #signup-response {  
