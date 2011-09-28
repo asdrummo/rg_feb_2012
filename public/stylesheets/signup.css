@@ -34,7 +34,7 @@ background-size: 640px 448px;
 
 /*
 Support in iOS devices.
-*/
+
  
 @media only screen and (orientation: portrait) and (device-width: 320px), (device-width: 768px) {
 body {
@@ -47,6 +47,7 @@ body {
 -webkit-background-size: 100% auto;
 }
 }
+*/
 /* set scaling to work with crappy browsers*/
 img#expando {
 display: none;
