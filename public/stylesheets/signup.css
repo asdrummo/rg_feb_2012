@@ -122,15 +122,17 @@ input {
 
 
 #signup_submit {  
-	border:1px solid #444;  
-    background-color:white;  
-    color:black;
+    border:1px solid #444;  
+    color:black;  
+    padding:5px;  
+    margin-left:3px;  
+    margin-right:4px;  
 	font-weight:900;
 	font-size:12px;
-	height:26px;
 	background-color:white;
 	opacity: 0.5; 
- 	vertical-align: middle; 
+ 	vertical-align: middle;
+	float:left;
 }  
   
 #signup_submit:hover {  
