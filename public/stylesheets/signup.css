@@ -114,8 +114,8 @@ input {
 }  
 
 
-#signup_email:focus{ color:#fff; background-color:#777; }
-#signup_name:focus { color:#fff; background-color:#777; }
+#signup_email:focus{ color:#fff; background-color:#777; outline: none; }
+#signup_name:focus { color:#fff; background-color:#777; outline: none; }
 #signup_email:active{ background-color:#888; }
 #signup_name:active{ background-color:#888; }
 
