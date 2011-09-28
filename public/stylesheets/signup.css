@@ -124,7 +124,7 @@ input {
 #signup_submit {  
 	background: white; /* without this, the other styles won't show up */    
     border:1px solid #444;  
-    color:black;  
+    color:gray;  
     padding:5px;  
     margin-left:3px;  
     margin-right:4px;  
