@@ -6,7 +6,7 @@
 			<% else %>
 			<%= image_tag "signup/get_email_updates.png", :alt => 'get email updates', :class => "displayed", :style => "padding-left:2px" %>
 			
-				<%= form_for(@signup) do |f| %>
+				<%= form_for(@signup, :url => {:action => 'signup'}) do |f| %>
 			  		
 
 			  <div class="field">
@@ -19,7 +19,7 @@
 				<%= f.submit 'SIGN UP'%>
 				<p id="signup-response"></p>
 				<div style="clear:both"></div>
-				<%= link_to((image_tag "signup/email.png", :alt => 'email roam & gauge', :class => "icon"), "mailto://explore@roamandgauge.com", :target => "blank") %>
+				<%= link_to((image_tag "signup/email.png", :alt => 'email roam & gauge', :class => "icon"), "mailto:explore@roamandgauge.com", :target => "blank") %>
 				<%= link_to((image_tag "signup/twitter.png", :alt => '@roamandgauge', :class => "icon"), "http://twitter.com/roamandgauge", :target => "blank") %>
 			  </div><!-- end field -->
 

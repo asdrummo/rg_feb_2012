@@ -6,6 +6,12 @@ class SignupsController < ApplicationController
   def signup
     @signup = Signup.new
     @page_title = 'Sign Up'
+    if params[:signup]
+       @signup = Signup.new(params[:signup])
+          if @signup.save
+            @submitted = 'true'
+          end
+    end
     render 'signup'
 
   end
@@ -51,19 +57,18 @@ class SignupsController < ApplicationController
   # POST /signups.xml
   def create
     @signup = Signup.new(params[:signup])
-    respond_to do |format|
       if @signup.save
         @submitted = 'true'
-        format.html { render 'signup', :notice => 'Signup was successfully created.'}
-        format.xml  { render 'signup' }
-        format.js 
+        redirect_to 'signup'
       
       else
+        respond_to do |format|
         format.html { render 'signup' }
         format.xml  { render :xml => @signup.errors, :status => :unprocessable_entity }
         format.js 
       end
-    end
+      end
+    
   end
 
   # PUT /signups/1
