@@ -134,6 +134,7 @@ input {
 	opacity: 0.5; 
  	vertical-align: middle;
 	float:left;
+	-webkit-appearance:none;
 }  
   
 #signup_submit:hover {  
@@ -149,11 +150,10 @@ input {
 	background-color:yellow;
 	
 }
-.field_with_errors #signup_email, .field_with_errors #signup_name{
-
+.field_with_errors #signup_email {
 	opacity: 0.4; 
-	
 }
+.field_with_errors #signup_email:active, .field_with_errors #signup_email:focus, .field_with_errors #signup_name{ color:black; }
 
 #signup-response {  
     display:inline;  

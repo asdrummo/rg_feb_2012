@@ -2,7 +2,9 @@
 	<div class="wrap">
 		<%= image_tag "signup/roam_and_gauge_signup.png", :alt => 'Design. Build. Ride. [2012]', :class => "displayed" %>
 			<% if @submitted %>
-			<%= image_tag "signup/thank_you.png", :alt => 'thank you', :class => "displayed" %>
+			<%= image_tag "signup/thank_you.png", :alt => 'thank you', :class => "displayed" %><br />
+			<%= link_to((image_tag "signup/email.png", :alt => 'email roam & gauge', :class => "icon"), "mailto:explore@roamandgauge.com", :target => "blank") %>
+			<%= link_to((image_tag "signup/twitter.png", :alt => '@roamandgauge', :class => "icon"), "http://twitter.com/roamandgauge", :target => "blank") %>
 			<% else %>
 			<%= image_tag "signup/get_email_updates.png", :alt => 'get email updates', :class => "displayed", :style => "padding-left:2px" %>
 			
