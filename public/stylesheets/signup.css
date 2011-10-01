@@ -153,7 +153,9 @@ input {
 .field_with_errors #signup_email {
 	opacity: 0.4; 
 }
-.field_with_errors #signup_email:active, .field_with_errors #signup_email:focus, .field_with_errors #signup_name{ color:black; }
+.field_with_errors #signup_email:active, .field_with_errors #signup_email:focus { color:black; }
+.field_with_errors #signup_email:focus {background-color:#888; color:white}
+
 
 #signup-response {  
     display:inline;  
