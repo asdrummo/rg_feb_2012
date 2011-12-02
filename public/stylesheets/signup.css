@@ -21,6 +21,10 @@ body {
 	-webkit-background-size: cover;
 
 }  
+
+:link img {
+  border: none;
+}
 /*
 Setting the minimum background rez
 */
