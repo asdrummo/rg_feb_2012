@@ -6,7 +6,7 @@ Drummlins::Application.routes.draw do
 
   resources :accessories, :component_packages, :frame_models, :workshops, :customers, :users, :components, :options
   
-  root :to => 'public#index'
+  root :to => 'public#signup'
   match 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
   match 'payments/new', :to => 'payments#new', :as => :new_payment 
   match '/', :to => 'public#index'
