@@ -1,5 +1,6 @@
 class PublicController < ApplicationController
   layout 'standard'
+  before_filter :confirm_logged_in
   before_filter :find_or_create_cart, :except => [:index]
   before_filter :find_or_create_customer, :only => [:checkout, :payment, :my_account, :login]
   def index_test
