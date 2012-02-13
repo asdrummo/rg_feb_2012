@@ -1397,7 +1397,7 @@ class BikeBuilderController < ApplicationController
         @headset_selected = Component.find_by_id(item.component.id)
       end
     end
-    if (@fork_selected) && (@stem_selected) && (@front_brake_selected) && (@rear_brake_selected) && (@front_lever_selected) && (@rear_lever_selected) && (@handlebar_selected) && (@handlebar_selected)
+    if (@fork_selected) && (@stem_selected) && (@front_brake_selected) && (@rear_brake_selected) && (@front_lever_selected) && (@rear_lever_selected) && (@handlebar_selected) && (@headset_selected)
       if @speed == 'single'
         @front_end_complete = 'true'
       elsif (@rear_shifter_selected) && (@front_shifter_selected)
