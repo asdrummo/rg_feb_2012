@@ -19,84 +19,159 @@
   <b>Price:</b>
   <%= @component_package.price %>
 </p>
+<% if (@component_package.package_type == 'full-multi_speed') || (@component_package.package_type == 'full-single_speed') %>
+	<p>
+	  <b>Frame Model:</b>
+	  <% if @component_package.frame_model_id %>
+	  	<%= FrameModel.find(@component_package.frame_model_id).name %>
+	  <% else %>
+	  	none selected
+	  <% end %>
+	</p>
 
-<p>
-  <b>Frame Model:</b>
-  <%= FrameModel.find(@component_package.frame_model_id).name %>
-</p>
-<p>
-  <b>Seat Post:</b>
-<% if @component_package.seat_post_id %>
-	<%= Component.find(@component_package.seat_post_id).name %>
-<% else %>
-	none selected
-<% end %>
-</p>
+	<p>
+	  <b>Seat Post:</b>
+	<% if @component_package.seat_post_id %>
+		<%= Component.find(@component_package.seat_post_id).name %>
+	<% else %>
+		none selected
+	<% end %>
+	</p>
 
-<p>
-  <b>Seat Clamp:</b>
-<% if @component_package.front_lever_id %>
-<%= Component.find(@component_package.front_lever_id).name %>
-
-<% else %>
-	none selected
-<% end %>
-</p>
-
-<p>
-  <b>Stem:</b>
-<% if @component_package.front_lever_id %>
-<%= Component.find(@component_package.front_lever_id).name %>
-<% else %>
-	none selected
-<% end %>
-</p>
-
-<p>
-  <b>Handlebars:</b>
-<% if @component_package.front_lever_id %>
+	<p>
+	  <b>Seat Clamp:</b>
+	<% if @component_package.front_lever_id %>
 	<%= Component.find(@component_package.front_lever_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
+	<% else %>
+		none selected
+	<% end %>
+	</p>
+	
+	<p>
+	  <b>Saddle:</b>
+		<% if @component_package.saddle_id %>
+			<%= Component.find(@component_package.saddle_id).name %>
+		<% else %>
+		none selected
+		<% end %>
+	</p>
+	
+	<p>
+  	  <b>Pedals:</b>
+	<% if @component_package.pedal_id %>
+		<%= Component.find(@component_package.pedal_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
 
-<p>
-  <b>Front Lever:</b>
-<% if @component_package.front_lever_id %>
+<% end %>
+
+
+<% if (@component_package.package_type == 'full-single_speed') || (@component_package.package_type == 'full-multi_speed') || (@component_package.package_type == 'front_end-single_speed') || (@component_package.package_type == 'front_end-multi_speed') %>
+	<p>
+	  <b>Front Brakes:</b>
+		<% if @component_package.front_brake_id %>
+		<%= Component.find(@component_package.front_brake_id).name %>
+		<% else %>
+		none
+		<% end %>
+	</p>
+
+	<p>
+	  <b>Rear Brakes:</b>
+		<% if @component_package.rear_brake_id %>
+		<%= Component.find(@component_package.rear_brake_id).name %>
+		<% else %>
+		none 
+		<% end %>
+	</p>
+
+	<p>
+	  <b>Stem:</b>
+	<% if @component_package.front_lever_id %>
 	<%= Component.find(@component_package.front_lever_id).name %>
+	<% else %>
+		none selected
+	<% end %>
+	</p>
+
+	<p>
+	  <b>Handlebars:</b>
+	<% if @component_package.front_lever_id %>
+		<%= Component.find(@component_package.front_lever_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
+	
+	<p>
+	  <b>Grips:</b>
+	<% if @component_package.grip_id %>
+		<%= Component.find(@component_package.grip_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
+	
+	<p>
+	  <b>Front Lever:</b>
+	<% if @component_package.front_lever_id %>
+		<%= Component.find(@component_package.front_lever_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
+
+	<p>
+	  <b>Rear Lever:</b>
+	<% if @component_package.rear_lever_id %>
+		<%= Component.find(@component_package.rear_lever_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
+
+	<p>
+	  <b>Fork:</b>
+	<% if @component_package.fork_id %>
+		<%= Component.find(@component_package.fork_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
+
+	<p>
+	  <b>Headset:</b>
+	<% if @component_package.headset_id %>
+		<%= Component.find(@component_package.headset_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+	</p>
+	
+<% end %>
+
+<% if (@component_package.package_type == 'full-multi_speed') || (@component_package.package_type == 'front_end-multi_speed') %>
+<p>
+  <b>Front Shifter:</b>
+<% if @component_package.front_shifter_id %>
+	<%= Component.find(@component_package.front_shifter_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
 
 <p>
-  <b>Rear Lever:</b>
-<% if @component_package.rear_lever_id %>
-	<%= Component.find(@component_package.rear_lever_id).name %>
+  <b>Rear Shifter:</b>
+<% if @component_package.rear_shifter_id %>
+	<%= Component.find(@component_package.rear_shifter_id).name %>
 <% else %>
 none selected
 <% end %>
 </p>
-
-<p>
-  <b>Fork:</b>
-<% if @component_package.fork_id %>
-	<%= Component.find(@component_package.fork_id).name %>
-<% else %>
-none selected
 <% end %>
-</p>
-
-<p>
-  <b>Headset:</b>
-<% if @component_package.headset_id %>
-	<%= Component.find(@component_package.headset_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
-
+<% if (@component_package.package_type == 'full') || (@component_package.package_type == 'wheels') %>
 <p>
   <b>Wheels:</b>
 front:
@@ -117,6 +192,7 @@ none selected
   <b>Rim Strips:</b>
 <% if @component_package.rim_strip_id %>
 	<%= Component.find(@component_package.rim_strip_id).name %>
+<% else %>
 none selected
 <% end %>
 </p>
@@ -153,7 +229,26 @@ none selected
 	none selected
 	<% end %>
 </p>
+<% end %>
 
+<% if (@component_package.package_type == 'full-multi_speed') || (@component_package.package_type == 'drivetrain-multi_speed') %>
+<p>
+  <b>Deraileurs:</b>
+  front: 
+<% if @component_package.front_derailleur_id %>
+	<%= Component.find(@component_package.front_derailleur_id).name %>
+<% else %>
+none selected
+<% end %>
+	rear: 
+	<% if @component_package.rear_derailleur_id %>
+	<%= Component.find(@component_package.rear_derailleur_id).name %>
+	<% else %>
+	none selected
+	<% end %>
+</p>
+<% end %>
+<% if (@component_package.package_type == 'full-multi_speed') || (@component_package.package_type == 'drivetrain-multi_speed') ||  (@component_package.package_type == 'full-single_speed') || (@component_package.package_type == 'drivetrain-single_speed') %>
 <p>
   <b>Cog Cassette:</b>
 <% if @component_package.cog_id %>
@@ -225,33 +320,7 @@ none selected
 none selected
 <% end %>
 </p>
-
-<p>
-  <b>Grips:</b>
-<% if @component_package.grip_id %>
-	<%= Component.find(@component_package.grip_id).name %>
-<% else %>
-none selected
 <% end %>
-</p>
-
-<p>
-  <b>Pedals:</b>
-<% if @component_package.pedal_id %>
-	<%= Component.find(@component_package.pedal_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
-
-<p>
-  <b>Saddle:</b>
-<% if @component_package.saddle_id %>
-	<%= Component.find(@component_package.saddle_id).name %>
-<% else %>
-none selected
-<% end %>
-</p>
 
 <%= link_to 'Edit', edit_component_package_path(@component_package) %> |
 <%= link_to 'Back', component_packages_path %>

@@ -12,14 +12,18 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :client_id %><br />
-    <%= f.text_field :client_id %>
-  </div>
-  <div class="field">
-    <%= f.label :experience %><br />
-	<%= f.select :experience, ['Tour', 'Studio'], {:prompt => 'Select Experience'} %>
-  </div>
+ <%= f.hidden_field :client_id, :value => @user.client_id%>
+
+<% if @workshop_select == 'true'%> 
+
+		<%= form_tag do %>
+			<%= select_tag :workshop_type, options_for_select(@workshops_array), :include_blank => "select experience", :onchange => 'this.form.submit()' %>
+		<% end %>
+<% else %>
+<%= f.label :experience %><br />
+<b><%= @workshop_type %></b>
+<% end %>
+
   <div class="field">
     <%= f.label :address %><br />
     <%= f.text_field :address %>

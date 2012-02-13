@@ -52,14 +52,19 @@ compatability specs:
   <%= f.text_field :chain_width %>
 </div>
 <div class="field">
-  <%= f.label :front_deraileur_type %><br />
-  <%= f.text_field :front_deraileur_type %>
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
 </div>
 <% elsif @name == 'chain'%>
 <div class="field">
-  <%= f.label :cog_num %><br />
-  <%= f.text_field :cog_num %>
+  <%= f.label :chain_width %><br />
+  <%= f.text_field :chain_width %>
 </div>
+<div class="field">
+  <%= f.label :cog_number %><br />
+  <%= f.text_field :cog_number %>
+</div>
+
 <% elsif @name == 'cog'%>
 <div class="field">
   <%= f.label :num_bolts %><br />
@@ -74,8 +79,8 @@ compatability specs:
   <%= f.text_field :chain_width %>
 </div>
 <div class="field">
-  <%= f.label :rear_deraileur_type %><br />
-  <%= f.text_field :rear_deraileur_type %>
+  <%= f.label :rear_derailleur_type %><br />
+  <%= f.text_field :rear_derailleur_type %>
 </div>
 <div class="field">
   <%= f.label :spline_thread_type %><br />
@@ -99,8 +104,8 @@ compatability specs:
   <%= f.text_field :taper %>
 </div>
 <div class="field">
-  <%= f.label :front_deraleur_type %><br />
-  <%= f.text_field :front_deraleur_type %>
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
 </div>
 <% elsif @name == 'fork'%>
 
@@ -138,11 +143,11 @@ compatability specs:
   <%= f.label :front_tire_max_width %><br />
   <%= f.text_field :front_tire_max_width %>
 </div>
-<% elsif @name == 'front_deraileur'%>
+<% elsif @name == 'front_derailleur'%>
 
 <div class="field">
-  <%= f.label :type %><br />
-  <%= f.text_field :type %>
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
 </div>
 <div class="field">
   <%= f.label :shifter_type %><br />
@@ -150,8 +155,8 @@ compatability specs:
 </div>
 <% elsif @name == 'front_lever'%>
 <div class="field">
-  <%= f.label :clamp_diamter_high %><br />
-  <%= f.text_field :clamp_diamter_high %>
+  <%= f.label :clamp_diameter_high %><br />
+  <%= f.text_field :clamp_diameter_high %>
 </div>
 <div class="field">
   <%= f.label :clamp_diameter_low %><br />
@@ -171,8 +176,8 @@ compatability specs:
 </div>
 <% elsif @name == 'front_shifter'%>
 <div class="field">
-  <%= f.label :front_deraileur_type %><br />
-  <%= f.text_field :front_deraileur_type %>
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
 </div>
 <div class="field">
   <%= f.label :clamp_diameter_low %><br />
@@ -208,8 +213,8 @@ compatability specs:
   <%= f.text_field :front_wheel_size %>
 </div>
 <div class="field">
-  <%= f.label :front_wheel_trim_width %><br />
-  <%= f.text_field :front_wheel_trim_width %>
+  <%= f.label :front_wheel_rim_width %><br />
+  <%= f.text_field :front_wheel_rim_width %>
 </div>
 <% elsif @name == 'front_tube'%>
 <div class="field">
@@ -221,8 +226,8 @@ compatability specs:
   <%= f.text_field :front_wheel_size %>
 </div>
 <div class="field">
-  <%= f.label :front_wheel_trim_width %><br />
-  <%= f.text_field :front_wheel_trim_width %>
+  <%= f.label :front_wheel_rim_width %><br />
+  <%= f.text_field :front_wheel_rim_width %>
 </div>
 <div class="field">
   <%= f.label :front_tire_width %><br />
@@ -242,8 +247,8 @@ compatability specs:
   <%= f.text_field :size %>
 </div>
 <div class="field">
-  <%= f.label :trim_width %><br />
-  <%= f.text_field :trim_width %>
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
 </div>
 <div class="field">
   <%= f.label :front_brake_type %><br />
@@ -265,8 +270,8 @@ compatability specs:
 </div>
 <% elsif @name == 'handlebar'%>
 <div class="field">
-  <%= f.label :clamp_diamter %><br />
-  <%= f.text_field :clamp_diamter %>
+  <%= f.label :clamp_diameter %><br />
+  <%= f.text_field :clamp_diameter %>
 </div>
 <div class="field">
   <%= f.label :tube %><br />
@@ -277,8 +282,8 @@ compatability specs:
   <%= f.text_field :type %>
 </div>
 <div class="field">
-  <%= f.label :stem_clamp_diamter %><br />
-  <%= f.text_field :stem_clamp_diamter %>
+  <%= f.label :stem_clamp_diameter %><br />
+  <%= f.text_field :stem_clamp_diameter %>
 </div>
 <div class="field">
   <%= f.label :max_turn_size %><br />
@@ -323,7 +328,7 @@ compatability specs:
   <%= f.label :rear_wheel_rim_width %><br />
   <%= f.text_field :rear_wheel_rim_width %>
 </div>
-<% elsif @name == 'rear_deraileur'%>
+<% elsif @name == 'rear_derailleur'%>
 
 <div class="field">
   <%= f.label :type %><br />
@@ -340,8 +345,8 @@ compatability specs:
 </div>
 <% elsif @name == 'rear_lever'%>
 <div class="field">
-  <%= f.label :clamp_diamter_high %><br />
-  <%= f.text_field :clamp_diamter_high %>
+  <%= f.label :clamp_diameter_high %><br />
+  <%= f.text_field :clamp_diameter_high %>
 </div>
 <div class="field">
   <%= f.label :clamp_diameter_low %><br />
@@ -361,8 +366,8 @@ compatability specs:
 </div>
 <% elsif @name == 'rear_shifter'%>
 <div class="field">
-  <%= f.label :rear_deraileur_type %><br />
-  <%= f.text_field :rear_deraileur_type %>
+  <%= f.label :rear_derailleur_type %><br />
+  <%= f.text_field :rear_derailleur_type %>
 </div>
 <div class="field">
   <%= f.label :clamp_diameter_low %><br />
@@ -398,8 +403,8 @@ compatability specs:
   <%= f.text_field :rear_wheel_size %>
 </div>
 <div class="field">
-  <%= f.label :rear_wheel_trim_width %><br />
-  <%= f.text_field :rear_wheel_trim_width %>
+  <%= f.label :rear_wheel_rim_width %><br />
+  <%= f.text_field :rear_wheel_rim_width %>
 </div>
 <% elsif @name == 'rear_tube'%>
 <div class="field">
@@ -411,8 +416,8 @@ compatability specs:
   <%= f.text_field :rear_wheel_size %>
 </div>
 <div class="field">
-  <%= f.label :rear_wheel_trim_width %><br />
-  <%= f.text_field :rear_wheel_trim_width %>
+  <%= f.label :rear_wheel_rim_width %><br />
+  <%= f.text_field :rear_wheel_rim_width %>
 </div>
 <div class="field">
   <%= f.label :rear_tire_width %><br />

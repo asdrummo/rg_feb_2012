@@ -1,3 +1,6 @@
+body {
+	background: #fff;
+}
 #new_container {
 	width: 450px;
 	margin:auto;
@@ -19,3 +22,7 @@
 	padding:0 20px 10px 20px;
 	text-align:center;
 }
+
+#index th {
+	padding:50px 
+	}

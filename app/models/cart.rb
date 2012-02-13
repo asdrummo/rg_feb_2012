@@ -75,10 +75,10 @@ class Cart
       @existing_item = @items.find {|item| (item.cog_id == component.id)}
     elsif name == 'crank'
       @existing_item = @items.find {|item| (item.crank_id == component.id)}
-    elsif name == 'front_deraileur'
-      @existing_item = @items.find {|item| (item.front_deraileur_id == component.id)}
-    elsif name == 'rear_deraileur'
-      @existing_item = @items.find {|item| (item.rear_deraileur_id == component.id)}
+    elsif name == 'front_derailleur'
+      @existing_item = @items.find {|item| (item.front_derailleur_id == component.id)}
+    elsif name == 'rear_derailleur'
+      @existing_item = @items.find {|item| (item.rear_derailleur_id == component.id)}
     elsif name == 'fork'
       @existing_item = @items.find {|item| (item.fork_id == component.id)}
     elsif name == 'grip'

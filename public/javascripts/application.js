@@ -1,6 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+
 //Mouseover Popup Script
 $(document).ready(function() {
 
@@ -86,4 +87,6 @@ sfHover = function() {
 	}
 }
 if (window.attachEvent) window.attachEvent("onload", sfHover);
+var Remove = <%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %>;
+
 

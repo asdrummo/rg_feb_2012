@@ -37,10 +37,12 @@ class ComponentPackagesController < ApplicationController
   # GET /component_packages/new.xml
   def new
     @component_package = ComponentPackage.new
-    list_components
+    @component_package_select = 'true'
+    list_package_types
+    @list_components = 'false'
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @component }
+      format.xml  { render :xml => @component_package }
     end
   end
 
@@ -49,8 +51,14 @@ class ComponentPackagesController < ApplicationController
     @component_package = ComponentPackage.find(params[:id])
    list_components
   end
-
+  
+  def list_package_types
+      @package_types = ['full-single_speed', 'full-multi_speed','drivetrain-single_speed', 'drivetrain-multi_speed','front_end-single_speed', 'front_end-multi_speed' 'wheels']
+      @package_types_array = @package_types.map { |package_types| [package_types, package_types] }
+  end
+  
   def list_components
+       @list_components = 'true'
        @frame_models = FrameModel.find(:all)
        @seat_posts = Component.find_all_by_component_type("Seat Post")
        @seat_clamps = Component.find_all_by_component_type("Seat Clamp")
@@ -61,7 +69,7 @@ class ComponentPackagesController < ApplicationController
        @rear_levers = Component.find_all_by_component_type("Rear Lever")
        @forks = Component.find_all_by_component_type("Fork")
        @headsets = Component.find_all_by_component_type("Headset")
-       @front_deraileurs = Component.find_all_by_component_type("Front Deraileur")
+       @front_derailleurs = Component.find_all_by_component_type("Front Derailleur")
        @front_wheels = Component.find_all_by_component_type("Front Wheel")
        @rear_wheels = Component.find_all_by_component_type("Rear Wheel")
        @rim_strips = Component.find_all_by_component_type("Rim Strip")
@@ -69,10 +77,10 @@ class ComponentPackagesController < ApplicationController
        @rear_tires = Component.find_all_by_component_type("Rear Tire")
        @front_tubes = Component.find_all_by_component_type("Front Tube")
        @rear_tubes = Component.find_all_by_component_type("Rear Tube")
-       @cogs = Component.find_all_by_component_type("Cog")
+       @cogs = Component.find_all_by_component_type("Cog Cassette")
        @front_brakes = Component.find_all_by_component_type("Front Brake")
        @rear_brakes = Component.find_all_by_component_type("Rear Brake")
-       @rear_deraileurs = Component.find_all_by_component_type("Rear Deraileur")
+       @rear_derailleurs = Component.find_all_by_component_type("Rear Derailleur")
        @rear_shifters = Component.find_all_by_component_type("Rear Shifter")
        @bottom_brackets = Component.find_all_by_component_type("Bottom Bracket")
        @cranks = Component.find_all_by_component_type("Crank")
@@ -86,8 +94,14 @@ class ComponentPackagesController < ApplicationController
   # POST /component_packages
   # POST /component_packages.xml
   def create
+    if params[:package_type]
+      @component_package = ComponentPackage.new(params[:component_package])
+      @package_type = params[:package_type]
+      @component_package_select = 'false'
+      list_components
+      render 'new'
+    else
     @component_package = ComponentPackage.new(params[:component_package])
-
     respond_to do |format|
       if @component_package.save
         format.html { redirect_to(@component_package, :notice => 'ComponentPackage was successfully created.') }
@@ -98,6 +112,9 @@ class ComponentPackagesController < ApplicationController
       end
     end
   end
+end
+      
+    
 
   # PUT /component_packages/1
   # PUT /component_packages/1.xml

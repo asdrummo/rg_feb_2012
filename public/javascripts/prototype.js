@@ -4143,7 +4143,6 @@ Sizzle.find = function(expr, context, isXML){
 					break;
 				}
 			}
-
 		}
 	}
 
@@ -6081,4 +6080,3 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
     }
   });
 })();
-

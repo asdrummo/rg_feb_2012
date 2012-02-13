@@ -1,10 +1,6 @@
 Drummlins::Application.routes.draw do
 
-
-  resources :signups
-
-
-  resources :accessories, :component_packages, :frame_models, :workshops, :customers, :users, :components, :options
+resources :components, :accessories, :component_packages, :frame_models, :workshops, :customers, :users, :options, :signups
   
   root :to => 'signups#signup'
   match 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
@@ -26,8 +22,10 @@ Drummlins::Application.routes.draw do
   match 'public/show_components' => 'public#show_components', :as => :show_components
   match 'component_packages/:id/show_component_package' => 'component_packages#show_component_package', :as => :show_component_package
   match 'public/bikes_to_buy' => 'public#bikes_to_buy', :as => :bikes_to_buy
-    match 'signup', :to => 'signups#signup'
-  
+  match 'signup', :to => 'signups#signup'
+  match 'bike_builder', :to => 'bike_builder#welcome', :as => :bike_builder  
+  match ':controller(/:action(/:type(.:format)))'
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -87,3 +85,4 @@ Drummlins::Application.routes.draw do
   match ':controller(/:action(/:id(.:format)))'
 
 end
+

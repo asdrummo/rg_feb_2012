@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
-
+<p>
+  <b>Component Type:</b>
+  <%= @component.component_type %>
+</p>
 <p>
   <b>Product:</b>
   <%= @component.product_id %>
@@ -50,4 +53,4 @@
 
 
 <%= link_to 'Edit', edit_component_path(@component) %> |
-<%= link_to 'Back', components_path %>
+<%= link_to 'Back', components_path %> | <%= link_to 'Add New Component', new_component_path %>

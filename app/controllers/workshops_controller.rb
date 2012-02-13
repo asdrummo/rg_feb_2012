@@ -27,13 +27,18 @@ class WorkshopsController < ApplicationController
   # GET /workshops/new.xml
   def new
     @workshop = Workshop.new
-
+    @workshop_select = 'true'
+    list_workshops
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @workshop }
     end
   end
-
+  
+  def list_workshops
+    @workshops = ['Tour', 'Studio', 'Component Build', 'General Mainentance', 'Other']
+    @workshops_array = @workshops.map { |workshop| [workshop, workshop] }
+  end
   # GET /workshops/1/edit
   def edit
     @workshop = Workshop.find(params[:id])
@@ -42,8 +47,13 @@ class WorkshopsController < ApplicationController
   # POST /workshops
   # POST /workshops.xml
   def create
-    @workshop = Workshop.new(params[:workshop])
-
+    if params[:workshop_type]
+      @workshop = Workshop.new(params[:workshop])
+      @workshop_type = params[:workshop_type]
+      @workshop_select = 'false'
+      render 'new'
+    else
+     @workshop = Workshop.new(params[:workshop])
     respond_to do |format|
       if @workshop.save
         format.html { redirect_to(@workshop, :notice => 'Workshop was successfully created.') }
@@ -54,6 +64,7 @@ class WorkshopsController < ApplicationController
       end
     end
   end
+end 
 
   # PUT /workshops/1
   # PUT /workshops/1.xml

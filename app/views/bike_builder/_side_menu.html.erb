@@ -1,0 +1,63 @@
+
+<div id="side_menu">
+	<h3>Components</h3>
+<% if @nav_id == 'drivetrain'%>
+<ul>
+	<li><%= link_to('cranks', :action => 'drivetrain', :type => 'Crank') %></li>
+	<% if @speed == 'multi' %>
+	<li><%= link_to('derailleurs (front)', :action => 'drivetrain', :type => 'Front Derailleur') %></li>
+	<li><%= link_to('derailleurs (rear)', :action => 'drivetrain', :type => 'Rear Derailleur') %></li>
+	<% else %>
+	<li><strike>derailleurs (front)</strike></li>
+	<li><strike>derailleurs (rear)</strike></li>
+	<% end %>
+	<li><%= link_to('cog cassettes', :action => 'drivetrain', :type => 'Cog Cassette') %></li>
+	<li><%= link_to('bottom brackets', :action => 'drivetrain', :type => 'Bottom Bracket') %></li>
+	<li><%= link_to('chainrings', :action => 'drivetrain', :type => 'Chainring') %></li>
+	<li><%= link_to('chains', :action => 'drivetrain', :type => 'Chain') %></li>
+</ul>	
+
+<% elsif @nav_id == 'front_end'%>
+	<ul>
+		<li><%= link_to('forks', :action => 'front_end', :type => 'Fork') %></li>
+		<li><%= link_to('stems', :action => 'front_end', :type => 'Stem') %></li>
+		<li><%= link_to('front brakes', :action => 'front_end', :type => 'Front Brake') %></li>
+		<li><%= link_to('rear brakes', :action => 'front_end', :type => 'Rear Brake') %></li>
+		<% if @speed == 'multi' %>
+		<li><%= link_to('front shifters', :action => 'front_end', :type => 'Front Shifter') %></li>
+		<li><%= link_to('rear shifters', :action => 'front_end', :type => 'Rear Shifter') %></li>
+		<% else %>
+		<li><strike>front shifters</strike></li>	
+		<li><strike>rear shifters</strike></li>		
+		<% end %>			
+		<li><%= link_to('front levers', :action => 'front_end', :type => 'Front Lever') %></li>
+		<li><%= link_to('rear levers', :action => 'front_end', :type => 'Rear Lever') %></li>
+		<li><%= link_to('handlebars', :action => 'front_end', :type => 'Handlebar') %></li>
+		<li><%= link_to('headsets', :action => 'front_end', :type => 'Headset') %></li>
+	</ul>
+
+<% elsif @nav_id == 'wheels'%>
+	<ul>
+		<li><%= link_to('front wheel', :action => 'drivetrain', :type => 'Front Wheel') %></li>
+		<li><%= link_to('rear wheel', :action => 'drivetrain', :type => 'Rear Wheel') %></li>
+		<li><%= link_to('front tube', :action => 'drivetrain', :type => 'Front Tube') %></li>
+		<li><%= link_to('rear tube', :action => 'drivetrain', :type => 'Rear Tube') %></li>
+		<li><%= link_to('front tire', :action => 'drivetrain', :type => 'Front Tire') %></li>
+		<li><%= link_to('rear tire', :action => 'drivetrain', :type => 'Rear Tire') %></li>
+	</ul>
+
+<% end %>
+
+available packages
+<ul>
+	<% if @component_packages.each do |p| %>
+	<li><%= link_to(p.name, :action => @nav_id, :package_id => p.id) %> | <%= link_to('add', :action => 'add_package_to_build', :package_id => p.id) %></li>
+	<% end %>
+	<% end %>
+</ul>
+
+
+
+
+
+</div>

@@ -2,6 +2,7 @@ class LineItem < ActiveRecord::Base
   
   belongs_to :workshop
   belongs_to :frame_model
+  belongs_to :custom_frame_model
   belongs_to :frame_model_size
   belongs_to :component_package
   belongs_to :component
@@ -12,6 +13,34 @@ class LineItem < ActiveRecord::Base
   belongs_to :option
   @status = "processing"
   
+  def self.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+    line_item = self.new
+    line_item.frame_model = frame
+    line_item.frame_model_size = frame_size
+    line_item.gear = gear
+    line_item.top_tube_style = top_tube_style
+    line_item.client_id = frame.client_id
+    line_item.status = @status
+    line_item.quantity = 1
+    line_item.price = (frame.price + frame_size.price + gear.price + top_tube_style.price)
+    return line_item
+  end
+  
+  def self.new_custom_frame_based_on(frame)
+    line_item = self.new
+    line_item.custom_frame_model = frame
+    return line_item
+  end
+  
+  def self.new_build_component_based_on(component)
+    line_item = self.new
+    line_item.component = component
+    line_item.id = component.id
+    line_item.client_id = component.client_id
+    line_item.status = @status
+    line_item.price = component.price
+    return line_item
+  end
   
   def self.new_workshop_based_on(workshop)
     line_item = self.new

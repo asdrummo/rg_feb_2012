@@ -15,7 +15,7 @@
 		</div><!-- end notice -->
 	<% end %>
 	<div class="float_right">&nbsp;|&nbsp;
-	<%= link_to('View Cart', :action => 'show_cart') %>
+	<%= link_to('View Cart', :controller => 'public', :action => 'show_cart') %>
 	<% if @cart != nil %>
 		<% @quantity = 0 %>
 		<% @cart.items.each do |item| 
@@ -42,7 +42,7 @@
 </div><!-- end login div -->
 <div class="clear"></div>
 <div id="title">
-	<h1><%= link_to('ROAM & GAUGE', root_url) %><h1>
+	<h1><%= link_to('ROAM & GAUGE', 'public') %><h1>
 </div>
 </div><!-- end header -->
 

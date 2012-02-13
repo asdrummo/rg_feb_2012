@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
+  
   protected
   
   def confirm_logged_in
@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
+
 
     private
 

@@ -42,16 +42,16 @@ class ComponentsController < ApplicationController
   # GET /components/new.xml
   def new
     @component = Component.new
-    @component_select = 'true'
+    @new_component = 'true'
     list_components
      respond_to do |format|
        format.html # new.html.erb
-       format.xml  { render :xml => @customer }
+       format.xml  { render :xml => @component }
     end
   end
        
   def list_components
-    @components = ['Bottom Bracket', 'Front Brake', 'Rear Brake', 'Chain', 'Chainring', 'Cog Cassette', 'Crank', 'Front Deraileur', 'Rear Deraileur', 'Fork', 'Grip', 'Half Link', 'Handlebar', 'Headset', 'Front Lever', 'Rear Lever', 'Pedal', 'Rim Strip', 'Saddle', 'Seat Clamp', 'Seat Post', 'Front Shifter', 'Rear Shifter', 'Stem', 'Front Tire', 'Rear Tire', 'Front Tube', 'Front Wheel', 'Rear Wheel']
+    @components = ['Bottom Bracket', 'Front Brake', 'Rear Brake', 'Chain', 'Chainring', 'Cog Cassette', 'Crank', 'Front Derailleur', 'Rear Derailleur', 'Fork', 'Grip', 'Half Link', 'Handlebar', 'Headset', 'Front Lever', 'Rear Lever', 'Pedal', 'Rim Strip', 'Saddle', 'Seat Clamp', 'Seat Post', 'Front Shifter', 'Rear Shifter', 'Stem', 'Front Tire', 'Rear Tire', 'Front Tube', 'Rear Tube', 'Front Wheel', 'Rear Wheel']
     @components_array = @components.map { |component| [component, component] }
   end
 
@@ -59,22 +59,25 @@ class ComponentsController < ApplicationController
 
   # GET /components/1/edit
   def edit
+    @new_component = 'false'
     @component = Component.find(params[:id])
+    @component_type = @component.component_type
+    @compartment = @component.compartment
+    find_component(@component_type)
   end
 
   # POST /components
   # POST /components.xml
   def create
+    @new_component = 'false'
     if params[:component_type]
       @component = Component.new(params[:component])
       find_component(params[:component_type])
       @component_type = params[:component_type]
-      @component_select = 'false'
       render 'new'
     else
     @component = Component.new(params[:component])
-    @component_type = @component.component_type.to_s
-    find_component(@component_type)
+    find_component(@component.component_type)
     @component_types = []
     respond_to do |format|
       if @component.save
@@ -114,64 +117,94 @@ class ComponentsController < ApplicationController
   def find_component (component_type)
     if component_type == "Bottom Bracket"
       @name = "bottom_bracket"
+      @compartment = 'drivetrain'
     elsif component_type == "Front Brake"
       @name = "front_brake"
+      @compartment = 'front_end'
     elsif component_type == 'Rear Brake'
       @name = "rear_brake"
+      @compartment = 'front_end'
     elsif component_type == 'Chain'
-      name = "chain"
+      @name = "chain"
+      @compartment = 'drivetrain'
     elsif component_type == 'Chainring'
       @name = "chainring"
+      @compartment = 'drivetrain'
     elsif component_type == 'Cog Cassette'
       @name = "cog"
+      @compartment = 'drivetrain'
     elsif component_type == 'Crank'
       @name = "crank"
-    elsif component_type == 'Front Deraileur'
-      @name = "front_deraileur"
-    elsif component_type == 'Rear Deraileur'
-      @name = "rear_deraileur"
+      @compartment = 'drivetrain'
+    elsif component_type == 'Front Derailleur'
+      @name = "front_derailleur"
+      @compartment = 'drivetrain'
+    elsif component_type == 'Rear Derailleur'
+      @name = "rear_derailleur"
+      @compartment = 'drivetrain'
     elsif component_type == 'Fork'
       @name = "fork"
+      @compartment = 'front_end'
     elsif component_type == 'Grip'
       @name = "grip"
+      @compartment = 'front_end'
     elsif component_type == 'Half Link'
       @name = "half_link"
+      @compartment = 'drivetrain'
     elsif component_type == 'Handlebar'
       @name = "handlebar"
+      @compartment = 'front_end'
     elsif component_type == 'Headset'
       @name = "headset"
+      @compartment = 'front_end'
     elsif component_type == 'Front Lever'
       @name = "front_lever"
+      @compartment = 'front_end'
     elsif component_type == 'Rear Lever'
       @name = "rear_lever"
+      @compartment = 'front_end'
     elsif component_type == 'Pedal'
       @name = "pedal"
+      @compartment = 'drivetrain'
     elsif component_type == 'Rim Strip'
       @name = "rim_strip"
+      @compartment = 'wheels'
     elsif component_type == 'Saddle'
       @name = "saddle"
+      @compartment = 'finishing'
     elsif component_type == 'Seat Clamp'
       @name = "seat_clamp"
+      @compartment = 'finishing'
     elsif component_type == 'Seat Post'
       @name = "seat_post"
+      @compartment = 'finishing'
     elsif component_type == 'Front Shifter'
       @name = "front_shifter"
+      @compartment = 'front_end'
     elsif component_type == 'Rear Shifter'
       @name = "rear_shifter"
+      @compartment = 'front_end'
     elsif component_type == 'Stem'
       @name = "stem"
+      @compartment = 'front_end'
     elsif component_type == 'Front Tire'
       @name = "front_tire"
+      @compartment = 'wheels'
     elsif component_type == 'Rear Tire'
       @name = "rear_tire"
+      @compartment = 'wheels'
     elsif component_type == 'Front Tube'
       @name = "front_tube"
+      @compartment = 'wheels'
     elsif component_type == 'Rear Tube'
       @name = "rear_tube"
+      @compartment = 'wheels'
     elsif component_type == 'Front Wheel'
       @name = "front_wheel"
+      @compartment = 'wheels'
     elsif component_type == 'Rear Wheel'
       @name = "rear_wheel"
+      @compartment = 'wheels'
     end
   end
   

@@ -1,0 +1,293 @@
+<div class="left">
+
+	INCOMPATIBLE COMPONENTS:<br /><br />
+	<% if @nav_id == 'drivetrain' %>
+		Cranks: <br />
+		<% if @ck_error_chainring_num_bolts != [] %>
+		incompatible with selected chainring (num_bolts): <br />
+			<% @ck_error_chainring_num_bolts.each do |component| %>
+				<%= component.name %>: <%= component.num_bolts %> != <%= @chainring_selected.num_bolts %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @ck_error_chainring_bcd != [] %>
+		incompatible with selected chainring (bcd): <br />
+			<% @ck_error_chainring_bcd.each do |component| %>
+				<%= component.name %>: <%= component.bcd %> != <%= @chainring_selected.bcd %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @ck_error_bottom_bracket_taper != [] %>
+		incompatible with selected bottom bracket (taper): <br />
+			<% @ck_error_bottom_bracket_taper.each do |component| %>
+				<%= component.name %>: <%= component.taper %> != <%= @bottom_bracket_selected.taper %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @ck_error_frame_clearance != [] %>
+		incompatible with selected frame (clearance): <br />
+			<% @ck_error_frame_clearance.each do |component| %>
+				<%= component.name %>: <%= component.qfactor %> < <%= @required_clearance %><br />
+			<% end %><br />
+		<% end %>
+
+		Bottom Brackets: <br />
+		<% if @bb_error_crank_taper != [] %>
+		incompatible with selected crank (taper): <br />
+			<% @bb_error_crank_taper.each do |component| %>
+				<%= component.name %>: <%= component.taper %> != <%= @crank_selected.taper %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @bb_error_frame_bb_width != [] %>
+		incompatible with selected frame (bottom_bracket_width): <br />
+			<% @bb_error_frame_bb_width.each do |component| %>
+				<%= component.name %>: <%= component.width %> != <%= @frame_model.bottom_bracket_width %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @bb_error_frame_bb_threading != [] %>
+		incompatible with selected frame (bottom_bracket_threading): <br />
+			<% @bb_error_frame_bb_threading.each do |component| %>
+				<%= component.name %>: <%= component.threading %> != <%= @frame_model.bottom_bracket_threading %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @bb_error_frame_bb_shell_width != [] %>
+		incompatible with selected frame (bottom_bracket_shell_width): <br />
+			<% @bb_error_frame_bb_shell_width.each do |component| %>
+				<%= component.name %>: <%= component.shell_width %> != <%= @frame_model.bottom_bracket_shell_width %><br />
+			<% end %><br />
+		<% end %>
+		<% if @bb_error_frame_clearance != [] %>
+		incompatible with selected frame (clearance): <br />
+			<% @bb_error_frame_clearance.each do |component| %>
+				<%= component.name %>: <%= component.qfactor %> < <%= @bb_frame_required_clearance %><br />
+			<% end %><br />
+		<% end %>
+		
+		Front Deraileurs: <br />
+		<% if @fd_error_crank_num_bolts != [] %>
+		incompatible with selected crank (num_bolts): <br />
+			<% @fd_error_crank_num_bolts.each do |component| %>
+				<%= component.name %>: <%= component.num_bolts %> != <%= @crank_selected.num_bolts %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_crank_bcd != [] %>
+		incompatible with selected crank (bcd): <br />
+			<% @fd_error_crank_bcd.each do |component| %>
+				<%= component.name %>: <%= component.bcd %> != <%= @crank_selected.bcd %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_crank_front_derailleur_type != [] %>
+		incompatible with selected crank (front_derailleur_type): <br />
+			<% @fd_error_crank_front_derailleur_type.each do |component| %>
+				<%= component.name %>: <%= component.front_derailleur_type %> != <%= @crank_selected.front_derailleur_type %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_chainring_num_bolts != [] %>
+		incompatible with selected chainring (num_bolts): <br />
+			<% @fd_error_chainring_num_bolts.each do |component| %>
+				<%= component.name %>: <%= component.num_bolts %> != <%= @chainring_selected.num_bolts %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_chainring_bcd != [] %>
+		incompatible with selected chainring (bcd): <br />
+			<% @fd_error_chainring_bcd.each do |component| %>
+				<%= component.name %>: <%= component.bcd %> != <%= @chainring_selected.bcd %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_chainring_chain_width != [] %>
+		incompatible with selected chainring (chain_width): <br />
+			<% @fd_error_chainring_chain_width.each do |component| %>
+				<%= component.name %>: <%=component.chain_width %> != <%= @chainring_selected.chain_width %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_chainring_front_derailleur_type != [] %>
+		incompatible with selected chainring (front_deraileur_type): <br />
+			<% @fd_error_chainring_front_derailleur_type.each do |component| %>
+				<%= component.name %>: <%= component.front_derailleur_type %> != <%= @chainring_selected.front_derailleur_type %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_chain_chain_width != [] %>
+		incompatible with selected chain (chain_width): <br />
+			<% @fd_error_chain_chain_width.each do |component| %>
+				<%= component.name %>: <%= component.chain_width %> != <%= @chain_selected.chain_width %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_cog_chain_width != [] %>
+		incompatible with selected cog cassette (chain_width): <br />
+			<% @fd_error_cog_chain_width.each do |component| %>
+				<%= component.name %>: <%= component.chain_width %> != <%= @cog_selected.chain_width %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @fd_error_gears_front_derailleur_type != [] %>
+		incompatible with selected gears (front_derailleur_type): <br />
+			<% @fd_error_gears_front_derailleur_type.each do |component| %>
+				<%= component.name %>: <%= component.front_derailleur_type %> != <%=  @gear.front_derailleur_type %><br />
+			<% end %><br />
+		<% end %>	
+		
+		<% if @fd_error_frame_front_derailleur_mount != [] %>
+		incompatible with selected frame (front_derailleur_mount): <br />
+			<% @fd_error_frame_front_derailleur_mount.each do |component| %>
+				<%= component.name %>: <%= component.front_derailleur_mount %> != <%=  @frame_model.front_deraill_mount %>: (<%= @frame_model.name %>)<br />
+			<% end %><br />
+		<% end %>
+
+		Chainrings: <br />
+		<% if @cr_error_crank_num_bolts != [] %>
+		incompatible with selected crank (num_bolts): <br />
+			<% @cr_error_crank_num_bolts.each do |component| %>
+				<%= component.name %>: <%= component.num_bolts %> != <%= @crank_selected.num_bolts %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @cr_error_chain_chain_width != [] %>
+		incompatible with selected chain (chain_width): <br />
+			<% @cr_error_chain_chain_width.each do |component| %>
+				<%= component.name %>: <%= component.chain_width %> != <%= @chain_selected.chain_width %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @cr_error_front_derailleur_type != [] %>
+		incompatible with selected front derailleur (front_derailleur_type): <br />
+			<% @cr_error_front_derailleur_type.each do |component| %>
+				<%= component.name %>: <%= component.front_derailleur_type %> != <%= @front_derailleur_selected.front_derailleur_type %><br />
+			<% end %><br />
+		<% end %>
+		
+		Rear Derailleurs: <br />
+		<% if @rd_error_frame_rear_derailleur_mount != [] %>
+		incompatible with selected frame (rear_derailleur_mount): <br />
+			<% @rd_error_frame_rear_derailleur_mount.each do |component| %>
+				<%= component.name %>: <%= component.rear_derailleur_mount %> != <%= @frame_model.rear_derailleur_mount %><br />
+			<% end %><br />
+		<% end %>
+
+		<% if @rd_error_cog_cassette_cog_number != [] %>
+		incompatible with selected cog cassette (cog_number): <br />
+			<% @rd_error_cog_cassette_cog_number.each do |component| %>
+				<%= component.name %>: <%=component.cog_number %> != <%= @cog_selected.cog_number %><br />
+			<% end %><br />
+		<% end %>
+		
+		<% if @rd_error_cog_cassette_chain_width != [] %>
+		incompatible with selected cog cassette (chain_width): <br />
+			<% @rd_error_cog_cassette_chain_width.each do |component| %>
+				<%= component.name %>: <%= component.chain_width %> != <%= @cog_selected.chain_width %><br />
+			<% end %><br />
+		<% end %>
+
+		<% if @rd_error_chain_chain_width != [] %>
+		incompatible with selected chain (chain_width): <br />
+			<% @rd_error_chain_chain_width.each do |component| %>
+				<%= component.name %>: <%= component.chain_width %> != <%= @chain_selected.chain_width %><br />
+			<% end %><br />
+		<% end %>
+
+		Cog Cassettes: <br />
+			<% if @cg_error_chain_chain_width != [] %>
+			incompatible with selected chain (chain width): <br />
+				<% @cg_error_chain_chain_width.each do |component| %>
+					<%= component.name %>: <%= component.width %> != <%= @chain_selected.chain_width %><br />
+				<% end %><br />
+			<% end %>
+			
+			<% if @cg_error_rear_derailleur_type != [] %>
+			incompatible with rear derailleur (type): <br />
+				<% @cg_error_rear_derailleur_type.each do |component| %>
+					<%= component.name %>: <%= component.rear_derailleur_type %> != <%= @rear_derailleur_selected.rear_derailleur_type %><br />
+				<% end %><br />
+			<% end %>			
+			
+		Chains: <br /> 
+			<% if @cn_error_chainring_chain_width != [] %>
+			incompatible chain width with chainring: <br />
+				<% @cn_error_chainring_chain_width.each do |component| %>
+		  			<%= component.name %>: <%= component.chain_width %> != <%= @chainring_selected.chain_width %><br />
+				<% end %><br />
+			<% end %>
+			
+			<% if @cn_error_rear_derailleur_chain_width != [] %>
+			incompatible chain width with rear_derailleur: <br />
+				<% @cn_error_rear_derailleur_chain_width.each do |component| %>
+		  			<%= component.name %>: <%= component.chain_width %> != <%= @rear_derailleur_selected.chain_width %><br />
+				<% end %><br />
+			<% end %>
+			
+			<% if @cn_error_cog_number != [] %>
+			incompatible chain number with cog cassette: <br />
+				<% @cn_error_cog_number.each do |component| %>
+		  			<%= component.name %>: <%= component.cog_number %> != <%= @cog_selected.cog_number %><br />
+				<% end %><br />
+			<% end %>
+	<% elsif @nav_id == 'front_end'%>
+	
+	Forks: <br />
+	<% if @fk_error_frame_front_wheel_size != [] %>
+	incompatible fork with selected frame (front_wheel_size): <br />
+	<% @fk_error_frame_front_wheel_size.each do |component| %>
+ 			<%= component.name %>: <%= component.front_wheel_size %> != <%= @frame_model.front_wheel_size %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fk_error_frame_front_brake_type != [] %>
+	incompatible fork with selected frame (front_brake_type): <br />
+	<% @fk_error_frame_front_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.front_brake_type %> != <%= @frame_model.front_brake_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fk_error_frame_steer_tube_length != [] %>
+	incompatible fork with selected frame (steer_tube_length): <br />
+	<% @fk_error_frame_steer_tube_length.each do |component| %>
+ 			<%= component.name %>: <%= component.steer_tube_length %> != <%= @frame_model.steer_tube_length %><br />
+	<% end %><br />
+	<% end %>
+	
+	STEMS: <br />
+	<% if @fk_error_stem_steer_tube_diameter != [] %>
+	incompatible fork with selected stem (steer_tube_diameter): <br />
+	<% @fk_error_stem_steer_tube_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.steer_tube_diameter %> != <%= @stem_selected.steer_tube_diameter %><br />
+	<% end %><br />
+	<% end %>
+	
+	HEADSETS:<br />
+	<% if @fk_error_headset_steer_tube_diameter != [] %>
+	incompatible fork with selected headset (steer_tube_diameter): <br />
+	<% @fk_error_headset_steer_tube_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.steer_tube_diameter %> != <%= @headset_selected.steer_tube_diameter %><br />
+	<% end %><br />
+	<% end %>
+	
+	FRONT BRAKES: <br />
+	<% if @fk_error_front_brake_front_brake_type != [] %>
+	incompatible fork with selected front_brake (front_brake_type): <br />
+	<% @fk_error_front_brake_front_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.front_brake_type %> != <%= @front_brake_selected.front_brake_type %><br />
+	<% end %><br />
+	<% end %>
+		
+	<% elsif @nav_id == 'wheels'%>
+	<% end %>
+	
+	INCOMPATIBLE COMPONENTS (ALL)<br />
+	<% @incompatible_components.each do |c| %>
+		<%= c.name %><br />
+	<% end %>
+			
+</div>
+
+		
+		

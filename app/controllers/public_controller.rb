@@ -312,12 +312,12 @@ class PublicController < ApplicationController
     elsif @component_name == 'Cranks'
       @component = Components::Crank.find(@id)
       @name = "crank"
-    elsif @component_name == 'Front Deraileurs'
-      @component = Components::FrontDeraileur.find(@id)
-      @name = "front_deraileur"
-    elsif @component_name == 'Rear Deraileurs'
-      @component = Components::RearDeraileur.find(@id)
-      @name = "rear_deraileur"
+    elsif @component_name == 'Front Derailleurs'
+      @component = Components::FrontDerailleur.find(@id)
+      @name = "front_derailleur"
+    elsif @component_name == 'Rear Derailleurs'
+      @component = Components::RearDerailleur.find(@id)
+      @name = "rear_derailleur"
     elsif @component_name == 'Forks'
       @component = Components::Fork.find(@id)
       @name = "fork"
@@ -475,12 +475,6 @@ class PublicController < ApplicationController
     end
   end
   
-  
-
-  
-
-  
-  
   def empty_cart
     @cart.empty_all_items
     @workshop_cart.empty_all_items
@@ -561,7 +555,6 @@ class PublicController < ApplicationController
       end
   end
   
-
   
   def attempt_login
     authorized_user = Customer.authenticate(params[:email], params[:password])
@@ -621,8 +614,6 @@ class PublicController < ApplicationController
       redirect_to(:controller => 'public', :action => 'error_forbidden')
     end
   end
-  
-  private
   
   def authorize_customer_access(order)
     if order.customer_id == session[:customer_id]

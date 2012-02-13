@@ -1,21 +1,23 @@
 module PublicHelper
-  def sort_link_helper(text, param, component)
+  def sort_link_helper2(text, param, component)
     key = param
     key += "_reverse" if "name" == param
     options = {
         :url => {:action => 'sort_components', :sort => key, :component => component},
         :update => 'table',
         :before => "Element.show('spinner')",
-        :success => "Element.hide('spinner')"
+        :success => "Element.hide('spinner')",
+        :remote => true
     }
     html_options = {
       :title => "Sort by this field",
       :href => url_for(:action => 'sort_components', :sort => key)
     }
-    link_to_remote(text, options, html_options)
+    #link_to_remote(text, options, html_options)
+    link_to(text, options, html_options)
   end
   
-  def nav_link_helper(text, param)
+  def nav_link_helper2(text, param)
     
     options = {
         :url => {:action => param},
@@ -30,7 +32,7 @@ module PublicHelper
     link_to_remote(text, options, html_options)
   end
 
-    def pagination_links_remote(paginator)
+    def pagination_links_remote2(paginator)
       page_options = {:window_size => 1}
       pagination_links_each(paginator, page_options) do |n|
         options = {
@@ -44,7 +46,7 @@ module PublicHelper
       end
     end
 
-    def sort_td_class_helper(param)
+    def sort_td_class_helper2(param)
       result = 'class="sortup"' if params[:sort] == param
       result = 'class="sortdown"' if params[:sort] == param + "_reverse"
       return result

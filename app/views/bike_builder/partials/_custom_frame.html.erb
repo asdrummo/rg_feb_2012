@@ -1,0 +1,49 @@
+<%= form_for('custom_frame', :action => 'frames' ) do |f| %>
+  <% if @custom_frame.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@custom_frame.errors.count, "error") %> prohibited this frame from being saved:</h2>
+
+      <ul>
+      <% @custom_frame.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= f.hidden_field :name, :value => 'custom' %>
+
+  <div class="field">
+    <%= f.label :gears %><br />
+    <%= f.text_field :gears %>
+  </div
+  <div class="field">
+    <%= f.label :rear_derailleur_mount %><br />
+    <%= f.text_field :rear_derailleur_mount %>
+  </div>
+  <div class="field">
+    <%= f.label :front_derailleur_mount %><br />
+    <%= f.text_field :front_derailleur_mount %>
+  </div>
+  <div class="field">
+    <%= f.label :bottom_bracket_width %><br />
+    <%= f.text_field :bottom_bracket_width %>
+  </div>
+  <div class="field">
+    <%= f.label :bottom_bracket_shell_width %><br />
+    <%= f.text_field :bottom_bracket_shell_width %>
+  </div>	
+  <div class="field">
+    <%= f.label :bottom_bracket_threading %><br />
+    <%= f.text_field :bottom_bracket_threading %>
+  </div>
+  <div class="field">
+    <%= f.label :clearance %><br />
+    <%= f.text_field :clearance %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Add Frame Specs'%>
+  </div>
+
+<% end %>

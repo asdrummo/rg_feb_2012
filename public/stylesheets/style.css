@@ -39,6 +39,11 @@ a {
 	text-align:center;
 }
 
+/* backend love */
+table.componentIndex{
+	width: 500px;
+}
+
 /* header styling */
 #header {
 
@@ -99,7 +104,9 @@ font-weight: 900;
 /* side menu */
 #side_menu {
 	float:left;
+	text-align:left;
 }
+
 /*--------- content styling ----- */
 table.center {margin-left:auto; margin-right:auto; border-collapse: collapse;}
 table.padded td {padding:10px}
@@ -114,7 +121,6 @@ table.padded td {padding:10px}
 }
 .error a.error_link {text-align: center; color: red;}
 #content {
-	
 padding-top:20px;
 }
 
@@ -146,12 +152,12 @@ padding-top:20px;
 
 #workshops {
 }
-#workshop_progress {
+#workshop_progress, #bike_builder_progress {
 	text-align:center;
 	padding-top:0;
 	width:800px;
 }
-#workshop_progress li {
+#workshop_progress li, #bike_builder_progress li  {
 	padding: 0 10px 0 10px;
 	list-style: none;
 	display:inline;
@@ -173,6 +179,7 @@ table#show_components td {
 	width: 800px;
 	text-align:left;
 }
+
 /* shopping cart */
 #cart{
 	width: 800px;
@@ -229,12 +236,19 @@ table.invoice_table {
 :link img {
 	border:none;
 }
+
 /* components (grid) */
 #component_grid {
 	margin:auto;
 	padding: 20px;
 	text-align:center;
+}
 
+#left_nav_sm {
+	text-align:left;
+}
+#left_column {
+	vertical-align:top
 }
 .item {
 	float:left;
@@ -274,6 +288,7 @@ table.invoice_table {
 #orders td {
 	padding:10px;
 }
+
 /* standard issue rails styling to be modded later */
 div.field, div.actions {
 	margin-bottom: 5px;

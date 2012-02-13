@@ -15,7 +15,7 @@
 		</div><!-- end notice -->
 	<% end %>
 	<div class="float_right">&nbsp;|&nbsp;
-	<%= link_to('View Cart', :action => 'show_cart') %>
+	<%= link_to('View Cart', :controller => 'public', :action => 'show_cart') %>
 	<% if @cart != nil %>
 		(<%= @cart.items.count %>)
 	<% else %>
@@ -30,8 +30,8 @@
 	</div><!-- end login -->
 <% else %>
 	<div class="float_right">
-		<%= link_to('Login', :action => 'login') %>&nbsp|&nbsp
-		<%= link_to('Register', :action => 'register') %>
+		<%= link_to('Login', :controller => 'public', :action => 'login') %>&nbsp|&nbsp
+		<%= link_to('Register', :controller => 'public', :action => 'register') %>
 	</div><!-- end logout -->
 <% end %>
 
