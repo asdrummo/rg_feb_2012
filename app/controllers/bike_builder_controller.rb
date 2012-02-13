@@ -496,6 +496,7 @@ class BikeBuilderController < ApplicationController
   end #end action
  
   def general_filters
+
     components_per_page
     if @nav_id == 'wheels'
       @component_packages = ComponentPackage.where(:package_type => @nav_id) #.order(:order => 'created_at ASC')
@@ -545,7 +546,7 @@ class BikeBuilderController < ApplicationController
     @fk_error_frame_steer_tube_length = []
     @fk_error_stem_steer_tube_diameter = []
     @fk_error_headset_steer_tube_diameter = []
-    @fk_error_front_brake_front_brake_type = []
+    @fk_error_front_brake_type = []
     #@fk_error_front_wheel_front_hub_width = []
     #@fk_error_front_tire_max_tire_width = []
     #@fk_error_front_tire_max_tire_size = []
@@ -554,12 +555,12 @@ class BikeBuilderController < ApplicationController
     
       if @frame_model
       #frame wheel size
-        if component.front_wheel_size != @frame_model.front_wheel_size.to_s
+        if component.wheel_size != @frame_model.front_wheel_size.to_s
           @fk_error_frame_front_wheel_size << component
           @incompatible_components << component
         end
       #frame front brake type
-        if component.front_brake_type != @frame_model.front_brake_type
+        if component.brake_type != @frame_model.front_brake_type
           @fk_error_frame_front_brake_type << component
           @incompatible_components << component
         end      
@@ -588,8 +589,8 @@ class BikeBuilderController < ApplicationController
       
       #front brake front brake type 
       if @front_brake_selected 
-        if component.front_brake_type != @front_brake_selected.front_brake_type
-          @fk_error_front_brake_front_brake_type << component
+        if component.brake_type != @front_brake_selected.brake_type
+          @fk_error_front_brake_type << component
           @incompatible_components << component
         end
       end #end front brake
@@ -672,7 +673,7 @@ class BikeBuilderController < ApplicationController
     @fs_error_handlebar_clamp_diameter_low = []
     @fs_error_handlebar_clamp_diameter_high = []
     @fs_error_handlebar_type = []
-    @fs_error_handlebar_max_turn_diameter = []
+    @fs_error_handlebar_max_turn_size = []
     
     if @components.where(:component_type => 'Front Shifter').each do |component|
       if @front_derailleur_selected
@@ -699,8 +700,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_diameter > @handlebar_selected.max_turn_diameter
-          @fs_error_handlebar_max_turn_diameter << component
+        if component.max_turn_size > @handlebar_selected.max_turn_size
+          @fs_error_handlebar_max_turn_size << component
           @incompatible_components << component
         end
       end # end handlebar filters
@@ -714,7 +715,7 @@ class BikeBuilderController < ApplicationController
     @rs_error_handlebar_clamp_diameter_low = []
     @rs_error_handlebar_clamp_diameter_high = []
     @rs_error_handlebar_type = []
-    @rs_error_handlebar_max_turn_diameter = []
+    @rs_error_handlebar_max_turn_size = []
     
     if @components.where(:component_type => 'Rear Shifter').each do |component|
       if @rear_derailleur_selected
@@ -741,8 +742,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_diameter > @handlebar_selected.max_turn_diameter
-          @rs_error_handlebar_max_turn_diameter << component
+        if component.max_turn_size > @handlebar_selected.max_turn_size
+          @rs_error_handlebar_max_turn_size << component
           @incompatible_components << component
         end
       end # end handlebar filters
@@ -757,18 +758,18 @@ class BikeBuilderController < ApplicationController
     @fl_error_handlebar_clamp_diameter_low = []
     @fl_error_handlebar_clamp_diameter_high = []
     @fl_error_handlebar_type = []
-    @fl_error_handlebar_max_turn_diameter = [] 
+    @fl_error_handlebar_max_turn_size = [] 
     
     if @components.where(:component_type => 'Front Lever').each do |component|
       
       if @front_brake_selected
         #front brake type
-        if component.front_brake_type > @front_brake_selected.front_brake_type
+        if component.brake_type > @front_brake_selected.brake_type
           @fl_error_front_brake_type << component
           @incompatible_components << component
         end 
         #front brake pull
-        if component.front_brake_pull > @front_brake_selected.front_brake_pull
+        if component.brake_pull > @front_brake_selected.brake_pull
           @fl_error_front_brake_pull << component
           @incompatible_components << component
         end
@@ -791,8 +792,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_diameter > @handlebar_selected.max_turn_diameter
-          @fl_error_handlebar_max_turn_diameter << component
+        if component.max_turn_size > @handlebar_selected.max_turn_size
+          @fl_error_handlebar_max_turn_size << component
           @incompatible_components << component
         end
       end # end handlebar filters
@@ -802,23 +803,23 @@ class BikeBuilderController < ApplicationController
     
     ### Rear LEVER ###
     #set rear lever error arrays
-    @rl_error_front_brake_type = [] 
-    @rl_error_front_brake_pull = [] 
+    @rl_error_rear_brake_type = [] 
+    @rl_error_rear_brake_pull = [] 
     @rl_error_handlebar_clamp_diameter_low = []
     @rl_error_handlebar_clamp_diameter_high = []
     @rl_error_handlebar_type = []
-    @rl_error_handlebar_max_turn_diameter = [] 
+    @rl_error_handlebar_max_turn_size = [] 
     
     if @components.where(:component_type => 'Rear Lever').each do |component|
       
       if @rear_brake_selected
         #rear brake type
-        if component.rear_brake_type > @rear_brake_selected.rear_brake_type
+        if component.brake_type > @rear_brake_selected.brake_type
           @rl_error_rear_brake_type << component
           @incompatible_components << component
         end 
         #rear brake pull
-        if component.rear_brake_pull > @rear_brake_selected.rear_brake_pull
+        if component.brake_pull > @rear_brake_selected.brake_pull
           @rl_error_rear_brake_pull << component
           @incompatible_components << component
         end
@@ -841,8 +842,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_diameter > @handlebar_selected.max_turn_diameter
-          @rl_error_handlebar_max_turn_diameter << component
+        if component.max_turn_size > @handlebar_selected.max_turn_size
+          @rl_error_handlebar_max_turn_size << component
           @incompatible_components << component
         end
       end # end handlebar filters
@@ -856,19 +857,19 @@ class BikeBuilderController < ApplicationController
     @hb_error_front_lever_clamp_diameter_high = [] 
     @hb_error_front_lever_clamp_diameter_low = [] 
     @hb_error_front_lever_handlebar_type = [] 
-    @hb_error_front_lever_max_turn_diameter = [] 
+    @hb_error_front_lever_max_turn_size = [] 
     @hb_error_rear_lever_clamp_diameter_high = [] 
     @hb_error_rear_lever_clamp_diameter_low = [] 
     @hb_error_rear_lever_handlebar_type = [] 
-    @hb_error_rear_lever_max_turn_diameter = []
+    @hb_error_rear_lever_max_turn_size = []
     @hb_error_front_shifter_clamp_diameter_high = []
     @hb_error_front_shifter_clamp_diameter_low = [] 
     @hb_error_front_shifter_handlebar_type = [] 
-    @hb_error_front_shifter_max_turn_diameter = []
+    @hb_error_front_shifter_max_turn_size = []
     @hb_error_rear_shifter_clamp_diameter_high = []
     @hb_error_rear_shifter_clamp_diameter_low = [] 
     @hb_error_rear_shifter_handlebar_type = [] 
-    @hb_error_rear_shifter_max_turn_diameter = []
+    @hb_error_rear_shifter_max_turn_size = []
     
     if @components.where(:component_type => 'Handlebar').each do |component|
       
@@ -897,8 +898,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #front lever max turn diameter
-        if component.max_turn_diameter > @front_lever_selected.max_turn_diameter
-          @hb_error_front_lever_max_turn_diameter << component
+        if component.max_turn_size > @front_lever_selected.max_turn_size
+          @hb_error_front_lever_max_turn_size << component
           @incompatible_components << component
         end
       end
@@ -920,8 +921,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #rear lever max turn diameter
-        if component.max_turn_diameter > @rear_lever_selected.max_turn_diameter
-          @hb_error_rear_lever_max_turn_diameter << component
+        if component.max_turn_size > @rear_lever_selected.max_turn_size
+          @hb_error_rear_lever_max_turn_size << component
           @incompatible_components << component
         end
       end
@@ -943,8 +944,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #front shifter max turn diameter
-        if component.max_turn_diameter > @front_shifter_selected.max_turn_diameter
-          @hb_error_front_shifter_max_turn_diameter << component
+        if component.max_turn_size > @front_shifter_selected.max_turn_size
+          @hb_error_front_shifter_max_turn_size << component
           @incompatible_components << component
         end
       end
@@ -966,8 +967,8 @@ class BikeBuilderController < ApplicationController
           @incompatible_components << component
         end
         #rear shifter max turn diameter
-        if component.max_turn_diameter > @rear_shifter_selected.max_turn_diameter
-          @hb_error_rear_shifter_max_turn_diameter << component
+        if component.max_turn_size > @rear_shifter_selected.max_turn_size
+          @hb_error_rear_shifter_max_turn_size << component
           @incompatible_components << component
         end
       end
@@ -983,21 +984,30 @@ class BikeBuilderController < ApplicationController
     #@fb_error_front_tire_width = [] 
     @fb_error_frame_front_brake_type = [] 
     @fb_error_front_brake_pull = [] 
+    @fb_error_fork_front_brake_type = []
     
     if @components.where(:component_type => 'Front Brake').each do |component|
       
       if @frame_model
         #frame front brake type
-        if component.front_brake_type != @frame_model.front_brake_type
+        if component.brake_type != @frame_model.front_brake_type
           @fb_error_frame_front_brake_type << component
           @incompatible_components << component
         end
       end
       
-      if @front_brake
+      if @front_brake_selected
         #front brake pull
-          if component.front_brake_pull != @frame_model.front_brake_pull
+          if component.brake_pull != @frame_model.front_brake_pull
             @fb_error_front_brake_pull << component
+            @incompatible_components << component
+          end
+      end
+      
+      if @fork_selected
+        #front brake pull
+          if component.brake_type != @fork_selected.brake_type
+            @fb_error_fork_front_brake_type << component
             @incompatible_components << component
           end
       end
@@ -1018,15 +1028,15 @@ class BikeBuilderController < ApplicationController
       
       if @frame_model
         #frame rear brake type
-        if component.rear_brake_type != @frame_model.rear_brake_type
+        if component.brake_type != @frame_model.rear_brake_type
           @fb_error_frame_rear_brake_type << component
           @incompatible_components << component
         end
       end
       
-      if @rear_brake
+      if @rear_brake_selected
         #rear brake pull
-          if component.rear_brake_pull != @frame_model.rear_brake_pull
+          if component.brake_pull != @frame_model.rear_brake_pull
             @fb_error_rear_brake_pull << component
             @incompatible_components << component
           end
@@ -1053,9 +1063,172 @@ class BikeBuilderController < ApplicationController
     frame_check
     general_filters
     check_compartment_completion
+    wheels_compatibility_check
     component_sort
   end
 
+  def wheels_compatibility_check
+    #set variables for arrays
+    @incompatible_components = []
+    
+    ### FRONT TIRE ###
+    #set front tire error arrays
+    @fti_error_front_tube_tire_size = [] 
+    @fti_error_front_tube_tire_width = [] 
+    @fti_error_front_tube_wheel_size = [] 
+    @fti_error_front_wheel_rim_width = [] 
+    
+    
+    if @components.where(:component_type => 'Front Tire').each do |component|
+      
+  
+      if @front_tube_selected
+        #front tube tire size & front tire wheel size
+          if component.wheel_size != @front_tube_selected.tire_size
+            @fti_error_front_tube_tire_size << component
+            @incompatible_components << component
+          end
+        #front tube tire width
+           if component.tire_width != @front_tube_selected.tire_width
+             @fti_error_front_tube_tire_width << component
+             @incompatible_components << component
+           end
+      end
+      
+      if @front_wheel_selected
+        #front wheel size
+          if component.wheel_size != @front_wheel_selected.wheel_size
+            @fti_error_front_tube_wheel_size << component
+            @incompatible_components << component
+          end
+        #front wheel rim width
+           if component.rim_width != @front_wheel_selected.rim_width
+             @fti_error_front_wheel_rim_width << component
+             @incompatible_components << component
+           end
+      end
+      
+      if @front_brake_selected
+        #front brake tire max width & front tire width 
+          if component.tire_width != @front_brake_selected.tire_max_width
+            @fti_error_front_brake_tire_max_width << component
+            @incompatible_components << component
+          end
+        #front wheel tire max size & front tire size
+           if component.tire_size != @front_brake_selected.tire_max_size
+             @fti_error_front_wheel_tire_max_size << component
+             @incompatible_components << component
+           end
+      end
+      
+    end # end front tire loop
+    end # end front tire if statement
+
+    ### FRONT TUBE ###
+    #set front tube error arrays
+    @ftu_error_front_wheel_size = [] 
+    @ftu_error_front_wheel_rim_width = [] 
+    @ftu_error_front_wheel_size = [] 
+    @ftu_error_front_tire_width = [] 
+    
+    
+    if @components.where(:component_type => 'Front Tube').each do |component|
+      
+      if @front_wheel_selected
+        #front wheel size
+          if component.wheel_size != @front_wheel_selected.wheel_size
+            @ftu_error_front_wheel_size << component
+            @incompatible_components << component
+          end
+        #front wheel rim width
+           if component.rim_width != @front_wheel_selected.rim_width
+             @ftu_error_front_wheel_rim_width << component
+             @incompatible_components << component
+           end
+      end
+
+      if @front_tire_selected
+        #front tire wheel size & front tube tire size
+          if component.tire_size != @front_tire_selected.wheel_size
+            @ftu_error_front_wheel_size << component
+            @incompatible_components << component
+          end
+        #front tire width
+           if component.tire_width != @front_tire_selected.tire_width
+             @ftu_error_front_tire_width << component
+             @incompatible_components << component
+           end
+      end
+      
+    end # end front tube loop
+    end # end front tube if statement
+
+    ### FRONT WHEEL ###
+    #set front tube error arrays
+    @fw_error_fork_hub_width = [] 
+    @fw_error_front_tire_wheel_size = [] 
+    @fw_error_front_tire_rim_width = [] 
+    @fw_error_front_brake_type = [] 
+    @fw_error_front_tube_wheel_size = [] 
+    @fw_error_front_tube_rim_width = []
+    
+    if @components.where(:component_type => 'Front Wheel').each do |component|
+      
+      if @fork_selected
+        #fork hub width
+          if component.hub_width != @fork_selected.hub_width
+            @fw_error_fork_hub_width << component
+            @incompatible_components << component
+          end
+      end
+
+      if @front_tire_selected
+        #front tire wheel size
+          if component.wheel_size != @front_tire_selected.wheel_size
+            @fw_error_front_tire_wheel_size << component
+            @incompatible_components << component
+          end
+        #front tire rim width
+           if component.rim_width != @front_tire_selected.rim_width
+             @fw_error_front_tire_rim_width << component
+             @incompatible_components << component
+           end
+      end
+      
+      if @front_brake_selected
+        #front brake type
+          if component.brake_type != @front_brake_selected.brake_type
+            @fw_error_front_brake_type << component
+            @incompatible_components << component
+          end
+      end
+      
+      if @front_tube_selected
+        #front tube wheel size
+          if component.wheel_size != @front_tube_selected.wheel_size
+            @fw_error_front_tube_wheel_size << component
+            @incompatible_components << component
+          end
+        #front tube rim width
+           if component.rim_width != @front_tube_selected.rim_width
+             @fw_error_front_tube_rim_width << component
+             @incompatible_components << component
+           end
+      end
+
+    end # end front wheel loop
+    end # end front wheel if statement    
+
+    
+    ###REMOVE INCOMPATIBLE FRONT END COMPONENTS FROM COMPONENTS!###
+    #remove incompatible components
+    @incompatible_components.uniq! 
+    if @incompatible_components.empty?
+    else
+    @components = @components.incompatible(@incompatible_components) 
+    end
+  end
+  
   def select_component
       @component_name = params[:component]
       @id = params[:id]
@@ -1286,11 +1459,11 @@ class BikeBuilderController < ApplicationController
         conditions = ["LOWER(name) LIKE ?", "%#{query.downcase}%"] unless query.nil?
 
        @components = @components.where(conditions).order(sort).paginate(:per_page => @per_page, :page => params[:page])
-        
+
         
         respond_to do |format|
           format.html 
-          format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
           format.js {render 'sort.js'}  
         end
     

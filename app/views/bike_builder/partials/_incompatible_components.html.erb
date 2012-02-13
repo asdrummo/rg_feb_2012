@@ -1,6 +1,7 @@
 <div class="left">
-
-	INCOMPATIBLE COMPONENTS:<br /><br />
+	<details>
+	<summary>INCOMPATIBILITY LOG</summary>
+	<br /><br />
 	<% if @nav_id == 'drivetrain' %>
 		Cranks: <br />
 		<% if @ck_error_chainring_num_bolts != [] %>
@@ -237,14 +238,14 @@
 	<% if @fk_error_frame_front_wheel_size != [] %>
 	incompatible fork with selected frame (front_wheel_size): <br />
 	<% @fk_error_frame_front_wheel_size.each do |component| %>
- 			<%= component.name %>: <%= component.front_wheel_size %> != <%= @frame_model.front_wheel_size %><br />
+ 			<%= component.name %>: <%= component.wheel_size %> != <%= @frame_model.front_wheel_size %><br />
 	<% end %><br />
 	<% end %>
 	
 	<% if @fk_error_frame_front_brake_type != [] %>
 	incompatible fork with selected frame (front_brake_type): <br />
 	<% @fk_error_frame_front_brake_type.each do |component| %>
- 			<%= component.name %>: <%= component.front_brake_type %> != <%= @frame_model.front_brake_type %><br />
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @frame_model.front_brake_type %><br />
 	<% end %><br />
 	<% end %>
 	
@@ -272,22 +273,23 @@
 	<% end %>
 	
 	FRONT BRAKES: <br />
-	<% if @fk_error_front_brake_front_brake_type != [] %>
+	<% if @fk_error_front_brake_type != [] %>
 	incompatible fork with selected front_brake (front_brake_type): <br />
-	<% @fk_error_front_brake_front_brake_type.each do |component| %>
- 			<%= component.name %>: <%= component.front_brake_type %> != <%= @front_brake_selected.front_brake_type %><br />
+	<% @fk_error_front_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @front_brake_selected.brake_type %><br />
 	<% end %><br />
 	<% end %>
 		
 	<% elsif @nav_id == 'wheels'%>
 	<% end %>
 	
-	INCOMPATIBLE COMPONENTS (ALL)<br />
-	<% @incompatible_components.each do |c| %>
-		<%= c.name %><br />
+	<% if @incompatible_components %>
+		INCOMPATIBLE COMPONENTS (ALL)<br />
+		<% @incompatible_components.each do |c| %>
+			<%= c.name %><br />
+		<% end %>
 	<% end %>
-			
 </div>
-
+</details>
 		
 		
