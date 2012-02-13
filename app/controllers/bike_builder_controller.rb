@@ -498,9 +498,9 @@ class BikeBuilderController < ApplicationController
   def general_filters
     components_per_page
     if @nav_id == 'wheels'
-      @component_packages = ComponentPackage.where(:package_type => @nav_id).order(:order => 'created_at ASC')
+      @component_packages = ComponentPackage.where(:package_type => @nav_id) #.order(:order => 'created_at ASC')
     else
-      @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed').order(:order => 'created_at ASC')
+      @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed') #.order(:order => 'created_at ASC')
     end
     #filter for component type 
     if params[:type] && (params[:type] != 'none')
@@ -635,7 +635,6 @@ class BikeBuilderController < ApplicationController
     @st_error_fork_steer_tube_inner_diameter = []
     @st_error_handlebar_stem_clamp_diameter_high = []
     @st_error_handlebar_stem_clamp_diameter_low = []
-
     
     if @components.where(:component_type => 'Headset').each do |component|
       
