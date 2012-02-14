@@ -234,6 +234,7 @@
 			<% end %>
 	<% elsif @nav_id == 'front_end'%>
 	
+	
 	Forks: <br />
 	<% if @fk_error_frame_front_wheel_size != [] %>
 	incompatible fork with selected frame (front_wheel_size): <br />
@@ -256,15 +257,6 @@
 	<% end %><br />
 	<% end %>
 	
-	STEMS: <br />
-	<% if @fk_error_stem_steer_tube_diameter != [] %>
-	incompatible fork with selected stem (steer_tube_diameter): <br />
-	<% @fk_error_stem_steer_tube_diameter.each do |component| %>
- 			<%= component.name %>: <%= component.steer_tube_diameter %> != <%= @stem_selected.steer_tube_diameter %><br />
-	<% end %><br />
-	<% end %>
-	
-	HEADSETS:<br />
 	<% if @fk_error_headset_steer_tube_diameter != [] %>
 	incompatible fork with selected headset (steer_tube_diameter): <br />
 	<% @fk_error_headset_steer_tube_diameter.each do |component| %>
@@ -272,14 +264,390 @@
 	<% end %><br />
 	<% end %>
 	
-	FRONT BRAKES: <br />
 	<% if @fk_error_front_brake_type != [] %>
-	incompatible fork with selected front_brake (front_brake_type): <br />
+	incompatible fork with selected front brake (brake_type): <br />
 	<% @fk_error_front_brake_type.each do |component| %>
  			<%= component.name %>: <%= component.brake_type %> != <%= @front_brake_selected.brake_type %><br />
 	<% end %><br />
 	<% end %>
-		
+
+
+	
+	STEMS: <br />
+	<% if @st_error_fork_steer_tube_diameter != [] %>
+	incompatible fork with selected fork (steer_tube_diameter): <br />
+	<% @st_error_fork_steer_tube_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.steer_tube_diameter %> != <%= @stem_selected.steer_tube_diameter %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @st_error_fork_steer_tube_inner_diameter != [] %>
+	incompatible fork with selected stem (steer_tube_inner_diameter): <br />
+	<% @st_error_fork_steer_tube_inner_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.steer_tube_inner_diameter %> != <%= @fork_selected.steer_tube_inner_diameter %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @st_error_handlebar_stem_clamp_diameter_high != [] %>
+	incompatible fork with selected handlebar (clamp_diameter_high): <br />
+	<% @st_error_handlebar_stem_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @handlebar_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @st_error_handlebar_stem_clamp_diameter_low != [] %>
+	incompatible fork with selected handlebar (clamp_diameter_low): <br />
+	<% @st_error_handlebar_stem_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @handlebar_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+
+	
+	HEADSETS:<br />
+	
+	<% if @hs_error_frame_head_tube_inner_diameter != [] %>
+	incompatible headset with selected frame (head_tube_inner_diameter): <br />
+	<% @hs_error_frame_head_tube_inner_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.head_tube_inner_diameter %> +/- 1 <%= @frame_model.head_tube_inner_diameter %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hs_error_fork_steer_tube_diameter != [] %>
+	incompatible headset with selected fork (steer_tube_diameter): <br />
+	<% @hs_error_fork_steer_tube_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.steer_tube_diameter %> != <%= @fork_selected.steer_tube_diameter %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @hs_error_fork_crown_race_diameter != [] %>
+	incompatible headset with selected fork (crown_race_diameter): <br />
+	<% @hs_error_fork_crown_race_diameter.each do |component| %>
+ 			<%= component.name %>: <%= component.crown_race_diameter %> != <%= @fork_selected.crown_race_diameter %><br />
+	<% end %><br />
+	<% end %>
+    
+	FRONT BRAKES: <br />
+	<% if @fb_error_frame_front_brake_type != [] %>
+	incompatible front brakes with selected frame (brake_type): <br />
+	<% @fb_error_frame_front_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @frame_model.front_brake_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fb_error_front_lever_brake_pull != [] %>
+	incompatible front brakes with selected front lever (brake_pull): <br />
+	<% @fb_error_front_lever_brake_pull.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_pull %> != <%= @front_lever_selected.brake_pull %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fb_error_fork_front_brake_type != [] %>
+	incompatible front brakes with selected fork (brake_type): <br />
+	<% @fb_error_fork_front_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @fork_selected.brake_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	REAR BRAKES: <br />
+	
+	<% if @rb_error_frame_rear_brake_type != [] %>
+	incompatible rear brakes with selected frame (brake_type): <br />
+	<% @rb_error_frame_rear_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @frame_model.front_brake_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rb_error_rear_lever_brake_pull != [] %>
+	incompatible rear brakes with selected rear lever (brake_pull): <br />
+	<% @rb_error_rear_lever_brake_pull.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_pull %> != <%= @rear_lever_selected.brake_pull %><br />
+	<% end %><br />
+	<% end %>
+
+	
+	HANDLEBARS: <br />
+	
+	<% if @hb_error_stem_clamp_diameter_high != [] %>
+	incompatible handlebar with selected stem (clamp_diameter_high): <br />
+	<% @hb_error_stem_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @stem_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>	
+	
+	<% if @hb_error_front_lever_clamp_diameter_low != [] %>
+	incompatible handlebar with selected front lever (clamp_diameter_low): <br />
+	<% @hb_error_front_lever_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @front_lever_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_front_lever_clamp_diameter_high != [] %>
+	incompatible handlebar with selected front lever (clamp_diameter_high): <br />
+	<% @hb_error_front_lever_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @front_lever_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_front_lever_handlebar_type != [] %>
+	incompatible handlebar with selected front lever (handlebar_type): <br />
+	<% @hb_error_front_lever_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @front_lever_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_front_lever_max_turn_size != [] %>
+	incompatible handlebar with selected front lever (max_turn_size): <br />
+	<% @hb_error_front_lever_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @front_lever_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_lever_clamp_diameter_low != [] %>
+	incompatible handlebar with selected rear lever (clamp_diameter_low): <br />
+	<% @hb_error_rear_lever_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @rear_lever_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_lever_clamp_diameter_high != [] %>
+	incompatible handlebar with selected rear lever (clamp_diameter_high): <br />
+	<% @hb_error_rear_lever_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @rear_lever_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_lever_handlebar_type != [] %>
+	incompatible handlebar with selected rear lever (handlebar_type): <br />
+	<% @hb_error_rear_lever_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @rear_lever_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_lever_handlebar_type != [] %>
+	incompatible handlebar with selected rear lever (handlebar_type): <br />
+	<% @hb_error_rear_lever_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @rear_lever_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_front_shifter_clamp_diameter_low != [] %>
+	incompatible handlebar with selected front shifter (clamp_diameter_low): <br />
+	<% @hb_error_front_shifter_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @front_shifter_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @hb_error_front_shifter_clamp_diameter_high != [] %>
+	incompatible handlebar with selected front shifter (clamp_diameter_high): <br />
+	<% @hb_error_front_shifter_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @front_shifter_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @hb_error_front_shifter_handlebar_type != [] %>
+	incompatible handlebar with selected front shifter (handlebar_type): <br />
+	<% @hb_error_front_shifter_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @front_shifter_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @hb_error_front_shifter_max_turn_size != [] %>
+	incompatible handlebar with selected front shifter (max_turn_size): <br />
+	<% @hb_error_front_shifter_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @front_shifter_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_shifter_clamp_diameter_low != [] %>
+	incompatible handlebar with selected rear shifter (clamp_diameter_low): <br />
+	<% @hb_error_rear_shifter_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @rear_shifter_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_shifter_clamp_diameter_high != [] %>
+	incompatible handlebar with selected rear shifter (clamp_diameter_high): <br />
+	<% @hb_error_rear_shifter_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @rear_shifter_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @hb_error_rear_shifter_handlebar_type != [] %>
+	incompatible handlebar with selected rear shifter (handlebar_type): <br />
+	<% @hb_error_rear_shifter_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @rear_shifter_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @hb_error_rear_shifter_max_turn_size != [] %>
+	incompatible handlebar with selected rear shifter (max_turn_size): <br />
+	<% @hb_error_rear_shifter_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @rear_shifter_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+
+	REAR LEVER: <br />
+
+	<% if @rl_error_rear_brake_type != [] %>
+	incompatible rear lever with selected rear brake (brake_type): <br />
+	<% @rl_error_rear_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @rear_brake_selected.brake_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rl_error_rear_brake_pull != [] %>
+	incompatible rear lever with selected rear brake (brake_pull): <br />
+	<% @rl_error_rear_brake_pull.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_pull %> != <%= @rear_brake_selected.brake_pull %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rl_error_handlebar_clamp_diameter_low != [] %>
+	incompatible rear lever with selected rear brake (clamp_diameter_low): <br />
+	<% @rl_error_handlebar_clamp_diameter_low.each do |component| %>
+			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @handlebar_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+  
+	<% if @rl_error_handlebar_clamp_diameter_high != [] %>
+	incompatible rear lever with selected rear brake (clamp_diameter_high): <br />
+	<% @rl_error_handlebar_clamp_diameter_high.each do |component| %>
+			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @handlebar_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @rl_error_handlebar_type != [] %>
+	incompatible rear lever with selected handlebar (handlebar_type): <br />
+	<% @rl_error_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @handlebar_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @rl_error_handlebar_max_turn_size != [] %>
+	incompatible rear lever with selected handlebar (max_turn_size): <br />
+	<% @rl_error_handlebar_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @handlebar_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+   
+	FRONT LEVER: <br />
+
+	<% if @fl_error_front_brake_type != [] %>
+	incompatible front lever with selected front brake (brake_type): <br />
+	<% @fl_error_front_brake_type.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_type %> != <%= @front_brake_selected.brake_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fl_error_front_brake_pull != [] %>
+	incompatible front lever with selected front brake (brake_pull): <br />
+	<% @fl_error_front_brake_pull.each do |component| %>
+ 			<%= component.name %>: <%= component.brake_pull %> != <%= @front_brake_selected.brake_pull %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fl_error_handlebar_clamp_diameter_low != [] %>
+	incompatible front lever with selected front brake (clamp_diameter_low): <br />
+	<% @fl_error_handlebar_clamp_diameter_low.each do |component| %>
+			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @handlebar_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+  
+	<% if @fl_error_handlebar_clamp_diameter_high != [] %>
+	incompatible front lever with selected front brake (clamp_diameter_high): <br />
+	<% @fl_error_handlebar_clamp_diameter_high.each do |component| %>
+			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @handlebar_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @fl_error_handlebar_type != [] %>
+	incompatible front lever with selected handlebar (handlebar_type): <br />
+	<% @fl_error_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @handlebar_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+
+	<% if @fl_error_handlebar_max_turn_size != [] %>
+	incompatible front lever with selected handlebar (max_turn_size): <br />
+	<% @fl_error_handlebar_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @handlebar_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+	
+	FRONT SHIFTER: 
+	
+	<% if @fs_error_front_derailleur_type != [] %>
+	incompatible front shifter with selected front derailleur (front_derailleur_type): <br />
+	<% @fs_error_front_derailleur_type.each do |component| %>
+ 			<%= component.name %>: <%= component.front_derailleur_type %> != <%= @front_derailleur_selected.front_derailleur_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fs_error_handlebar_clamp_diameter_low != [] %>
+	incompatible front shifter with selected handlebar (clamp_diameter_low): <br />
+	<% @fs_error_handlebar_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @handlebar_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fs_error_handlebar_clamp_diameter_high != [] %>
+	incompatible front shifter with selected handlebar (clamp_diameter_high): <br />
+	<% @fs_error_handlebar_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @handlebar_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fs_error_handlebar_type != [] %>
+	incompatible front shifter with selected handlebar (handlebar_type): <br />
+	<% @fs_error_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @handlebar_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fs_error_handlebar_max_turn_size != [] %>
+	incompatible front shifter with selected handlebar (max_turn_size): <br />
+	<% @fs_error_handlebar_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @handlebar_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+	
+	REAR SHIFTER: 
+	
+	<% if @rs_error_rear_derailleur_type != [] %>
+	incompatible rear shifter with selected rear derailleur (rear_derailleur_type): <br />
+	<% @rs_error_rear_derailleur_type.each do |component| %>
+ 			<%= component.name %>: <%= component.rear_derailleur_type %> != <%= @rear_derailleur_selected.rear_derailleur_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rs_error_handlebar_clamp_diameter_low != [] %>
+	incompatible rear shifter with selected handlebar (clamp_diameter_low): <br />
+	<% @rs_error_handlebar_clamp_diameter_low.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_low %> != <%= @handlebar_selected.clamp_diameter_low %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rs_error_handlebar_clamp_diameter_high != [] %>
+	incompatible rear shifter with selected handlebar (clamp_diameter_high): <br />
+	<% @rs_error_handlebar_clamp_diameter_high.each do |component| %>
+ 			<%= component.name %>: <%= component.clamp_diameter_high %> != <%= @handlebar_selected.clamp_diameter_high %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rs_error_handlebar_type != [] %>
+	incompatible rear shifter with selected handlebar (handlebar_type): <br />
+	<% @rs_error_handlebar_type.each do |component| %>
+ 			<%= component.name %>: <%= component.handlebar_type %> != <%= @handlebar_selected.handlebar_type %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @rs_error_handlebar_max_turn_size != [] %>
+	incompatible rear shifter with selected handlebar (max_turn_size): <br />
+	<% @rs_error_handlebar_max_turn_size.each do |component| %>
+ 			<%= component.name %>: <%= component.max_turn_size %> != <%= @handlebar_selected.max_turn_size %><br />
+	<% end %><br />
+	<% end %>
+
 	<% elsif @nav_id == 'wheels'%>
 	<% end %>
 	

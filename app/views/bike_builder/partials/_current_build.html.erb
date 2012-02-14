@@ -31,7 +31,13 @@
 		<strong><%= item.component.component_type %>:</strong> | 	
 		<%= item.component.name %> |
 		<%= number_to_currency(item.component.price) %> | 
+		<% if (@fe_build_item == 'true' || @w_build_item == 'true') %>
+						<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type, :reset_fe_w => 'true'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %>
+		<% else %>
 		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %>
+		<% end %>
+		
+		
 		<br />
 		<% @drivetrain_price += item.component.price %>
 		<% end %>
@@ -47,7 +53,11 @@
 		<strong><%= item.component.component_type %>:</strong> |  	
 		<%= item.component.name %> |
 		<%= number_to_currency(item.component.price) %> | 
-		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %><br />
+		<% if @w_build_item == 'true' %>
+		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type, :reset_w => 'true'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %><br />
+		<% else%>
+			<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %><br />
+		<% end %>
 		<% @front_end_price += item.component.price %>
 		<% end %>
 		<% end %>

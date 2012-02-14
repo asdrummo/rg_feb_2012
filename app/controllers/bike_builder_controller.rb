@@ -80,7 +80,7 @@ class BikeBuilderController < ApplicationController
     session[:build] = @build
   end
   
-  def add_custom_frame_to_build    
+  def add_custom_frame_to_build
     frame = @custom_frame
     @frame_model = frame
     session[:frame] = frame
@@ -801,7 +801,7 @@ class BikeBuilderController < ApplicationController
     end # end front lever loop
     end # end front lever if statement       
     
-    ### Rear LEVER ###
+    ### REAR LEVER ###
     #set rear lever error arrays
     @rl_error_rear_brake_type = [] 
     @rl_error_rear_brake_pull = [] 
@@ -983,7 +983,7 @@ class BikeBuilderController < ApplicationController
     #@fb_error_front_tire_size = [] 
     #@fb_error_front_tire_width = [] 
     @fb_error_frame_front_brake_type = [] 
-    @fb_error_front_brake_pull = [] 
+    @fb_error_front_lever_brake_pull = [] 
     @fb_error_fork_front_brake_type = []
     
     if @components.where(:component_type => 'Front Brake').each do |component|
@@ -996,10 +996,10 @@ class BikeBuilderController < ApplicationController
         end
       end
       
-      if @front_brake_selected
-        #front brake pull
-          if component.brake_pull != @frame_model.front_brake_pull
-            @fb_error_front_brake_pull << component
+      if @front_lever_selected
+        #front lever brake pull
+          if component.brake_pull != @front_lever_selected.brake_pull
+            @fb_error_front_lever_brake_pull << component
             @incompatible_components << component
           end
       end
@@ -1010,44 +1010,42 @@ class BikeBuilderController < ApplicationController
             @fb_error_fork_front_brake_type << component
             @incompatible_components << component
           end
-      end
-      
+      end  
+
+
     end # end front brake loop
     end # end front brake if statement
     
-    ### REAR BRAKE ###
-    #set rear brake error arrays
-    #@fb_error_rear_wheel_size = [] 
-    #@fb_error_rear_wheel_rim_width = [] 
-    #@fb_error_rear_tire_size = [] 
-    #@fb_error_rear_tire_width = [] 
-    @fb_error_frame_rear_brake_type = [] 
-    @fb_error_rear_brake_pull = [] 
+    ### Rear BRAKE ###
+    #set front brake error arrays
+    #@rb_error_front_wheel_size = [] 
+    #@rb_error_front_wheel_rim_width = [] 
+    #@rb_error_front_tire_size = [] 
+    #@rb_error_front_tire_width = [] 
+    @rb_error_frame_rear_brake_type = [] 
+    @rb_error_rear_lever_brake_pull = [] 
     
     if @components.where(:component_type => 'Rear Brake').each do |component|
       
       if @frame_model
         #frame rear brake type
         if component.brake_type != @frame_model.rear_brake_type
-          @fb_error_frame_rear_brake_type << component
+          @rb_error_frame_rear_brake_type << component
           @incompatible_components << component
         end
       end
       
-      if @rear_brake_selected
-        #rear brake pull
-          if component.brake_pull != @frame_model.rear_brake_pull
-            @fb_error_rear_brake_pull << component
+      if @rear_lever_selected
+        #rear lever brake pull
+          if component.brake_pull != @rear_lever_selected.brake_pull
+            @rb_error_rear_lever_brake_pull << component
             @incompatible_components << component
           end
       end
-      
+    	
     end # end rear brake loop
     end # end rear brake if statement
 
-
-    
-    
     ###REMOVE INCOMPATIBLE FRONT END COMPONENTS FROM COMPONENTS!###
     #remove incompatible components
     @incompatible_components.uniq! 
@@ -1084,7 +1082,7 @@ class BikeBuilderController < ApplicationController
   
       if @front_tube_selected
         #front tube tire size & front tire wheel size
-          if component.wheel_size != @front_tube_selected.tire_size
+          if component.tire_size != @front_tube_selected.tire_size
             @fti_error_front_tube_tire_size << component
             @incompatible_components << component
           end
@@ -1149,7 +1147,7 @@ class BikeBuilderController < ApplicationController
 
       if @front_tire_selected
         #front tire wheel size & front tube tire size
-          if component.tire_size != @front_tire_selected.wheel_size
+          if component.tire_size != @front_tire_selected.tire_size
             @ftu_error_front_wheel_size << component
             @incompatible_components << component
           end
@@ -1219,6 +1217,131 @@ class BikeBuilderController < ApplicationController
     end # end front wheel loop
     end # end front wheel if statement    
 
+    ### REAR TIRE ###
+    #set rear tire error arrays
+    @rti_error_rear_tube_tire_size = [] 
+    @rti_error_rear_tube_tire_width = [] 
+    @rti_error_rear_tube_wheel_size = [] 
+    @rti_error_rear_wheel_rim_width = [] 
+    
+    
+    if @components.where(:component_type => 'Rear Tire').each do |component|
+      
+  
+      if @rear_tube_selected
+        #rear tube tire size & rear tire wheel size
+          if component.tire_size != @rear_tube_selected.tire_size
+            @rti_error_rear_tube_tire_size << component
+            @incompatible_components << component
+          end
+        #rear tube tire width
+           if component.tire_width != @rear_tube_selected.tire_width
+             @rti_error_rear_tube_tire_width << component
+             @incompatible_components << component
+           end
+      end
+      
+      if @rear_wheel_selected
+        #rear wheel size
+          if component.wheel_size != @rear_wheel_selected.wheel_size
+            @rti_error_rear_tube_wheel_size << component
+            @incompatible_components << component
+          end
+        #rear wheel rim width
+           if component.rim_width != @rear_wheel_selected.rim_width
+             @rti_error_rear_wheel_rim_width << component
+             @incompatible_components << component
+           end
+      end
+
+    end # end rear tire loop
+    end # end rear tire if statement
+
+    ### REAR WHEEL ###
+    #set rear tube error arrays
+    @rw_error_rear_tire_wheel_size = [] 
+    @rw_error_rear_tire_rim_width = [] 
+    @rw_error_rear_brake_type = [] 
+    @rw_error_rear_tube_wheel_size = [] 
+    @rw_error_rear_tube_rim_width = []
+    
+    if @components.where(:component_type => 'Rear Wheel').each do |component|
+
+      if @rear_tire_selected
+        #rear tire wheel size
+          if component.wheel_size != @rear_tire_selected.wheel_size
+            @rw_error_rear_tire_wheel_size << component
+            @incompatible_components << component
+          end
+        #rear tire rim width
+           if component.rim_width != @rear_tire_selected.rim_width
+             @rw_error_rear_tire_rim_width << component
+             @incompatible_components << component
+           end
+      end
+      
+      if @rear_brake_selected
+        #rear brake type
+          if component.brake_type != @rear_brake_selected.brake_type
+            @rw_error_rear_brake_type << component
+            @incompatible_components << component
+          end
+      end
+      
+      if @rear_tube_selected
+        #rear tube wheel size
+          if component.wheel_size != @rear_tube_selected.wheel_size
+            @rw_error_rear_tube_wheel_size << component
+            @incompatible_components << component
+          end
+        #rear tube rim width
+           if component.rim_width != @rear_tube_selected.rim_width
+             @rw_error_rear_tube_rim_width << component
+             @incompatible_components << component
+           end
+      end
+
+    end # end rear wheel loop
+    end # end rear wheel if statement
+    
+     ### REAR TUBE ###
+      #set rear tube error arrays
+      @rtu_error_rear_wheel_size = [] 
+      @rtu_error_rear_wheel_rim_width = [] 
+      @rtu_error_rear_wheel_size = [] 
+      @rtu_error_rear_tire_width = [] 
+
+
+      if @components.where(:component_type => 'Rear Tube').each do |component|
+
+        if @rear_wheel_selected
+          #rear wheel size
+            if component.wheel_size != @rear_wheel_selected.wheel_size
+              @rtu_error_rear_wheel_size << component
+              @incompatible_components << component
+            end
+          #rear wheel rim width
+             if component.rim_width != @rear_wheel_selected.rim_width
+               @rtu_error_rear_wheel_rim_width << component
+               @incompatible_components << component
+             end
+        end
+        
+        if @rear_tire_selected
+          #rear tire wheel size & rear tube tire size
+            if component.tire_size != @rear_tire_selected.tire_size
+              @rtu_error_rear_wheel_size << component
+              @incompatible_components << component
+            end
+          #rear tire width
+             if component.tire_width != @rear_tire_selected.tire_width
+               @rtu_error_rear_tire_width << component
+               @incompatible_components << component
+             end
+        end
+
+      end # end rear tube loop
+      end # end rear tube if statement
     
     ###REMOVE INCOMPATIBLE FRONT END COMPONENTS FROM COMPONENTS!###
     #remove incompatible components
@@ -1233,18 +1356,7 @@ class BikeBuilderController < ApplicationController
       @component_name = params[:component]
       @id = params[:id]
       add_component_to_build
-      #reset compartents if modifying build
-      if params[:reset_fe_w]
-        @result_of_component_select = 'true'
-        params[:compartment] = 'front_end'
-        clear_compartment_from_build
-        params[:compartment] = 'wheels'
-        clear_compartment_from_build
-      elsif params[:reset_w]
-        @result_of_component_select = 'true'
-        params[:compartment] = 'wheels'
-        clear_compartment_from_build
-      end
+      reset_compartments
       flash[:notice] = 'Component Added to Build'
       component = Component.find(params[:id])
       redirect_back
@@ -1266,6 +1378,7 @@ class BikeBuilderController < ApplicationController
   end
   
   def remove_component_from_build
+    reset_compartments
     list_components
     @component_name = params[:component]
     component = Component.find(params[:id])
@@ -1323,7 +1436,22 @@ class BikeBuilderController < ApplicationController
     flash[:notice] = 'your build has been reset'
     redirect_to(:action => 'frames')
   end
-    
+  
+  def reset_compartments
+    #reset compartents if modifying build
+    if params[:reset_fe_w] == 'true'
+      @result_of_component_select = 'true'
+      params[:compartment] = 'front_end'
+      clear_compartment_from_build
+      params[:compartment] = 'wheels'
+      clear_compartment_from_build
+    elsif params[:reset_w] == 'true'
+      @result_of_component_select = 'true'
+      params[:compartment] = 'wheels'
+      clear_compartment_from_build
+    end
+  end
+   
   def check_compartment_completion
     @build_component = 'false'
     #DRIVETRAIN CHECK

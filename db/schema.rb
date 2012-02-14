@@ -155,6 +155,14 @@ ActiveRecord::Schema.define(:version => 20120213084408) do
     t.decimal  "clearance",                  :precision => 5, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "front_wheel_size"
+    t.string   "rear_wheel_size"
+    t.string   "front_brake_type"
+    t.string   "rear_brake_type"
+    t.string   "front_brake_pull"
+    t.string   "rear_brake_pull"
+    t.integer  "head_tube_inner_diameter"
+    t.integer  "steer_tube_length"
   end
 
   create_table "customers", :force => true do |t|

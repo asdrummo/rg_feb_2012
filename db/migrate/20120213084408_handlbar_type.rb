@@ -19,8 +19,16 @@ class HandlbarType < ActiveRecord::Migration
     #remove_column :components, :rear_brake_type
     #rename_column :components, :front_brake_pull, :brake_pull
     #remove_column :components, :rear_brake_pull
-    add_column :frame_models, :front_brake_pull, :string
-    add_column :frame_models, :rear_brake_pull, :string
+    #add_column :frame_models, :front_brake_pull, :string
+    #add_column :frame_models, :rear_brake_pull, :string
+    add_column :custom_frame_models, :front_wheel_size, :string
+    add_column :custom_frame_models, :rear_wheel_size, :string
+    add_column :custom_frame_models, :front_brake_type, :string
+    add_column :custom_frame_models, :rear_brake_type, :string
+    add_column :custom_frame_models, :front_brake_pull, :string
+    add_column :custom_frame_models, :rear_brake_pull, :string
+    add_column :custom_frame_models, :head_tube_inner_diameter, :integer
+    add_column :custom_frame_models, :steer_tube_length, :integer
     
   end
 

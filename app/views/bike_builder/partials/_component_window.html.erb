@@ -1,14 +1,14 @@
 <table id="show_components">
 <tr>
 	<td id="component_nav">
-		<%= render :partial => 'side_menu' %>
+		<%= render :partial => 'bike_builder/partials/side_menu' %>
 	</td>
 	<td id="main_comp_window">
 	<% if @component != nil %>
 		
-		<%= render :partial => 'sort' %>
+		<%= render :partial => 'bike_builder/partials/sort' %>
 			<div id="component_grid">
-			<%= render :partial => 'component' %>
+			<%= render :partial => 'bike_builder/partials/component' %>
 		</div><!-- end table div -->
 		
 	<% else %>	
@@ -16,16 +16,16 @@
 
 				<h2 class="center">No Components Available</h2>
 				
-				<%= render :partial => 'sort' %>
+				<%= render :partial => 'bike_builder/partials/sort' %>
 				<div id="component_grid">
-				<%= render :partial => 'component' %>
+				<%= render :partial => 'bike_builder/partials/component' %>
 				</div>
 	<% end %>
 	</td>
 </tr>
 </table>
 <div class="clear"></div>
+<hr>
 <%= render(:partial => 'bike_builder/partials/incompatible_components')%>
-<div id="incompatible">
-</div>
+<hr>
 <%= render(:partial => 'bike_builder/partials/current_build')%>
