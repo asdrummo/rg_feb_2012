@@ -143,7 +143,6 @@ ActiveRecord::Schema.define(:version => 20120215072635) do
     t.string   "pedal_strap"
     t.string   "attachment_type"
     t.integer  "brake_mount_to_hub"
-    t.integer  "teeth"
   end
 
   create_table "custom_frame_models", :force => true do |t|

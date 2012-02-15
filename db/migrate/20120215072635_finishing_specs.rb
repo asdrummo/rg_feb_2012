@@ -15,7 +15,7 @@ class FinishingSpecs < ActiveRecord::Migration
     #remove_column :components, :size
     #remove_column :components, :teeth
     #add_column :components, :brake_mount_to_hub, :integer
-    add_column :components, :teeth, :integer
+    add_column :components, :teeth
     
     
     
