@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120213084408) do
+ActiveRecord::Schema.define(:version => 20120215072635) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -104,23 +104,19 @@ ActiveRecord::Schema.define(:version => 20120213084408) do
     t.decimal  "steer_tube_length",         :precision => 8, :scale => 2
     t.decimal  "crown_race_diameter",       :precision => 8, :scale => 2
     t.decimal  "tube_width",                :precision => 8, :scale => 2
-    t.string   "size"
     t.decimal  "hub_width",                 :precision => 8, :scale => 2
     t.decimal  "rim_width",                 :precision => 8, :scale => 2
     t.string   "cog_spline_thread"
     t.decimal  "width",                     :precision => 8, :scale => 2
     t.decimal  "tire_max_size",             :precision => 8, :scale => 2
     t.string   "wheel_size"
-    t.decimal  "wheel_rim_width",           :precision => 8, :scale => 2
     t.decimal  "tire_width",                :precision => 8, :scale => 2
     t.string   "tire_size"
     t.integer  "num_bolts"
-    t.integer  "teeth"
     t.decimal  "chain_width",               :precision => 8, :scale => 2
     t.string   "rear_derailleur_type"
     t.string   "spline_thread_type"
     t.integer  "cog_number"
-    t.string   "pull"
     t.decimal  "mount_high",                :precision => 8, :scale => 2
     t.decimal  "mount_low",                 :precision => 8, :scale => 2
     t.decimal  "tire_max_width",            :precision => 8, :scale => 2
@@ -132,7 +128,6 @@ ActiveRecord::Schema.define(:version => 20120213084408) do
     t.decimal  "qfactor",                   :precision => 8, :scale => 2
     t.decimal  "bcd",                       :precision => 8, :scale => 2
     t.string   "front_derailleur_type"
-    t.string   "strap"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
@@ -142,6 +137,13 @@ ActiveRecord::Schema.define(:version => 20120213084408) do
     t.string   "front_derailleur_mount"
     t.decimal  "weight",                    :precision => 5, :scale => 1
     t.string   "handlebar_type"
+    t.integer  "seat_tube_inner_diameter"
+    t.integer  "seat_tube_outer_diameter"
+    t.string   "clamp"
+    t.string   "pedal_strap"
+    t.string   "attachment_type"
+    t.integer  "brake_mount_to_hub"
+    t.integer  "teeth"
   end
 
   create_table "custom_frame_models", :force => true do |t|
@@ -163,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20120213084408) do
     t.string   "rear_brake_pull"
     t.integer  "head_tube_inner_diameter"
     t.integer  "steer_tube_length"
+    t.integer  "seat_tube_inner_diameter"
+    t.integer  "seat_tube_outer_diameter"
   end
 
   create_table "customers", :force => true do |t|
@@ -218,6 +222,8 @@ ActiveRecord::Schema.define(:version => 20120213084408) do
     t.integer  "head_tube_inner_diameter"
     t.string   "front_brake_pull"
     t.string   "rear_brake_pull"
+    t.integer  "seat_tube_inner_diameter"
+    t.integer  "seat_tube_outer_diameter"
   end
 
   create_table "gears", :force => true do |t|

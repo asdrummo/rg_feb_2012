@@ -496,7 +496,7 @@ class BikeBuilderController < ApplicationController
   end #end action
  
   def general_filters
-
+    list_components
     components_per_page
     if @nav_id == 'wheels'
       @component_packages = ComponentPackage.where(:package_type => @nav_id) #.order(:order => 'created_at ASC')
@@ -985,7 +985,12 @@ class BikeBuilderController < ApplicationController
     @fb_error_frame_front_brake_type = [] 
     @fb_error_front_lever_brake_pull = [] 
     @fb_error_fork_front_brake_type = []
+    @fb_error_fork_front_brake_pull = []
+   # @fb_error_fork_brake_mount_high = []
+   # @fb_error_fork_brake_mount_low = []
     
+    
+  
     if @components.where(:component_type => 'Front Brake').each do |component|
       
       if @frame_model
@@ -997,6 +1002,12 @@ class BikeBuilderController < ApplicationController
       end
       
       if @front_lever_selected
+        #front lever brake type
+          if component.brake_type != @front_lever_selected.brake_type
+            @fb_error_front_lever_brake_type << component
+            @incompatible_components << component
+          end
+          
         #front lever brake pull
           if component.brake_pull != @front_lever_selected.brake_pull
             @fb_error_front_lever_brake_pull << component
@@ -1005,12 +1016,13 @@ class BikeBuilderController < ApplicationController
       end
       
       if @fork_selected
-        #front brake pull
+        #fork brake type
           if component.brake_type != @fork_selected.brake_type
             @fb_error_fork_front_brake_type << component
             @incompatible_components << component
           end
       end  
+
 
 
     end # end front brake loop
@@ -1352,6 +1364,128 @@ class BikeBuilderController < ApplicationController
     end
   end
   
+  def finishing
+    @nav_id = 'finishing'
+    @finishing = 'active_progress'   
+    frame_check
+    general_filters
+    check_compartment_completion
+    finishing_compatibility_check
+    component_sort
+  end
+  
+  def finishing_compatibility_check
+    #set variables for arrays
+    @incompatible_components = []
+    
+    ### PEDAL STRAPS ###
+    #set pedal strap error array
+    @stp_error_pedal_strap = []
+    
+    if @components.where(:component_type => 'Pedal Straps').each do |component|
+      
+      if @pedal_selected
+        #pedal strap
+          if component.pedal_strap != @pedal_selected.pedal_strap
+            @stp_error_pedal_strap << component
+            @incompatible_components << component
+          end
+      end
+    end #end pedal straps
+    end #end pedal straps
+    
+    ### SEAT POST ###
+    #set seat post error array
+    @sp_error_frame_seat_tube_inner_diameter = []
+    @sp_error_saddle_clamp = []
+    @sp_error_frame_seat_tube_inner_diameter = []
+    
+    
+    if @components.where(:component_type => 'Seat Post').each do |component|
+      
+      if @frame_model
+        #frame seat tube inner diameter
+          if component.seat_tube_inner_diameter != @frame_model.seat_tube_inner_diameter
+            @sp_error_frame_seat_tube_inner_diameter << component
+            @incompatible_components << component
+          end
+      end
+      
+      if @saddle_selected
+        #saddle clamp error
+        if component.clamp != @saddle_selected.clamp
+          @sp_error_saddle_clamp << component
+          @incompatible_components << component
+        end
+      end
+      
+      if @seat_clamp_selected
+        #seat clamp seat tube inner diameter
+        if component.seat_tube_inner_diameter != @seat_clamp_selected.seat_tube_inner_diameter
+          @sp_error_seat_clamp_seat_tube_inner_diameter << component
+          @incompatible_components << component
+        end
+      end
+      
+    end #end seat post loop
+    end #end seat post if statement
+
+    ### SADDLE ###
+    #set saddle error array
+    @sdl_error_seat_post_attachment_type = []
+    
+    if @components.where(:component_type => 'Saddle').each do |component|
+      
+      if @seat_post_selected
+        #seat post attachment type
+          if component.attachment_type != @seat_post_selected.attachment_type
+            @sdl_error_seat_post_attachment_type << component
+            @incompatible_components << component
+          end
+      end
+    end #end saddle loop
+    end #end saddle if statement
+
+    ### SEAT CLAMP ###
+    #set seat clamp error array
+    @sc_error_frame_seat_tube_inner_diameter = []
+    @sc_error_frame_seat_tube_outer_diameter = []
+    @sc_error_seat_post_seat_tube_inner_diameter = []
+    
+    
+    if @components.where(:component_type => 'Seat Clamp').each do |component|
+      
+      if @frame_model
+        #frame seat tube inner diameter
+          if component.seat_tube_inner_diameter != @frame_model.seat_tube_inner_diameter
+            @sc_error_frame_seat_tube_inner_diameter << component
+            @incompatible_components << component
+          end
+        #frame seat tube outer diameter
+          if component.seat_tube_outer_diameter != @frame_model.seat_tube_outer_diameter
+            @sc_error_frame_seat_tube_outer_diameter << component
+            @incompatible_components << component
+          end
+      end
+      
+      if @seat_post_selected 
+          if component.seat_tube_inner_diameter != @seat_post_selected.seat_tube_inner_diameter
+            @sc_error_seat_post_seat_tube_inner_diameter << component
+            @incompatible_components << component
+          end
+      end
+    end #end seat clamp loop
+    end #end seat clamp if statement  
+    
+    ###REMOVE INCOMPATIBLE FINISHING COMPONENTS FROM COMPONENTS!###
+    #remove incompatible components
+    @incompatible_components.uniq! 
+    if @incompatible_components.empty?
+    else
+    @components = @components.incompatible(@incompatible_components) 
+    end
+  end
+  
   def select_component
       @component_name = params[:component]
       @id = params[:id]
@@ -1408,8 +1542,15 @@ class BikeBuilderController < ApplicationController
   
   def list_components
     @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Shifter', 'Rear Shifter', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
-    @drivetrain_components = ['Crank', 'Cog', 'Bottom Bracket', 'Front Derailleur', 'Chainring', 'Chain']
+    @drivetrain_components = ['Crank', 'Cog', 'Bottom Bracket', 'Front Derailleur', 'Rear Derailleur', 'Chainring', 'Chain']
+    
+    if @speed == 'single'
+      @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
+      @drivetrain_components = ['Crank', 'Cog', 'Bottom Bracket', 'Chainring', 'Chain']
+    end
+
     @wheel_components = ['Front Wheel', 'Rear Wheel', 'Front Tube', 'Rear Tube', 'Front Tire', 'Rear Tire']
+    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedals']
   end
   
   def find_package_components
@@ -1533,7 +1674,7 @@ class BikeBuilderController < ApplicationController
       end
     end
     
-    #FRONT WHEEL CHECK 
+    #WHEEL CHECK 
     @w_build_item = 'false'
     @build.items.each do |item|  
       if item.component && (item.component.component_type == 'Front Wheel')
@@ -1559,7 +1700,33 @@ class BikeBuilderController < ApplicationController
     if ((@front_wheel_selected) && (@rear_wheel_selected) && (@front_tire_selected) && (@rear_tire_selected) && (@front_tube_selected) && (@rear_tube_selected))
       @wheels_complete = 'true'
     end
-    if (@dt_build_item == 'true') || (@fe_build_item == 'true') || (@w_build_item =='true')
+
+    
+    #FINISHING CHECK 
+    @f_build_item = 'false'
+    @build.items.each do |item|  
+      if item.component && (item.component.component_type == 'Saddle')
+         @saddle_selected = Component.find_by_id(item.component.id)
+         @f_build_item = 'true'
+      elsif item.component && (item.component.component_type == 'Seat Post')
+        @seat_post_selected = Component.find_by_id(item.component.id)
+        @f_build_item = 'true'
+      elsif item.component && (item.component.component_type == 'Seat Clamp')
+        @seat_clamp_selected = Component.find_by_id(item.component.id)
+        @f_build_item = 'true'
+      elsif item.component && (item.component.component_type == 'Pedals')
+        @pedals_selected = Component.find_by_id(item.component.id)
+        @f_build_item = 'true'
+      elsif item.component && (item.component.component_type == 'Pedal Straps')
+        @pedal_straps_selected = Component.find_by_id(item.component.id)
+        @f_build_item = 'true'
+      end
+    end
+    if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedals_selected) && (@pedal_straps_selected))
+      @finishing_complete = 'true'
+    end
+    
+    if (@dt_build_item == 'true') || (@fe_build_item == 'true') || (@w_build_item =='true') || (@f_build_item)
       @build_component = 'true'
     end
   end

@@ -29,4 +29,33 @@ module BikeBuilderHelper
     }
     link_to text, options, html_options, 
   end
+
+
+  def sidebar_link_helper(text, compartment)
+
+    options = {
+        :url => {:action => compartment, :type => text},
+        :update => 'component_grid',    
+    }
+    html_options = {
+      :title => text,
+      :href => url_for(:action => compartment, :type => text ),
+      :remote => true
+    }
+    link_to text, options, html_options, 
+  end
+  
+  def package_link_helper(name, package_id, compartment)
+
+    options = {
+        :url => {:action => compartment, :package_id => package_id},
+        :update => 'component_grid',    
+    }
+    html_options = {
+      :title => name,
+      :href => url_for(:action => compartment, :package_id => package_id ),
+      :remote => true
+    }
+    link_to name, options, html_options, 
+  end
 end

@@ -348,6 +348,21 @@
 	<% end %><br />
 	<% end %>
 	
+	<% if @fb_error_fork_brake_mount_low != [] %>
+	incompatible front brakes with selected fork (brake_mount_low): <br />
+	<% @fb_error_fork_brake_mount_low.each do |component| %>
+ 			<%= component.name %>: <%= component.mount_low %> != <%= @fork_selected.mount_low %><br />
+	<% end %><br />
+	<% end %>
+	
+	<% if @fb_error_fork_brake_mount_high != [] %>
+	incompatible front brakes with selected fork (brake_mount_high): <br />
+	<% @fb_error_fork_brake_mount_high.each do |component| %>
+ 			<%= component.name %>: <%= component.mount_high %> != <%= @fork_selected.mount_lowmount_high %> <br />
+	<% end %><br />
+	<% end %>
+
+	
 	REAR BRAKES: <br />
 	
 	<% if @rb_error_frame_rear_brake_type != [] %>
