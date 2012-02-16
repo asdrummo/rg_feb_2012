@@ -57,11 +57,11 @@ class PaymentsController < ApplicationController
         @workshop.update_attributes(:quantity => (@workshop.quantity -= item.quantity))
       end
       if item.accessory
-        
-        @option = Option.find(item.option.id)
-      
-        if @option.quantity 
-        @option.update_attributes(:quantity => (@option.quantity -= item.quantity))
+        if item.option
+          @option = Option.find(item.option.id)
+          if @option.quantity 
+          @option.update_attributes(:quantity => (@option.quantity -= item.quantity))
+          end
         end
       end
         
