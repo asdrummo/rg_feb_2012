@@ -38,7 +38,6 @@ class Build
       end
   end
 
-  
   def add_component_to_build (component)
       existing_component = @items.find {|item| (item.component && (item.component.component_type == component.component_type))}
       if existing_component
@@ -50,9 +49,7 @@ class Build
       end
       @total_price += (component.price)
   end
-  
-
-  
+   
   def remove_component_from_build(component)
     existing_component = @items.find {|item| (item.component && (item.component.component_type == component.component_type))}
     @items.delete(existing_component)
@@ -65,4 +62,5 @@ class Build
         @total_price -= item.price
      end
   end
+
 end

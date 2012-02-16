@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
 
   before_filter :confirm_logged_in, :only => [:index, :menu]
-   before_filter :find_user, :only => [:orders, :components, :menu]
+  before_filter :find_user, :only => [:orders, :components, :menu]
   layout 'admin'
  
   def menu

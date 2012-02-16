@@ -51,7 +51,7 @@ class ComponentsController < ApplicationController
   end
        
   def list_components
-    @components = ['Bottom Bracket', 'Front Brake', 'Rear Brake', 'Chain', 'Chainring', 'Cog Cassette', 'Crank', 'Front Derailleur', 'Rear Derailleur', 'Fork', 'Grip', 'Half Link', 'Handlebar', 'Headset', 'Front Lever', 'Rear Lever', 'Pedals', 'Pedal Straps' 'Rim Strip', 'Saddle', 'Seat Clamp', 'Seat Post', 'Front Shifter', 'Rear Shifter', 'Stem', 'Front Tire', 'Rear Tire', 'Front Tube', 'Rear Tube', 'Front Wheel', 'Rear Wheel']
+    @components = ['Bottom Bracket', 'Front Brake', 'Rear Brake', 'Chain', 'Chainring', 'Cog Cassette', 'Crank', 'Front Derailleur', 'Rear Derailleur', 'Fork', 'Grip', 'Half Link', 'Handlebar', 'Headset', 'Front Lever', 'Rear Lever', 'Pedals', 'Pedal Straps', 'Rim Strip', 'Saddle', 'Seat Clamp', 'Seat Post', 'Front Shifter', 'Rear Shifter', 'Stem', 'Front Tire', 'Rear Tire', 'Front Tube', 'Rear Tube', 'Front Wheel', 'Rear Wheel']
     @components_array = @components.map { |component| [component, component] }
   end
 

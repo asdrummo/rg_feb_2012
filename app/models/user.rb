@@ -1,9 +1,5 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-
-# require 'admin_user'
-
-
 attr_accessor :password
 
 EMAIL_REGEX = /^[A-ZA-Z0-9._%+-]+@[A-ZA-Z0-9.-]+\.[A-Z]{2,4}$/i

@@ -128,8 +128,6 @@ class LineItem < ActiveRecord::Base
     return line_item
   end
   
-
-  
   def self.remove_reservation_based_on(workshop)
     line_item = self.find(workshop)
     line_item.workshop = workshop

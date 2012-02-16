@@ -1552,7 +1552,7 @@ class BikeBuilderController < ApplicationController
     end
 
     @wheel_components = ['Front Wheel', 'Rear Wheel', 'Front Tube', 'Rear Tube', 'Front Tire', 'Rear Tire']
-    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedals', 'Grip', 'Half Link']
+    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedals', 'Pedal Straps', 'Grip', 'Half Link']
   end
   
   def find_package_components
@@ -1571,6 +1571,9 @@ class BikeBuilderController < ApplicationController
 
     elsif @package.package_type == 'wheels'
       @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_wheel_id, @package.rear_wheel_id, @package.front_tube_id, @package.rear_tube_id, @package.front_tire_id, @package.rear_tire_id)
+
+    elsif @package.package_type == 'finishing'
+      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?, OR id = ?', @package.saddle_id, @package.seat_post_id, @package.seat_clamp_id, @package.grip_id, @package.pedal_id, @package.pedal_strap_id, @package.half_link_id)
     end
   end
   
@@ -1582,15 +1585,23 @@ class BikeBuilderController < ApplicationController
   
   def reset_compartments
     #reset compartents if modifying build
-    if params[:reset_fe_w] == 'true'
+    if params[:reset_fe] == 'true'
       @result_of_component_select = 'true'
       params[:compartment] = 'front_end'
       clear_compartment_from_build
       params[:compartment] = 'wheels'
       clear_compartment_from_build
+      params[:compartment] = 'finishing'
+      clear_compartment_from_build
     elsif params[:reset_w] == 'true'
       @result_of_component_select = 'true'
       params[:compartment] = 'wheels'
+      clear_compartment_from_build
+      params[:compartment] = 'finishing'
+      clear_compartment_from_build
+    elsif params[:reset_f] == 'true'
+      @result_of_component_select = 'true'
+      params[:compartment] = 'finishing'
       clear_compartment_from_build
     end
   end
@@ -1722,13 +1733,19 @@ class BikeBuilderController < ApplicationController
       elsif item.component && (item.component.component_type == 'Pedal Straps')
         @pedal_straps_selected = Component.find_by_id(item.component.id)
         @f_build_item = 'true'
+      elsif item.component && (item.component.component_type == 'Grip')
+        @grip_selected = Component.find_by_id(item.component.id)
+        @f_build_item = 'true'
+      elsif item.component && (item.component.component_type == 'Half Link')
+        @half_link_selected = Component.find_by_id(item.component.id)
+        @f_build_item = 'true'
       end
     end
     if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedals_selected) && (@pedal_straps_selected))
       @finishing_complete = 'true'
     end
     
-    if (@dt_build_item == 'true') || (@fe_build_item == 'true') || (@w_build_item =='true') || (@f_build_item)
+    if (@dt_build_item == 'true') || (@fe_build_item == 'true') || (@w_build_item =='true') || (@f_build_item == 'true')
       @build_component = 'true'
     end
   end

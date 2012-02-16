@@ -13,7 +13,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
-
+  def admin_only
+    unless User.find(session[:user_id]).privilege == 'admin'
+      flash[:notice] = "Get Lost!"
+      redirect_to(:controller => 'admin', :action => 'login')
+      return false #halts the before_filter
+    else
+      return true
+    end
+  end
 
     private
 

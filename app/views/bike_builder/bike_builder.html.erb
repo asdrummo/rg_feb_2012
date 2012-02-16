@@ -37,7 +37,6 @@
 
 <% elsif @nav_id == 'finishing' %>
 	<% if @finishing_complete == 'true' %>
-	add to cart or save for later<br />
 	<%= link_to('Add to Cart', {:action => 'finishing'}) %> | <%= link_to('Save for Later', {:action => 'finishing'}) %>
 	<% else %>
 	<%= @nav_id.humanize %> Components.

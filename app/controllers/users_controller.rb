@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :confirm_logged_in
+  before_filter :confirm_logged_in, :admin_only
   layout 'admin'
   # GET /users
   # GET /users.xml

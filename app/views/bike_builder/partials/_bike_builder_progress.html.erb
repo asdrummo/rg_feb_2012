@@ -26,9 +26,9 @@
 		<% end %>
 		</li>
 		
-		<li class="<%= @finish %>">
+		<li class="<%= @finishing %>">
 		<% if (@frame == 'true') && (@drivetrain_complete == 'true') && (@front_end_complete == 'true') && (@wheels_complete == 'true') %>
-		<%= link_to('5. Finishing Touches', :action => 'finishing') %>
+		<%= link_to('5. Finishing', :action => 'finishing') %>
 		<% else%>
 		5. Finishing Touches
 		<% end %>

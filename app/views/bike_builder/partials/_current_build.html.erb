@@ -77,6 +77,22 @@
 		<% end %>
 		<% end %>
 		<strong><%= number_to_currency(@wheels_price) %></strong>
+		<br />
+		
+		---finishing--- 
+		<% @finishing_price = 0.0 %>
+		<%= link_to('clear finishing items', {:action => 'clear_compartment_from_build', :compartment => 'finishing'}, :class => "remove_item") %> <br />
+		<% @build.items.each do |item| %>
+		<% if item.component && (item.component.compartment == 'finishing') %>
+		<strong><%= item.component.component_type %>:</strong> |
+		<%= item.component.name %> |
+		<%= number_to_currency(item.component.price) %> |
+		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %><br />
+		<% @finishing_price += item.component.price %>
+		<% end %>
+		<% end %>
+		<strong><%= number_to_currency(@finishing_price) %></strong>
+
 
 		
 <% end %>
