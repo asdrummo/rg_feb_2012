@@ -1,9 +1,10 @@
 class BikeBuilderController < ApplicationController
   layout 'standard'
-  before_filter :confirm_logged_in
-  before_filter :find_or_create_build
-  before_filter :find_frame
-
+  before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
+  #before_filter :find_or_create_build, :find_frame, :compatibility_check
+  #before_filter :find_frame, :compatibility_check
+  #before_filter :compatibility_check
+  
     
   def frames
 
@@ -117,11 +118,7 @@ class BikeBuilderController < ApplicationController
   def drivetrain
     @nav_id = 'drivetrain'
     @drivetrain = 'active_progress'
-    frame_check
     general_filters
-    check_compartment_completion
-    drivetrain_compatibility_check
-    component_sort 
   end
   
   def drivetrain_compatibility_check
@@ -496,6 +493,8 @@ class BikeBuilderController < ApplicationController
   end #end action
  
   def general_filters
+    frame_check
+    check_compartment_completion
     list_components
     components_per_page
     if @nav_id == 'wheels'
@@ -504,7 +503,7 @@ class BikeBuilderController < ApplicationController
       @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed') #.order(:order => 'created_at ASC')
     end
     #filter for component type 
-    if params[:type] && (params[:type] != 'none')
+    if params[:type] && (params[:type] != 'All')
       @component_type = params[:type]
       @component = params[:type]
       @components = Component.where(:component_type => @component_type)
@@ -512,7 +511,9 @@ class BikeBuilderController < ApplicationController
     elsif params[:package_id]
       find_package_components
       @component = @package.name
-    #all drivetrain components
+    #all compartment components
+    elsif params[:type] == 'All'
+      @components = Component.where(:compartment => @nav_id)
     else
       @component_type = 'none'
       @component = @nav_id.titleize + 'Components'
@@ -523,16 +524,25 @@ class BikeBuilderController < ApplicationController
         @components = @components.where('component_type != ? AND component_type != ? AND component_type != ? AND component_type != ?', 'Rear Derailleur', 'Front Derailleur', 'Rear Shifter', 'Front Shifter')
         #@components = @components - @derailleur_components
     end
+    compatibility_check
+    if @compatibility_check == 'on'
+      if @nav_id == 'drivetrain' 
+        drivetrain_compatibility_check
+      elsif @nav_id == 'front_end'
+        front_end_compatibility_check
+      elsif @nav_id == 'wheels'
+        wheels_compatibility_check
+      elsif @nav_id == 'finishing'
+        finishing_compatibility_check
+      end
+    end
+    component_sort
   end
     
   def front_end
     @nav_id = 'front_end'
     @front_end = 'active_progress'
-    frame_check 
     general_filters
-    check_compartment_completion
-    front_end_compatibility_check
-    component_sort
   end
   
   def front_end_compatibility_check
@@ -1070,11 +1080,7 @@ class BikeBuilderController < ApplicationController
   def wheels
     @nav_id = 'wheels'
     @wheels = 'active_progress'   
-    frame_check
     general_filters
-    check_compartment_completion
-    wheels_compatibility_check
-    component_sort
   end
 
   def wheels_compatibility_check
@@ -1367,11 +1373,7 @@ class BikeBuilderController < ApplicationController
   def finishing
     @nav_id = 'finishing'
     @finishing = 'active_progress'   
-    frame_check
     general_filters
-    check_compartment_completion
-    finishing_compatibility_check
-    component_sort
   end
   
   def finishing_compatibility_check
@@ -1550,7 +1552,7 @@ class BikeBuilderController < ApplicationController
     end
 
     @wheel_components = ['Front Wheel', 'Rear Wheel', 'Front Tube', 'Rear Tube', 'Front Tire', 'Rear Tire']
-    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedals']
+    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedals', 'Grip', 'Half Link']
   end
   
   def find_package_components
@@ -1738,6 +1740,7 @@ class BikeBuilderController < ApplicationController
                when "name"  then "name ASC"
                when "qty"   then "quantity ASC"
                when "price" then "price ASC"
+               when "type" then "component_type ASC"  
                when "name_reverse"  then "name DESC"
                when "qty_reverse"   then "quantity DESC"
                when "price_reverse" then "price DESC"
@@ -1757,7 +1760,7 @@ class BikeBuilderController < ApplicationController
 
         
         respond_to do |format|
-          format.html 
+          format.html { render 'bike_builder'}
           format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
           format.js {render 'sort.js'}  
         end
@@ -1791,10 +1794,20 @@ private
 
   def find_or_create_build
     @build = session[:build] ||= Build.new
+    @page_id = 'bike_builder'
   end
 
   def find_frame
      @frame_model = session[:frame]
   end
+  
+  def compatibility_check
+     @compatibility_check = session[:compatibility] ||= 'on'
+     if params[:compatibility]
+       @compatibility = params[:compatibility]
+       session[:compatibility] = @compatibility
+     end
+  end
+  
     
 end

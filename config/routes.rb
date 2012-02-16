@@ -5,7 +5,7 @@ resources :components, :accessories, :component_packages, :frame_models, :worksh
   root :to => 'signups#signup'
   match 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
   match 'payments/new', :to => 'payments#new', :as => :new_payment 
-  match '/', :to => 'public#index'
+  match 'public', :to => 'public#index'
   match 'workshops', :to => 'public#workshops'
   match 'do_it_yourself', :to => 'public#do_it_yourself'
   match 'bamboo_bike_kits', :to => 'public#bamboo_bike_kits'

@@ -97,8 +97,6 @@ class LineItem < ActiveRecord::Base
     return line_item
   end
   
- 
-  
   def self.new_component_based_on(component)
     line_item = self.new
     line_item.component = component
@@ -113,6 +111,16 @@ class LineItem < ActiveRecord::Base
     line_item = self.new
     line_item.accessory = accessory
     line_item.option = option
+    line_item.quantity = 1
+    line_item.client_id = accessory.client_id
+    line_item.status = @status
+    line_item.price = accessory.price
+    return line_item
+  end
+  
+  def self.new_accessory_no_option_based_on(accessory)
+    line_item = self.new
+    line_item.accessory = accessory
     line_item.quantity = 1
     line_item.client_id = accessory.client_id
     line_item.status = @status
@@ -190,6 +198,16 @@ class LineItem < ActiveRecord::Base
   end
   
   def self.remove_accessory_based_on(accessory, option)
+    line_item = self.find(accessory)
+    line_item.accessory = accessory
+    line_item.client_id = accessory.client_id
+    line_item.status = @status
+    line_item.quantity = 1
+    line_item.price = accessory.price
+    return line_item
+  end
+  
+  def self.remove_accessory_no_option_based_on(accessory)
     line_item = self.find(accessory)
     line_item.accessory = accessory
     line_item.client_id = accessory.client_id

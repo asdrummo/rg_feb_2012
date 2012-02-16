@@ -147,6 +147,17 @@ class Cart
     @total_price += accessory.price
   end
   
+  def add_accessory_no_option(accessory)
+    existing_item = @items.find {|item| (item.accessory_id == accessory.id) }
+    if existing_item
+      existing_item.quantity += 1
+    else
+      @items << LineItem.new_accessory_no_option_based_on(accessory)
+      
+    end
+    @total_price += accessory.price
+  end
+  
   def remove_reservation(workshop)
     existing_item = @items.find {|item| item.workshop_id == workshop.id}
     if existing_item && existing_item.quantity > 1

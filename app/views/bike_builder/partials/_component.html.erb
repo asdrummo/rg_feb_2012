@@ -3,6 +3,7 @@
 <% i = 0 %>
 <div id="" style="">
 <% i = 0 %>
+<% @warning = "adding this component will reset any components in the following sections"%>
 <% @components.each do |component|  %>
 
 	<div class="item">	
@@ -12,10 +13,11 @@
 	    <%= number_to_currency(component.price) %><br />
 
 		<% if @nav_id == 'drivetrain' && (@fe_build_item == 'true' || @w_build_item == 'true') %>
-		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_fe_w => 'true'}, :confirm => "Adding this component will reset your front end & wheels" ) %>
+		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_fe_w => 'true'}, :confirm =>  @warning ) %>
 		<% elsif (@nav_id == 'front_end') && (@w_build_item == 'true') %>
-		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_w => 'true'}, :confirm => "Adding this component will reset your wheels" ) %>
-		<% else %>
+		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_w => 'true'}, :confirm =>  @warning ) %>
+		<% elsif (@nav_id == 'wheels') && (@f_build_item == 'true') %>
+		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_f => 'true'}, :confirm => @warning ) %>
 		<%= link_to('select', :action => 'select_component', :component => component.component_type, :id => component.id) %>
 		<% end %>
 		</div>

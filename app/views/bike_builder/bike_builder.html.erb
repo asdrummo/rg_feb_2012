@@ -1,0 +1,52 @@
+<% @page_title = @nav_id.humanize + 'Selection | Bike Builder Beta' %>
+<%= render(:partial => 'bike_builder/partials/bike_builder_progress')%>
+<div class="center"><h2>
+<% if @nav_id == 'drivetrain' %>
+	<% if @drivetrain_complete == 'true' %>
+	let's move on to the front end!<br />
+	<%= link_to('Continue', {:action => 'front_end'}) %>
+	<% else %>
+	<%= @nav_id.humanize %> Components.
+	<% end %>
+	<% if @frame == 'false' %>
+		<% @completion_error = 'you need a frame!' %>
+	<% end %>
+	
+<% elsif @nav_id == 'front_end' %>
+	<% if @front_end_complete == 'true' %>
+	let's move on to the drivetrain!<br />
+	<%= link_to('Continue', {:action => 'wheels'}) %>
+	<% else %>
+	<%= @nav_id.humanize %> Components.
+	<% end %>
+	<% if @drivetrain_complete == 'false' %>
+		<% @completion_error = 'you need to complete your drivetrain!' %>
+	<% end %>
+
+
+<% elsif @nav_id == 'wheels' %>
+	<% if @wheels_complete == 'true' %>
+	let's move on to the finishing!<br />
+	<%= link_to('Continue', {:action => 'finishing'}) %>
+	<% else %>
+	<%= @nav_id.humanize %> Components.
+	<% end %>
+	<% if @front_end_complete == 'false' %>
+		<% @completion_error = 'you need to complete your front end!' %>
+	<% end %>
+
+<% elsif @nav_id == 'finishing' %>
+	<% if @finishing_complete == 'true' %>
+	add to cart or save for later<br />
+	<%= link_to('Add to Cart', {:action => 'finishing'}) %> | <%= link_to('Save for Later', {:action => 'finishing'}) %>
+	<% else %>
+	<%= @nav_id.humanize %> Components.
+	<% end %>
+	<% if @wheels_complete == 'false' %>
+		<% @completion_error = 'you need to complete your wheels!' %>
+	<% end %>
+<% end %>
+</h2></center>
+
+<%= render(:partial => 'bike_builder/partials/component_window') unless @completion_error %>
+<hr>

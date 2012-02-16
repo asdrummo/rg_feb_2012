@@ -10,12 +10,16 @@ or sort:
 
 	
 	<%= sort_link_helper "Name", "name", @component_type, @nav_id %>&nbsp|&nbsp
-	<%= sort_link_helper "Price", "price", @component_type, @nav_id %>
+	<%= sort_link_helper "Price", "price", @component_type, @nav_id %>&nbsp|&nbsp
+	<%= sort_link_helper "Type", "type", @component_type, @nav_id %>
 	
-	
+	items per page:
 	<%= select_tag :per_page, options_for_select([10,20,50], @per_page.to_i),
-	    :onchange => "if(this.value){window.location='?per_page='+this.value;}" %>
+	    :onchange =>  remote_function(:update => 'component_grid', :url => {:action => @nav_id, }, :with => "'per_page=' + this.value")%>
+
 	
+	compatibility: 	<%= select_tag :compatibility, options_for_select(['on', 'off'], @compatibility_check),
+		    :onchange => "if(this.value){window.location='?compatibility='+this.value;}" %>
 
 </div>	
 </div>

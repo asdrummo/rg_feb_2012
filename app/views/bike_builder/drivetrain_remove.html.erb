@@ -1,0 +1,17 @@
+<% @page_title = 'Drivetrain Selection | Bike Builder Beta' %>
+<%= render(:partial => 'bike_builder/partials/bike_builder_progress')%>
+<div class="center"><h2>
+<% if @drivetrain_complete == 'true' %>
+let's move on to the front end!<br />
+<%= link_to('Continue', {:action => 'front_end'}) %>
+<% else %>
+Drivetrain Components.
+<% end %>
+<% if @frame == 'false' %>
+you need a frame!
+<% else %>
+</h2></center>
+
+<%= render(:partial => 'bike_builder/partials/component_window')%>
+<% end %>
+<hr>

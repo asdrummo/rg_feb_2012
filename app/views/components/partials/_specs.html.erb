@@ -249,8 +249,8 @@ compatability specs:
 </div>
 <% elsif @name == 'grip'%>
 <div class="field">
-  <%= f.label :grip_size %><br />
-  <%= f.text_field :grip_size %>
+  <%= f.label :size %><br />
+  <%= f.text_field :size %>
 </div>
 <% elsif @name == 'half_link'%>
 <div class="field">
@@ -287,7 +287,7 @@ compatability specs:
   <%= f.label :crown_race_diameter %><br />
   <%= f.text_field :crown_race_diameter %>
 </div>
-<% elsif @name == 'pedal'%>
+<% elsif @name == 'pedals'%>
 <div class="field">
   <%= f.label :pedal_strap %><br />
   <%= f.text_field :pedal_strap %>
@@ -436,9 +436,34 @@ compatability specs:
 <% elsif @name == 'rim_strip'%>
 none
 <% elsif @name == 'saddle'%>
-none
+<div class="field">
+  <%= f.label :clamp %><br />
+  <%= f.text_field :clamp %>
+</div>
+<div class="field">
+  <%= f.label :attachment_type %><br />
+  <%= f.text_field :attachment_type %>
+</div>
 <% elsif @name == 'seat_clamp'%>
-none
+<div class="field">
+  <%= f.label :seat_tube_inner_diameter %><br />
+  <%= f.text_field :seat_tube_inner_diameter %>
+</div>
+<div class="field">
+  <%= f.label :seat_tube_outer_diameter %><br />
+  <%= f.text_field :seat_tube_outer_diameter %>
+</div>
 <% elsif @name == 'seat_post'%>
-none
+<div class="field">
+  <%= f.label :seat_tube_inner_diameter %><br />
+  <%= f.text_field :seat_tube_inner_diameter %>
+</div>
+<div class="field">
+  <%= f.label :clamp %><br />
+  <%= f.text_field :clamp %>
+</div>
+<div class="field">
+  <%= f.label :attachment_type %><br />
+  <%= f.text_field :attachment_type %>
+</div>
 <% end %>

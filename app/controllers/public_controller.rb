@@ -3,8 +3,8 @@ class PublicController < ApplicationController
   before_filter :confirm_logged_in
   before_filter :find_or_create_cart, :except => [:index]
   before_filter :find_or_create_customer, :only => [:checkout, :payment, :my_account, :login]
-  def index_test
-  end
+ 
+ 
   def submit_component
       @component_name = params[:component]
       @id = params[:id]
@@ -13,7 +13,6 @@ class PublicController < ApplicationController
       redirect_to(:back)
   end
   
-
   def error_forbidden
     render('403')
   end
@@ -89,8 +88,6 @@ class PublicController < ApplicationController
 
   end
   
-
-  
   def reservations
     @workshops = Workshop.find(:all, :order => 'start_date ASC')
     @nav_id = 'do_it_yourself'
@@ -129,7 +126,6 @@ class PublicController < ApplicationController
     end
   end
   
-  
   def submit_model
     @frame_model = FrameModel.new(params[:frame_model])
     if @frame_model.size_selection.blank?
@@ -151,14 +147,11 @@ class PublicController < ApplicationController
       add_kit_to_cart
       session[:workshop] = nil
       session[:top_tube_selection] = nil
-      session[:frame_model] = @frame_model
       session[:gear] = session[:gear_selection]
       session[:gear_selection] = nil
       redirect_to(:action => 'bike_kit_component_packages')
     end
   end
-  
-
   
   def show_component_packages
   check_for_frame_model
@@ -193,13 +186,10 @@ class PublicController < ApplicationController
   end
   
   def submit_accessory
-  add_accessory_to_cart
-  flash[:notice] = 'Item Added to Cart'
-  redirect_to(:back)
+     add_accessory_to_cart
+     redirect_to(:back)
   end
-  
 
-  
   def check_for_reservation
     if session[:workshop]
       @reservation = 'true'
@@ -215,8 +205,6 @@ class PublicController < ApplicationController
       @frame_model = 'false'
     end
   end
-  
-
   
   def add_reservation_to_cart
     @workshop = Workshop.find(params[:id])
@@ -257,7 +245,8 @@ class PublicController < ApplicationController
   end
   
   def add_kit_to_cart
-    @frame_model = FrameModel.find(params[:id])
+    frame_model = FrameModel.find(params[:id])
+    session[:frame_model] = frame_model
     if session[:gear_selection] == nil
       gear = Gear.find(1)
       session[:gear_selection] = gear
@@ -270,11 +259,10 @@ class PublicController < ApplicationController
     else
       top_tube_style = session[:top_tube_selection]
     end
-    frame_model_size = FrameModelSize.find_by_name(session[:frame_model_size])
-    @cart.add_kit(@frame_model, frame_model_size, gear, top_tube_style)
+    frame_model_size = FrameModelSize.find(params[:frame_model][:size_selection])
+    @cart.add_kit(frame_model, frame_model_size, gear, top_tube_style)
     session[:cart] = @cart
   end
-  
   
   def add_component_package_to_cart
     component_package = ComponentPackage.find(params[:id])
@@ -383,12 +371,21 @@ class PublicController < ApplicationController
       @name = "rear_wheel"
     end
   end
-
-  
+ 
   def add_accessory_to_cart
-    option = Option.find(params[:option][:id])
     accessory = Accessory.find(params[:id])
-    @cart.add_accessory(accessory, option)
+    if params[:option]
+      if params[:option][:id].blank?
+        flash[:notice] = 'Please pick an option for' + accessory.name
+      else
+        option = Option.find(params[:option][:id])
+        @cart.add_accessory(accessory, option)
+        flash[:notice] = 'Item Added to Cart'
+      end
+    else
+      @cart.add_accessory_no_option(accessory)
+      flash[:notice] = 'Item Added to Cart'
+    end
     session[:cart] = @cart
   end
 
@@ -509,8 +506,7 @@ class PublicController < ApplicationController
       render('checkout')
     end
   end
-
-  
+ 
   def save_order
     @customer = Customer.new(params[:customer])
     credit_card_number = params[:credit_card]
@@ -554,8 +550,7 @@ class PublicController < ApplicationController
            render('register')
       end
   end
-  
-  
+   
   def attempt_login
     authorized_user = Customer.authenticate(params[:email], params[:password])
     if authorized_user

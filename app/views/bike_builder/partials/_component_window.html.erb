@@ -26,6 +26,8 @@
 </table>
 <div class="clear"></div>
 <hr>
+<% if @compatibility_check == 'on' %>
 <%= render(:partial => 'bike_builder/partials/incompatible_components')%>
+<% end %>
 <hr>
 <%= render(:partial => 'bike_builder/partials/current_build')%>

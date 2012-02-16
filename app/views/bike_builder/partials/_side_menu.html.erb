@@ -3,6 +3,7 @@
 	<h3>Components</h3>
 <% if @nav_id == 'drivetrain'%>
 <ul>
+	<li><%= sidebar_link_helper('All', @nav_id )%></li>
 	<% @drivetrain_components.each do |component|%>
 	<li>
 		<%= sidebar_link_helper(component, @nav_id )%>

@@ -147,10 +147,10 @@ class ComponentsController < ApplicationController
       @compartment = 'front_end'
     elsif component_type == 'Grip'
       @name = "grip"
-      @compartment = 'front_end'
+      @compartment = 'finishing'
     elsif component_type == 'Half Link'
       @name = "half_link"
-      @compartment = 'drivetrain'
+      @compartment = 'finising'
     elsif component_type == 'Handlebar'
       @name = "handlebar"
       @compartment = 'front_end'

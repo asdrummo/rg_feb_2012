@@ -22,7 +22,7 @@
 		<th><%= f.label(:password) %></th>
 		<td><%= f.password_field(:password) %></td>
 	</tr>
-	<% f.hidden_field(:privilege => "client")%>
+	<% f.hidden_field(:privilege, :value => "client")%>
 		<div class="form-buttons">
 			<%= submit_tag('Create Admin User') %>
 		</div>
