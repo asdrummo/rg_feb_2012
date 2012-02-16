@@ -1,6 +1,6 @@
 
 <div id="side_menu">
-	<h4><%= link_to('Components', :url => {:action => @nav_id, :type => 'All'}, :update => 'component_grid', :title => @nav_id + 'components', :remote => true) %></h4>
+	<h4>Components (<%= sidebar_link_helper('all', @nav_id )%>)</h4>
 <% if @nav_id == 'drivetrain'%>
 <ul>
 	<% @drivetrain_components.each do |component|%>

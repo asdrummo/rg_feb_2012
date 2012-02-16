@@ -503,7 +503,7 @@ class BikeBuilderController < ApplicationController
       @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed') #.order(:order => 'created_at ASC')
     end
     #filter for component type 
-    if params[:type] && (params[:type] != 'All')
+    if params[:type] && (params[:type] != 'all')
       @component_type = params[:type]
       @component = params[:type]
       @components = Component.where(:component_type => @component_type)
@@ -512,7 +512,7 @@ class BikeBuilderController < ApplicationController
       find_package_components
       @component = @package.name
     #all compartment components
-    elsif params[:type] == 'All'
+    elsif params[:type] == 'all'
       @components = Component.where(:compartment => @nav_id)
     else
       #@component_type = 'none'
