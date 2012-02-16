@@ -515,7 +515,7 @@ class BikeBuilderController < ApplicationController
     elsif params[:type] == 'All'
       @components = Component.where(:compartment => @nav_id)
     else
-      @component_type = 'none'
+      #@component_type = 'none'
       @component = @nav_id.titleize + 'Components'
       @components = Component.where(:compartment => @nav_id)
     end
