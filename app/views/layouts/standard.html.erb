@@ -30,12 +30,12 @@
 <% if session[:first_name] %>
 	<div class="">
 		Logged in as: <%= link_to(session[:first_name], :controller => 'public', :action => 'my_account') %>&nbsp|&nbsp
-		<%= link_to('Log Out', :action => 'logout') %>
+		<%= link_to('Log Out', :controller => 'public', :action => 'logout') %>
 	</div><!-- end login -->
 <% else %>
 	<div class="float_right">
-		<%= link_to('Login', :action => 'login') %>&nbsp|&nbsp
-		<%= link_to('Register', :action => 'register') %>
+		<%= link_to('Login', :controller => 'public', :action => 'login') %>&nbsp|&nbsp
+		<%= link_to('Register', :controller => 'public', :action => 'register') %>
 	</div><!-- end logout -->
 <% end %>
 
