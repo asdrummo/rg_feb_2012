@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120216110759) do
+ActiveRecord::Schema.define(:version => 20120217020121) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20120216110759) do
     t.string   "package_type"
     t.integer  "front_derailleur_id"
     t.integer  "rear_derailleur_id"
-    t.integer  "pedal_strap"
+    t.integer  "pedal_strap_id"
   end
 
   create_table "components", :force => true do |t|

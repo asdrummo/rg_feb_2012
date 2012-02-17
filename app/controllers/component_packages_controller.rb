@@ -89,6 +89,7 @@ class ComponentPackagesController < ApplicationController
        @half_links = Component.find_all_by_component_type("Half Link")
        @grips = Component.find_all_by_component_type("Grip")
        @pedals = Component.find_all_by_component_type("Pedal")
+       @pedal_straps = Component.find_all_by_component_type("Pedal Strap")
        @saddles = Component.find_all_by_component_type("Saddle")
   end
   # POST /component_packages

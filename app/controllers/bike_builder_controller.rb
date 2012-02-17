@@ -495,7 +495,7 @@ class BikeBuilderController < ApplicationController
     check_compartment_completion
     list_components
     components_per_page
-    if @nav_id == 'wheels'
+    if @nav_id == 'wheels' || @nav_id == 'finishing'
       @component_packages = ComponentPackage.where(:package_type => @nav_id) #.order(:order => 'created_at ASC')
     else
       @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed') #.order(:order => 'created_at ASC')
@@ -1378,11 +1378,11 @@ class BikeBuilderController < ApplicationController
     #set variables for arrays
     @incompatible_components = []
     
-    ### PEDAL STRAPS ###
+    ### PEDAL STRAP ###
     #set pedal strap error array
     @stp_error_pedal_strap = []
     
-    if @components.where(:component_type => 'Pedal Straps').each do |component|
+    if @components.where(:component_type => 'Pedal Strap').each do |component|
       
       if @pedal_selected
         #pedal strap
@@ -1391,8 +1391,8 @@ class BikeBuilderController < ApplicationController
             @incompatible_components << component
           end
       end
-    end #end pedal straps
-    end #end pedal straps
+    end #end pedal strap
+    end #end pedal strap
     
     ### SEAT POST ###
     #set seat post error array
@@ -1550,7 +1550,7 @@ class BikeBuilderController < ApplicationController
     end
 
     @wheel_components = ['Front Wheel', 'Rear Wheel', 'Front Tube', 'Rear Tube', 'Front Tire', 'Rear Tire']
-    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedals', 'Pedal Straps', 'Grip', 'Half Link']
+    @finishing_components = ['Seat Post', 'Saddle', 'Seat Clamp', 'Pedal', 'Pedal Strap', 'Grip', 'Half Link']
   end
   
   def find_package_components
@@ -1725,11 +1725,11 @@ class BikeBuilderController < ApplicationController
       elsif item.component && (item.component.component_type == 'Seat Clamp')
         @seat_clamp_selected = Component.find_by_id(item.component.id)
         @f_build_item = 'true'
-      elsif item.component && (item.component.component_type == 'Pedals')
-        @pedals_selected = Component.find_by_id(item.component.id)
+      elsif item.component && (item.component.component_type == 'Pedal')
+        @pedal_selected = Component.find_by_id(item.component.id)
         @f_build_item = 'true'
-      elsif item.component && (item.component.component_type == 'Pedal Straps')
-        @pedal_straps_selected = Component.find_by_id(item.component.id)
+      elsif item.component && (item.component.component_type == 'Pedal Strap')
+        @pedal_strap_selected = Component.find_by_id(item.component.id)
         @f_build_item = 'true'
       elsif item.component && (item.component.component_type == 'Grip')
         @grip_selected = Component.find_by_id(item.component.id)
@@ -1739,7 +1739,7 @@ class BikeBuilderController < ApplicationController
         @f_build_item = 'true'
       end
     end
-    if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedals_selected) && (@pedal_straps_selected))
+    if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedal_selected) && (@pedal_strap_selected))
       @finishing_complete = 'true'
     end
     

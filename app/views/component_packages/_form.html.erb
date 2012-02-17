@@ -280,8 +280,10 @@ frame_model_selection: <%= session[:frame_model_id] %>
 		<% else %>
 		<%= f.select :chain_id, options_from_collection_for_select(@chains, "id", "name"), :include_blank => true %>
 		<% end %>
-	
-	  	<br />
+	<% end %>
+		
+		<% if (@package_type == 'full-multi_speed') || (@package_type == 'full-single_speed') || (@package_type =='drivetrain-multi_speed') || (@package_type =='drivetrain-single_speed') || (@package_type =='finishing')%>
+		<br />
 	   	<%= f.label :half_link_id %><br />
 		<% if @component_package.half_link_id %>
 		<%= f.select :half_link_id, options_from_collection_for_select(@half_links, "id", "name", @component_package.half_link_id), :include_blank => true %>
@@ -294,6 +296,34 @@ frame_model_selection: <%= session[:frame_model_id] %>
 		<%= f.select :pedal_id, options_from_collection_for_select(@pedals, "id", "name", @component_package.pedal_id), :include_blank => true %>
 		<% else %>
 		<%= f.select :pedal_id, options_from_collection_for_select(@pedals, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :pedal_strap_id %><br />
+		<% if @component_package.pedal_strap_id %>
+		<%= f.select :pedal_strap_id, options_from_collection_for_select(@pedal_straps, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :pedal_strap_id, options_from_collection_for_select(@pedal_straps, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :seat_post_id %><br />
+		<% if @component_package.seat_post_id %>
+		<%= f.select :seat_post_id, options_from_collection_for_select(@seat_posts, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :seat_post_id, options_from_collection_for_select(@seat_posts, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :saddle_id %><br />
+		<% if @component_package.saddle_id %>
+		<%= f.select :saddle_id, options_from_collection_for_select(@saddles, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :saddle_id, options_from_collection_for_select(@saddles, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :seat_clamp_id %><br />
+		<% if @component_package.seat_clamp_id %>
+		<%= f.select :seat_clamp_id, options_from_collection_for_select(@seat_clamps, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :seat_clamp_id, options_from_collection_for_select(@seat_clamps, "id", "name"), :include_blank => true %>
 		<% end %>	<br />
 	<% end %>
    	
