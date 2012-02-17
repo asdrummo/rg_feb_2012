@@ -1,9 +1,7 @@
 class BikeBuilderController < ApplicationController
   layout 'standard'
   before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
-  #before_filter :find_or_create_build, :find_frame, :compatibility_check
-  #before_filter :find_frame, :compatibility_check
-  #before_filter :compatibility_check
+
   
     
   def frames
@@ -1824,6 +1822,11 @@ private
        @compatibility = params[:compatibility]
        session[:compatibility] = @compatibility
      end
+     @component_view = session[:component_view] ||= 'grid'
+      if params[:component_view]
+        @component_view = params[:component_view]
+        session[:component_view] = @component_view
+      end
   end
   
     

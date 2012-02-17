@@ -53,7 +53,7 @@ class ComponentPackagesController < ApplicationController
   end
   
   def list_package_types
-      @package_types = ['full-single_speed', 'full-multi_speed','drivetrain-single_speed', 'drivetrain-multi_speed','front_end-single_speed', 'front_end-multi_speed' 'wheels']
+      @package_types = ['full-single_speed', 'full-multi_speed','drivetrain-single_speed', 'drivetrain-multi_speed','front_end-single_speed', 'front_end-multi_speed' 'wheels', 'finishing']
       @package_types_array = @package_types.map { |package_types| [package_types, package_types] }
   end
   

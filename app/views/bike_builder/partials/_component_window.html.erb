@@ -4,27 +4,16 @@
 		<%= render :partial => 'bike_builder/partials/side_menu' %>
 	</td>
 	<td id="main_comp_window">
-	<% if @component != nil %>
-		
 		<%= render :partial => 'bike_builder/partials/sort' %>
-			<div id="component_grid">
-			<%= render :partial => 'bike_builder/partials/component' %>
-		</div><!-- end table div -->
-		
-	<% else %>	
-
-
-				<h2 class="center">No Components Available</h2>
-				
-				<%= render :partial => 'bike_builder/partials/sort' %>
-				<div id="component_grid">
-				<%= render :partial => 'bike_builder/partials/component' %>
-				</div>
-	<% end %>
+			<div id="component_grid">				
+				<%= render :partial => 'bike_builder/partials/component' %>				
+			</div><!-- end component_grid div -->
 	</td>
 </tr>
 </table>
 <div class="clear"></div>
+compatibility: 	<%= select_tag :compatibility, options_for_select(['on', 'off'], @compatibility_check),
+	    :onchange => "if(this.value){window.location='?compatibility='+this.value;}" %>
 <hr>
 <% if @compatibility_check == 'on' %>
 <%= render(:partial => 'bike_builder/partials/incompatible_components')%>

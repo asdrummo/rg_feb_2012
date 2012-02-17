@@ -1,40 +1,6 @@
-
 <% @page_title = @component ||= @nav_id %>
-<% if @component_view == 'grid' %>
-<% i = 0 %>
-<div id="" style="">
-<% i = 0 %>
 <% @warning = "adding this component will reset any components in the following sections"%>
-<% @components.each do |component|  %>
 
-	<div class="item">	
-		<%= image_tag(component.image_path, :alt => "item", :size => "100x100", :class => "",:rel => "",
-		:class => "lightview", :rel => "iframe", :title => component.name)  %><br />
-		<div class="item_name"><%= component.name %><br />
-	    <%= number_to_currency(component.price) %><br />
-
-		<% if @nav_id == 'drivetrain' && (@fe_build_item == 'true' || @w_build_item == 'true' ||  @f_build_item == 'true') %>
-		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_fe => 'true'}, :confirm =>  @warning ) %>
-		<% elsif (@nav_id == 'front_end') && (@w_build_item == 'true' ||  @f_build_item == 'true') %>
-		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_w => 'true'}, :confirm =>  @warning ) %>
-		<% elsif (@nav_id == 'wheels') && (@f_build_item == 'true') %>
-		<%= link_to('select', {:action => 'select_component', :component => component.component_type, :id => component.id, :reset_f => 'true'}, :confirm => @warning ) %>
-		<% else %>
-		<%= link_to('select', :action => 'select_component', :component => component.component_type, :id => component.id) %>
-		<% end %>
-		</div>
-	
-		<% i += 1 %>
-		
-	</div>
-	 <% if i == 5 %>
-	<div style="clear:both"></div>
-	<% i = 0 %>
-	<!-- end clear -->
-	<% end %>
-
-<% end %>
-<% elsif @component_view == 'list' %>
 <table>
 	<tr>
 		<th>
@@ -82,8 +48,5 @@
 		</td>
 	</tr>
 	<% end %>
-</table>
-<% end %>
+</table>			
 <%= will_paginate @components %>
-<div class="clear"></div>
-</div><!-- end component grid -->
