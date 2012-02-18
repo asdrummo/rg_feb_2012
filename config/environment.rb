@@ -13,6 +13,7 @@ module ActiveSupport::Inflector
     result.downcase.gsub(/ +/,'_')
   end
 end
+
 class String
   def computerize
     ActiveSupport::Inflector.computerize(self)

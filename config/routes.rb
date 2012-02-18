@@ -24,7 +24,7 @@ resources :components, :accessories, :component_packages, :frame_models, :worksh
   match 'public/bikes_to_buy' => 'public#bikes_to_buy', :as => :bikes_to_buy
   match 'signup', :to => 'signups#signup'
   match 'bike_builder', :to => 'bike_builder#welcome', :as => :bike_builder
-  match 'bike_builder/frames', :to => 'bike_builder#frames'   
+  #match 'bike_builder/frames', :to => 'bike_builder#frames'   
   match ':controller(/:action(/:type(.:format)))'
 
   

@@ -1,5 +1,6 @@
 <ul id="bike_builder_progress">
-	<h1 class="center">Bike Builder Beta</h1>(<%= session[:customer_build_id] %>)
+	<h1 class="center" style="display:inline">Bike Builder Beta</h1>
+	<% if session[:customer_build_id] %>(build:<%= session[:customer_build_id] %>)<% end %><br /><br />
 	<li class="<%= @model %>"><%= link_to('1. Select Model', :action => 'frames') %></li>
 	
 	<li class="<%= @drivetrain %>">

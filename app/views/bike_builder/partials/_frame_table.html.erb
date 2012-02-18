@@ -1,26 +1,12 @@
 <table class="center padded">
-	<tr>
-		<th>&nbsp;</th>
-		<th>name</th>
-		<th>description</th>
-		<th>options</th>
-		<th>price</th>
-		<th>&nbsp;</th>
-	</tr>
+	
 <% @frames.each do |m| %>
 
 	<tr class="<%= cycle('odd', 'even') %>">
-		<td>
-			<p><%= image_tag(m.image_path, :size => "100x100", :alt => "", :class => "product_image") %></p>
-		</td>
-		<td>
-			<p><%= m.name %></p>
-		</td>
-				
-		<td>
-		<p class="left"><%= raw m.description %></p>
-		</td>
+		<td><%= image_tag(m.image_path, :size => "100x100", :alt => "", :class => "product_image", :style => "float:left") %></td>
+		<td><p><strong><%= m.name %></strong></p>
 		
+		</td>
 		<td>
 			<% 	if m.sizes
 			 	frame_sizes = m.sizes.split('x') 
@@ -51,20 +37,11 @@
 					<%= f.select :gear_selection, options_from_collection_for_select(@gears, "id", "name"), :include_blank => @gear_selection %>
 		
 			<% end %>
-			
-
 		</td>
 			
-		<td>
-			<%= number_to_currency(m.price) %>
-		</td>
-		<td>
-	
-			
-			
+		<td>	<%= number_to_currency(m.price) %><br />
 				<div class="actions">
 				<% if @build_component == 'true' %>
-				
 			    <%= f.submit "Select Frame", :onclick => "return confirm(\"If you continue, all components in your current build will be cleared. \")" %>	
 				<% else %>
 				<%= f.submit "Select Frame" %>
@@ -73,5 +50,6 @@
 			<%end %>
 		</td>
 	</tr>
+
 <% end %>
 </table>

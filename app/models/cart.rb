@@ -12,6 +12,29 @@ class Cart
     @total_price = 0.0
   end
   
+  def add_customer_build(customer_build)
+    existing_item = @items.find {|item| item.customer_build_id == customer_build.id}
+    if existing_item
+        existing_item.quantity += 1
+    else
+        @items << LineItem.new_customer_build_based_on(customer_build)
+    end
+    @total_price += customer_build.price
+  end
+  
+  
+  def remove_customer_build(customer_build)
+    existing_item = @items.find {|item| item.customer_build_id == customer_build.id}
+    if existing_item && existing_item.quantity > 1
+      existing_item.quantity -= 1
+    else
+      @items.delete(existing_item)
+      
+    end
+    @total_price -= customer_build.price
+  end
+  
+  
   def add_workshop( workshop )
     existing_item = @items.find {|item| item.workshop_id == workshop.id}
     if existing_item
@@ -36,9 +59,7 @@ class Cart
   def add_frame_model_to_workshop( frame_model, workshop)
 
        @items << LineItem.add_frame_model_to_workshop( frame_model, workshop )
-
   end
-  
     
   def add_kit( frame_model, frame_model_size, gear, top_tube_style )
     existing_item = @items.find {|item| (item.frame_model_id == frame_model.id) && (item.frame_model_size_id == frame_model_size.id) && (item.gear_id == gear.id) && (item.top_tube_style == top_tube_style.id)}

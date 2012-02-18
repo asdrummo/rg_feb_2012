@@ -389,6 +389,37 @@ class PublicController < ApplicationController
     session[:cart] = @cart
   end
 
+  def add_build_to_cart
+    build = session[:build] 
+    if session[:customer_build_id]
+      customer_build = CustomerBuild.find(session[:customer_build_id])
+      build_items = CustomerBuildItem.find_all_by_customer_build_id(customer_build.id)
+      build_items.each{ |u| u.destroy }
+    else
+      customer_build = CustomerBuild.new
+    end
+      customer_build.customer_build_items << build.items
+    if session[:customer_id]
+      customer_build.update_attributes(:customer_id => session[:customer_id], :price => build.total_price)
+    else
+      customer_build.update_attributes(:price => build.total_price)
+    end
+    customer_build.save
+    @cart.add_customer_build(customer_build)
+    flash[:notice] = 'Build Added to Cart'
+    redirect_back
+  end
+  
+  
+  def remove_customer_build_from_cart
+    customer_build = CustomerBuild.find(params[:id])
+    @cart.remove_customer_build(customer_build)
+    session[:cart] = @cart
+    flash[:notice] = 'Build Successfully Removed From Cart'
+    redirect_to(:action => 'show_cart')
+  end
+  
+  
   def remove_reservation_from_cart
     workshop = Workshop.find(params[:id])
     @cart.remove_reservation(workshop)

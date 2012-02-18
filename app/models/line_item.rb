@@ -11,9 +11,27 @@ class LineItem < ActiveRecord::Base
   belongs_to :top_tube_style
   belongs_to :order
   belongs_to :option
+  belongs_to :customer_build
 
   
   @status = "processing"
+  def self.new_customer_build_based_on(customer_build)
+    line_item = self.new
+    line_item.customer_build = customer_build
+    line_item.quantity = 1
+    line_item.status = @status
+    line_item.price = customer_build.price
+    return line_item
+  end
+  
+  def self.remove_customer_build_based_on(customer_build)
+    line_item = self.find(customer_build)
+    line_item.customer_build = customer_build
+    line_item.customer_build_id = customer_build.id
+    line_item.quantity = 1
+    line_item.status = @status
+    return line_item
+  end
   
   def self.new_frame_based_on(frame, frame_size, gear, top_tube_style)
     line_item = self.new

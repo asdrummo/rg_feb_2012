@@ -166,7 +166,7 @@
 <% end %>
 <% end %>
 <% @cart.items.each do |item| %>
-<% if item.frame_model.nil? && item.accessory.nil? %>
+<% if item.component %>
 <% if @comp_count == 0 %>	
 <tr>
 
@@ -195,8 +195,6 @@
 		<td>
 			<p><%= item.component.description %></p>
 		</td>
-
-
 		<td>
 			<p>quantity: <%= item.quantity %></p>
 			<p>subtotal: <%= number_to_currency(item.component.price) %></p>
@@ -204,6 +202,45 @@
 		</td>
 <% end %>
 <% end %>
+
+<% @cart.items.each do |item| %>
+<% if item.customer_build %>
+<% if @comp_count == 0 %>	
+<tr>
+
+	<td colspan="7" class="center"><h2>Bike Builder Build</h2></td>
+</tr>
+	<tr id="cart_header">
+
+		<th colspan="3">Product Image</th>
+		
+		<th colspan="2">Name</th>
+		<th>Description</th>
+	
+		<th>Price</th>
+	</tr>
+<% end %>
+<% @comp_count += 1 %>
+		
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td colspan="3">
+			<%= image_tag('default.png', :size => "100x100", :alt => "", :class => "product_image") %>
+		</td>
+		<td colspan="2">
+			<p>custom build #<%= item.customer_build_id %></p>
+		</td>
+		<td>
+			<p>bike via the bike builder</p>
+		</td>
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(item.price) %></p>
+			<p><%= link_to('remove', {:action => 'remove_customer_build_from_cart', :id => item.customer_build.id}, :class => "remove_item") %></p>
+		</td>
+<% end %>
+<% end %>
+
 	<tr id="cart_total">
 		<td></td>
 		<td></td>

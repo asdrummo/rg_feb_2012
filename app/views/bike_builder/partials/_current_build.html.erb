@@ -1,4 +1,19 @@
-<div class="center">subtotal: <%= number_to_currency(@build.total_price) %></div>
+<div class="center">subtotal: <%= number_to_currency(@build.total_price) %><br /><br />
+
+	<% if session[:customer_id] %>
+	 <%= link_to('Save Build', {:action => 'save_build'} ) %>&nbsp|&nbsp
+	 <%= link_to('New Build', {:action => 'new_build'} ) %>
+	<% else %>
+	<div id="build_login" style="display:inline">
+	please <%= login_link_helper('login', 'build_login') %> to save build
+	</div>
+	<% end %>
+	&nbsp|&nbsp
+	<%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %>
+	<br />
+	<%= link_to('Add Build to Cart', {:controller => 'public', :action => 'add_build_to_cart'}) %>
+</div>
+<br />
 <div class="left">
 <% if @customer_build %>
 your build was last saved at: <strong><%= @customer_build.updated_at %></strong> <br />
@@ -99,14 +114,7 @@ your build was last saved at: <strong><%= @customer_build.updated_at %></strong>
 		
 <% end %>
 
-<br /><br />
-<% if session[:customer_id] %>
- <%= link_to('Save Build', {:action => 'save_build'} ) %>
-<% else %>
-<div id="build_login" style="display:inline">
-please <%= login_link_helper('login', 'build_login') %> to save build
-</div>
-<% end %>&nbsp|&nbsp
-<%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %> 
+
+
 </div>
 </div>

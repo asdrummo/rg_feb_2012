@@ -18,7 +18,8 @@ Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><b
 	<tr class="<%= cycle('odd', 'even') %>">
 		<td><%= build.created_at.strftime("%m/%d/%y") %></td>
 		<td><%= build.id %></td>
-		<td><%= link_to('resume', :controller => 'bike_builder', :action => 'resume_build', :build_id => build.id) %> | 
+		<td><%= link_to('resume', :controller => 'bike_builder', :action => 'resume_build', :build_id => build.id) %> |
+			<%= link_to('buy', :action => 'add_build_to_cart') %> | 
 		<%= link_to('delete', :controller => 'bike_builder', :action => 'delete_build', :build_id => build.id) %></td>
 
 	</tr>

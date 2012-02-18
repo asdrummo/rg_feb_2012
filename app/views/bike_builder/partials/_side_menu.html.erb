@@ -1,7 +1,16 @@
 
 <div id="side_menu">
 	<h4>Components (<%= sidebar_link_helper('all', @nav_id )%>)</h4>
-<% if @nav_id == 'drivetrain'%>
+<% if @nav_id == 'frames' %>
+<ul>
+	<li>
+		frame side bar
+	</li>
+	<%= remote_link_helper('Already Have a Frame?', 'component_grid', 'custom_frame', 'frames' )%>
+		
+</ul>
+
+<% elsif @nav_id == 'drivetrain'%>
 <ul>
 	<% @drivetrain_components.each do |component|%>
 	<li>
@@ -40,7 +49,7 @@
 
 available packages
 <ul>
-	<% if @component_packages.each do |p| %>
+	<% if @component_packages && @component_packages.each do |p| %>
 	<li>
 	<%= package_link_helper(p.name, p.id, @nav_id) %> | <%= link_to('add', :action => 'add_package_to_build', :package_id => p.id) %>
 	</li>

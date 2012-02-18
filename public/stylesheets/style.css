@@ -24,7 +24,7 @@ a {
 	clear:both;
 }
 #bodywrap {
-	width:900px;
+	width:1200px;
 	min-height:600px;
 	margin:auto;
 	background-color: #fff;
@@ -125,7 +125,7 @@ padding-top:20px;
 }
 
 #features {
-	width:800px;
+	width:1200px;
 	text-align:center;
 	vertical-align:middle;
 	
@@ -155,7 +155,6 @@ padding-top:20px;
 #workshop_progress, #bike_builder_progress {
 	text-align:center;
 	padding-top:0;
-	width:800px;
 }
 #workshop_progress li, #bike_builder_progress li  {
 	padding: 0 10px 0 10px;
@@ -176,7 +175,7 @@ table#show_components td {
 	width:175px;
 }
 #main_comp_window {
-	width: 800px;
+	width: 725px;
 	text-align:left;
 }
 
@@ -237,6 +236,10 @@ table.invoice_table {
 	border:none;
 }
 
+/* sort bar */
+#sort_info {
+	text-align:center;
+}
 /* components (grid) */
 #component_grid {
 	margin:auto;

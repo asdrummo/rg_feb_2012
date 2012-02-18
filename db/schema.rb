@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217094145) do
+ActiveRecord::Schema.define(:version => 20120218080523) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20120217094145) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "customer_id"
+    t.decimal  "price",       :precision => 8, :scale => 2
   end
 
   create_table "customers", :force => true do |t|
@@ -273,6 +274,7 @@ ActiveRecord::Schema.define(:version => 20120217094145) do
     t.string   "tracking"
     t.integer  "option"
     t.integer  "custom_frame_model_id"
+    t.integer  "customer_build_id"
   end
 
   create_table "options", :force => true do |t|

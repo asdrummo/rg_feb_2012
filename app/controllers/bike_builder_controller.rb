@@ -1,6 +1,6 @@
 class BikeBuilderController < ApplicationController
   layout 'standard'
-  before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
+  before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check, :find_or_create_cart
   
   def frames
 
@@ -14,10 +14,11 @@ class BikeBuilderController < ApplicationController
        # format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
       #end
     end
+    
     frame_check
-    check_for_size_error
+    #check_for_size_error
     @frames = FrameModel.find(:all, :order => 'name ASC') 
-    @nav_id = 'bike_builder'
+    @nav_id = 'frames'
     @model = 'active_progress'
     @frame_sizes = FrameModelSize.find(:all, :order => 'id ASC') 
     @top_tube_styles = TopTubeStyle.find(:all, :order => 'id ASC')
@@ -25,21 +26,15 @@ class BikeBuilderController < ApplicationController
     @custom_frame = FrameModel.new
     if params[:item] == 'custom_frame'
       respond_to do |format|
-        format.html 
         format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity }
         format.js {render 'custom_frame.js'}  
       end
+    else
+     render 'bike_builder' 
     end
-      
   end
   
-  def check_for_size_error
-    if params[:size_error]
-      @size_error = 'true'
-    else
-      @size_error = 'false'
-    end
-  end
+
   
   def submit_frame
     @frame = FrameModel.new(params[:frame_model])
@@ -1819,13 +1814,15 @@ class BikeBuilderController < ApplicationController
     session[:customer_build_id] = params[:build_id]
     session[:build] = @build
     flash[:notice] = 'your build has been resume'
-    redirect_back
+    redirect_to(:action => 'frames')
   end
   
   def new_build
     session[:customer_build_id] = nil
+    @build = Build.new
+    session[:build] = @build
     flash[:notice] = 'you now have a new build'
-    redirect_back
+    redirect_to(:action => 'frames')
   end
   
   def delete_build  
@@ -1869,10 +1866,6 @@ class BikeBuilderController < ApplicationController
       format.js {render 'login.js'}  
     end
   end
-  
-  def new_build
-    session[:customer_build_id] = nil
-  end
 
 private
 
@@ -1898,5 +1891,9 @@ private
       end
   end
   
-    
+  def find_or_create_cart
+     @cart = session[:cart] ||= Cart.new
+     @workshop_cart = session[:workshop_cart] ||= Cart.new
+  end
+ 
 end
