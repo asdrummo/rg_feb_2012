@@ -10,18 +10,19 @@ Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><b
 		<td colspan="5"><h2>My builds:</h2></td>
 	</tr>
 	<tr id="builds_header" >
-		<th>date</th>
 		<th>build #</th>
+		<th>last saved (UTC)</th>
 		<th>action</th>
+
 	</tr>
 	<% @builds.each do |build| %>
 	<tr class="<%= cycle('odd', 'even') %>">
-		<td><%= build.created_at.strftime("%m/%d/%y") %></td>
 		<td><%= build.id %></td>
+		<td><%= build.updated_at.strftime("%m/%d/%y: %l:%M%P") %></td>
 		<td><%= link_to('resume', :controller => 'bike_builder', :action => 'resume_build', :build_id => build.id) %> |
 			<%= link_to('buy', :action => 'add_build_to_cart') %> | 
 		<%= link_to('delete', :controller => 'bike_builder', :action => 'delete_build', :build_id => build.id) %></td>
-
+		
 	</tr>
 	<% end %>
 
