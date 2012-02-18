@@ -1,7 +1,8 @@
 class FixCustomerOrderId < ActiveRecord::Migration
   def self.up
-    #rename_column :customer_build_items, :order_id, :customer_build_id
-    #remove_column :customer_build_items, :client_id
+    rename_column :customer_build_items, :order_id, :customer_build_id
+    remove_column :customer_build_items, :client_id
+    
   end
 
   def self.down

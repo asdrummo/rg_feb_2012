@@ -619,7 +619,6 @@ class PublicController < ApplicationController
   @builds = CustomerBuild.where(:customer_id => session[:customer_id])
   end
   
-  
   def redirect_back
     redirect_to :back
     rescue ActionController::RedirectBackError
@@ -630,6 +629,7 @@ class PublicController < ApplicationController
   
   def find_or_create_cart
     @cart = session[:cart] ||= Cart.new
+    @build = session[:build] ||= Build.new
     @workshop_cart = session[:workshop_cart] ||= Cart.new
   end
   

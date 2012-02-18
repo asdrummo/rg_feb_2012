@@ -1,6 +1,6 @@
 class BikeBuilderController < ApplicationController
   layout 'standard'
-  before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check, :find_or_create_cart
+  before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
   
   def frames
 
@@ -33,9 +33,7 @@ class BikeBuilderController < ApplicationController
      render 'bike_builder' 
     end
   end
-  
-
-  
+ 
   def submit_frame
     @frame = FrameModel.new(params[:frame_model])
     if @frame.size_selection.blank?
@@ -1788,7 +1786,7 @@ class BikeBuilderController < ApplicationController
       @customer_build = CustomerBuild.new
     end
      @customer_build.customer_build_items << @build.items
-     @customer_build.update_attributes(:customer_id => session[:customer_id])
+     @customer_build.update_attributes(:customer_id => session[:customer_id], :price => @build.total_price)
      @customer_build.save
       flash[:notice] = 'your build has been saved'
     session[:customer_build_id] = @customer_build.id
@@ -1813,7 +1811,7 @@ class BikeBuilderController < ApplicationController
     @customer_build = CustomerBuild.find(params[:build_id])
     session[:customer_build_id] = params[:build_id]
     session[:build] = @build
-    flash[:notice] = 'your build has been resume'
+    flash[:notice] = 'your build has been resumed'
     redirect_to(:action => 'frames')
   end
   
@@ -1834,7 +1832,7 @@ class BikeBuilderController < ApplicationController
     @build_items.each{ |u| u.destroy }
     @customer_build.destroy
     flash[:notice] = 'build deleted'
-    session[:customer_build_id] = @customer_build
+    session[:customer_build_id] = @customer_build.id
     redirect_back
   end
   
@@ -1872,6 +1870,8 @@ private
   def find_or_create_build
     @build = session[:build] ||= Build.new
     @page_id = 'bike_builder'
+    @cart = session[:cart] ||= Cart.new
+     @workshop_cart = session[:workshop_cart] ||= Cart.new
   end
 
   def find_frame
@@ -1890,10 +1890,6 @@ private
         session[:component_view] = @component_view
       end
   end
-  
-  def find_or_create_cart
-     @cart = session[:cart] ||= Cart.new
-     @workshop_cart = session[:workshop_cart] ||= Cart.new
-  end
+
  
 end
