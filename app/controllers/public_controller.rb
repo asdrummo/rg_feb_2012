@@ -531,6 +531,11 @@ class PublicController < ApplicationController
   end
   
   def login
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
+      format.js {render 'public/login.js'}
+    end
   end
   
   def register
@@ -575,11 +580,19 @@ class PublicController < ApplicationController
     session[:first_name] = nil
     session[:cart] = nil
     flash[:notice] = "You are now logged out."
-    redirect_to(:action => 'index')
+    render ('index')
   end
   
   def my_account
   @orders = Order.where(:customer_id => session[:customer_id])
+  @builds = CustomerBuild.where(:customer_id => session[:customer_id])
+  end
+  
+  
+  def redirect_back
+    redirect_to :back
+    rescue ActionController::RedirectBackError
+    render :partial => 'shared/referrer_error'
   end
   
   private

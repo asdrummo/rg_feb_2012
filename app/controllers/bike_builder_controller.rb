@@ -1,9 +1,7 @@
 class BikeBuilderController < ApplicationController
   layout 'standard'
   before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
-
   
-    
   def frames
 
     if params[:custom_frame]
@@ -1398,7 +1396,9 @@ class BikeBuilderController < ApplicationController
     #set seat post error array
     @sp_error_frame_seat_tube_inner_diameter = []
     @sp_error_saddle_clamp = []
-    @sp_error_frame_seat_tube_inner_diameter = []
+    @sp_error_seat_clamp_seat_tube_inner_diameter = []
+    
+    
     
     
     if @components.where(:component_type => 'Seat Post').each do |component|
@@ -1571,12 +1571,13 @@ class BikeBuilderController < ApplicationController
       @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_wheel_id, @package.rear_wheel_id, @package.front_tube_id, @package.rear_tube_id, @package.front_tire_id, @package.rear_tire_id)
 
     elsif @package.package_type == 'finishing'
-      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?, OR id = ?', @package.saddle_id, @package.seat_post_id, @package.seat_clamp_id, @package.grip_id, @package.pedal_id, @package.pedal_strap_id, @package.half_link_id)
+      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.saddle_id, @package.seat_post_id, @package.seat_clamp_id, @package.grip_id, @package.pedal_id, @package.pedal_strap_id, @package.half_link_id)
     end
   end
   
   def reset_build
     @build.empty_all_items
+    session[:customer_build_id] = nil
     flash[:notice] = 'your build has been reset'
     redirect_to(:action => 'frames')
   end
@@ -1782,6 +1783,64 @@ class BikeBuilderController < ApplicationController
     
   end
   
+  def save_build
+    @build = session[:build]
+     if session[:customer_build_id]
+       @customer_build = CustomerBuild.find(session[:customer_build_id])
+       @build_items = CustomerBuildItem.find_all_by_customer_build_id(@customer_build.id)
+       @build_items.each{ |u| u.destroy }
+     else
+      @customer_build = CustomerBuild.new
+    end
+     @customer_build.customer_build_items << @build.items
+     @customer_build.update_attributes(:customer_id => session[:customer_id])
+     @customer_build.save
+      flash[:notice] = 'your build has been saved'
+    session[:customer_build_id] = @customer_build.id
+    redirect_back
+  end
+  
+  def resume_build
+    @build = Build.new
+    @build_items = CustomerBuildItem.find_all_by_customer_build_id(params[:build_id])
+    @build_items.each do |item|
+      if item.frame_model_id
+        frame = FrameModel.find(item.frame_model_id)
+        frame_size = FrameModelSize.find(item.frame_model_size_id)
+        gear = Gear.find(item.gear_id)
+        top_tube_style = TopTubeStyle.find(item.top_tube_style_id)
+        @build.add_frame_to_build(frame, frame_size, gear, top_tube_style)
+      elsif item.component_id
+        component = Component.find(item.component_id)
+        @build.add_component_to_build(component)
+      end
+    end
+    @customer_build = CustomerBuild.find(params[:build_id])
+    session[:customer_build_id] = params[:build_id]
+    session[:build] = @build
+    flash[:notice] = 'your build has been resume'
+    redirect_back
+  end
+  
+  def new_build
+    session[:customer_build_id] = nil
+    flash[:notice] = 'you now have a new build'
+    redirect_back
+  end
+  
+  def delete_build  
+    @customer_build = CustomerBuild.find(params[:build_id])
+    if @customer_build.id == session[:customer_build_id]
+      session[:customer_build_id] = nil
+    end
+    @build_items = CustomerBuildItem.find_all_by_customer_build_id(@customer_build.id)
+    @build_items.each{ |u| u.destroy }
+    @customer_build.destroy
+    flash[:notice] = 'build deleted'
+    session[:customer_build_id] = @customer_build
+    redirect_back
+  end
+  
   def components_per_page
     #set components per page session
     if params[:per_page]
@@ -1804,6 +1863,16 @@ class BikeBuilderController < ApplicationController
     render :partial => 'shared/referrer_error'
   end
 
+  def login
+    respond_to do |format|
+      format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
+      format.js {render 'login.js'}  
+    end
+  end
+  
+  def new_build
+    session[:customer_build_id] = nil
+  end
 
 private
 

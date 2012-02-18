@@ -11,6 +11,8 @@ class LineItem < ActiveRecord::Base
   belongs_to :top_tube_style
   belongs_to :order
   belongs_to :option
+
+  
   @status = "processing"
   
   def self.new_frame_based_on(frame, frame_size, gear, top_tube_style)
@@ -31,17 +33,7 @@ class LineItem < ActiveRecord::Base
     line_item.custom_frame_model = frame
     return line_item
   end
-  
-  def self.new_build_component_based_on(component)
-    line_item = self.new
-    line_item.component = component
-    line_item.id = component.id
-    line_item.client_id = component.client_id
-    line_item.status = @status
-    line_item.price = component.price
-    return line_item
-  end
-  
+ 
   def self.new_workshop_based_on(workshop)
     line_item = self.new
     line_item.workshop = workshop

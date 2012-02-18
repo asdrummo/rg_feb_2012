@@ -58,4 +58,18 @@ module BikeBuilderHelper
     }
     link_to name, options, html_options, 
   end
+
+  def login_link_helper(text, update)
+
+    options = {
+        :url => {:controller => 'public', :action => 'login', :type => 'login'},
+        :update => update,    
+    }
+    html_options = {
+      :title => text,
+      :href => url_for(:controller => 'public', :action => 'login', :type => 'login' ),
+      :remote => true
+    }
+    link_to text, options, html_options, 
+  end
 end

@@ -1,6 +1,8 @@
 <div class="center">subtotal: <%= number_to_currency(@build.total_price) %></div>
 <div class="left">
-
+<% if @customer_build %>
+your build was last saved at: <strong><%= @customer_build.updated_at %></strong> <br />
+<% end %>
 <% if @build.items.count == 0 %>
 	<table class="center">
 		<tr>
@@ -98,5 +100,13 @@
 <% end %>
 
 <br /><br />
- <%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %>
+<% if session[:customer_id] %>
+ <%= link_to('Save Build', {:action => 'save_build'} ) %>
+<% else %>
+<div id="build_login" style="display:inline">
+please <%= login_link_helper('login', 'build_login') %> to save build
+</div>
+<% end %>&nbsp|&nbsp
+<%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %> 
+</div>
 </div>

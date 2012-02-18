@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217020121) do
+ActiveRecord::Schema.define(:version => 20120217094145) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -21,11 +21,6 @@ ActiveRecord::Schema.define(:version => 20120217020121) do
     t.string   "color"
     t.string   "client_id"
     t.string   "image_path",                                :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "builds", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -168,6 +163,27 @@ ActiveRecord::Schema.define(:version => 20120217020121) do
     t.integer  "steer_tube_length"
     t.integer  "seat_tube_inner_diameter"
     t.integer  "seat_tube_outer_diameter"
+  end
+
+  create_table "customer_build_items", :force => true do |t|
+    t.integer  "customer_build_id"
+    t.integer  "price"
+    t.integer  "frame_model_id"
+    t.integer  "custom_frame_model_id"
+    t.integer  "component_id"
+    t.integer  "frame_model_size_id"
+    t.integer  "gear_id"
+    t.integer  "top_tube_style_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "client_id"
+    t.string   "component_type"
+  end
+
+  create_table "customer_builds", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "customer_id"
   end
 
   create_table "customers", :force => true do |t|

@@ -18,12 +18,12 @@ class Build
       existing_custom_model = @items.find {|item| (item.custom_frame_model)}
       if existing_frame
         @items.delete(existing_frame)
-        @items << LineItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+        @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
       elsif existing_custom_model
         @items.delete(existing_custom_model)
-        @items << LineItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+        @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
       else
-        @items << LineItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+        @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
       end
       @total_price += (frame.price + frame_size.price + gear.price + top_tube_style.price)
   end
@@ -32,9 +32,9 @@ class Build
       existing_frame = @items.find {|item| (item.frame_model)}
       if existing_frame
         @items.delete(existing_frame)
-        @items << LineItem.new_custom_frame_based_on(frame)
+        @items << CustomerBuildItem.new_custom_frame_based_on(frame)
       else
-        @items << LineItem.new_custom_frame_based_on(frame)
+        @items << CustomerBuildItem.new_custom_frame_based_on(frame)
       end
   end
 
@@ -43,9 +43,9 @@ class Build
       if existing_component
         @items.delete(existing_component)
         @total_price -= (existing_component.price)
-        @items << LineItem.new_build_component_based_on(component)
+        @items << CustomerBuildItem.new_build_component_based_on(component)
       else
-        @items << LineItem.new_build_component_based_on(component)
+        @items << CustomerBuildItem.new_build_component_based_on(component)
       end
       @total_price += (component.price)
   end

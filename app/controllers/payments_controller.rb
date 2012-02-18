@@ -30,7 +30,6 @@ class PaymentsController < ApplicationController
     if @cart != []
     @work_count = 0
     @comp_count = 0
-    @cart = session[:cart]
     @order = Order.new
     @customer = Customer.find(session[:customer_id])
     @cart = session[:cart]

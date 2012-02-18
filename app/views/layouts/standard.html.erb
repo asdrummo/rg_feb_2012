@@ -33,8 +33,8 @@
 		<%= link_to('Log Out', :controller => 'public', :action => 'logout') %>
 	</div><!-- end login -->
 <% else %>
-	<div class="float_right">
-		<%= link_to('Login', :controller => 'public', :action => 'login') %>&nbsp|&nbsp
+	<div class="float_right" id="top_login">
+		<%= login_link_helper('Login', 'top_login') %>&nbsp|&nbsp
 		<%= link_to('Register', :controller => 'public', :action => 'register') %>
 	</div><!-- end logout -->
 <% end %>

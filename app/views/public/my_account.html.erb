@@ -2,7 +2,35 @@
 Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><br />
 <%= link_to('edit profile', edit_info_path(@customer)) %><br /><br />
 <%= link_to('edit login/password', edit_login_path(@customer)) %><br />
+<table id="orders" class="center">
+<% if @builds.count > 0 %>
+<% total = 0 %>
 
+	<tr>
+		<td colspan="5"><h2>My builds:</h2></td>
+	</tr>
+	<tr id="builds_header" >
+		<th>date</th>
+		<th>build #</th>
+		<th>action</th>
+	</tr>
+	<% @builds.each do |build| %>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td><%= build.created_at.strftime("%m/%d/%y") %></td>
+		<td><%= build.id %></td>
+		<td><%= link_to('resume', :controller => 'bike_builder', :action => 'resume_build', :build_id => build.id) %> | 
+		<%= link_to('delete', :controller => 'bike_builder', :action => 'delete_build', :build_id => build.id) %></td>
+
+	</tr>
+	<% end %>
+
+
+<% else %>
+<tr><td>
+you have no builds
+</tr></td>
+<% end %>
+</table>
 
 <% if @orders.count > 0 %>
 <% total = 0 %>
