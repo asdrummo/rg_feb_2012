@@ -1921,12 +1921,27 @@ class BikeBuilderController < ApplicationController
         custom_frame = CustomFrameModel.find(item.custom_frame_model_id)
         @build.add_custom_frame_to_build(custom_frame)
       end
+      
     end
     @customer_build = CustomerBuild.find(params[:build_id])
     session[:customer_build_id] = params[:build_id]
     session[:build] = @build
     flash[:notice] = 'your build has been resumed'
-    redirect_to(:action => 'frames')
+    check_compartment_completion
+    frame_check
+    if @finishing_complete
+      redirect_to(:action => 'finishing')
+    elsif @wheels_complete == 'true'
+      redirect_to(:action => 'finishing')
+    elsif @front_end_complete == 'true'
+      redirect_to(:action => 'wheels')
+    elsif @drivetrain_complete == 'true'
+      redirect_to(:action => 'front_end')
+    elsif @frame == 'true'
+      redirect_to(:action => 'drivetrain')
+    else
+      redirect_to(:action => 'frames')
+    end
   end
   
   def new_build
