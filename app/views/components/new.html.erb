@@ -1,3 +1,11 @@
+<% if  @component_specs %>
+<div id="new_container">
+	<div id="new">
+		<h1>Custom Component</h1>
+		<%= render(:partial => "components/partials/form", :locals => { :component_specs => @component_specs })%>
+	<div><!-- end new -->
+</div><!-- end new_container -->
+<% else %>
 <div id="new_container">
 	<div id="new">
 		<h1>New component</h1>
@@ -5,3 +13,4 @@
 		<%= link_to 'Back', components_path %>
 	<div><!-- end new -->
 </div><!-- end new_container -->
+<% end %>

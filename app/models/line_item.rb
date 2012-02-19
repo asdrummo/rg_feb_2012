@@ -15,6 +15,7 @@ class LineItem < ActiveRecord::Base
 
   
   @status = "processing"
+  
   def self.new_customer_build_based_on(customer_build)
     line_item = self.new
     line_item.customer_build = customer_build

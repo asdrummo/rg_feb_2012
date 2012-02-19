@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218080523) do
+ActiveRecord::Schema.define(:version => 20120219102612) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -142,6 +142,78 @@ ActiveRecord::Schema.define(:version => 20120218080523) do
     t.string   "size"
   end
 
+  create_table "custom_components", :force => true do |t|
+    t.string   "client_id"
+    t.string   "component_type"
+    t.integer  "product_id"
+    t.string   "sku"
+    t.string   "name"
+    t.string   "image_path"
+    t.string   "vendor"
+    t.string   "brand"
+    t.string   "material"
+    t.string   "color"
+    t.string   "finish"
+    t.decimal  "cost",                      :precision => 8, :scale => 2
+    t.decimal  "price",                     :precision => 8, :scale => 2
+    t.decimal  "stem_clamp_diameter",       :precision => 8, :scale => 2
+    t.decimal  "steer_tube_diameter",       :precision => 8, :scale => 2
+    t.decimal  "steer_tube_inner_diameter", :precision => 8, :scale => 2
+    t.decimal  "clamp_diameter",            :precision => 8, :scale => 2
+    t.decimal  "tube",                      :precision => 8, :scale => 2
+    t.decimal  "max_turn_size",             :precision => 8, :scale => 2
+    t.decimal  "clamp_diameter_high",       :precision => 8, :scale => 2
+    t.decimal  "clamp_diameter_low",        :precision => 8, :scale => 2
+    t.string   "bar_type"
+    t.string   "brake_type"
+    t.string   "brake_pull"
+    t.decimal  "head_tube_inner_diameter",  :precision => 8, :scale => 2
+    t.decimal  "steer_tube_length",         :precision => 8, :scale => 2
+    t.decimal  "crown_race_diameter",       :precision => 8, :scale => 2
+    t.decimal  "tube_width",                :precision => 8, :scale => 2
+    t.decimal  "hub_width",                 :precision => 8, :scale => 2
+    t.decimal  "rim_width",                 :precision => 8, :scale => 2
+    t.string   "cog_spline_thread"
+    t.decimal  "width",                     :precision => 8, :scale => 2
+    t.decimal  "tire_max_size",             :precision => 8, :scale => 2
+    t.string   "wheel_size"
+    t.decimal  "tire_width",                :precision => 8, :scale => 2
+    t.string   "tire_size"
+    t.integer  "num_bolts"
+    t.decimal  "chain_width",               :precision => 8, :scale => 2
+    t.string   "rear_derailleur_type"
+    t.string   "spline_thread_type"
+    t.integer  "cog_number"
+    t.decimal  "mount_high",                :precision => 8, :scale => 2
+    t.decimal  "mount_low",                 :precision => 8, :scale => 2
+    t.decimal  "tire_max_width",            :precision => 8, :scale => 2
+    t.string   "threading"
+    t.decimal  "spacing",                   :precision => 8, :scale => 2
+    t.string   "bolt"
+    t.string   "taper"
+    t.decimal  "shell_width",               :precision => 8, :scale => 2
+    t.decimal  "qfactor",                   :precision => 8, :scale => 2
+    t.decimal  "bcd",                       :precision => 8, :scale => 2
+    t.string   "front_derailleur_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "description"
+    t.string   "shifter_type"
+    t.string   "compartment"
+    t.string   "rear_derailleur_mount"
+    t.string   "front_derailleur_mount"
+    t.decimal  "weight",                    :precision => 5, :scale => 1
+    t.string   "handlebar_type"
+    t.integer  "seat_tube_inner_diameter"
+    t.integer  "seat_tube_outer_diameter"
+    t.string   "clamp"
+    t.string   "pedal_strap"
+    t.string   "attachment_type"
+    t.integer  "brake_mount_to_hub"
+    t.string   "size"
+    t.integer  "customer_id"
+  end
+
   create_table "custom_frame_models", :force => true do |t|
     t.string   "name"
     t.integer  "gears"
@@ -163,6 +235,7 @@ ActiveRecord::Schema.define(:version => 20120218080523) do
     t.integer  "steer_tube_length"
     t.integer  "seat_tube_inner_diameter"
     t.integer  "seat_tube_outer_diameter"
+    t.integer  "customer_id"
   end
 
   create_table "customer_build_items", :force => true do |t|
@@ -178,6 +251,8 @@ ActiveRecord::Schema.define(:version => 20120218080523) do
     t.datetime "updated_at"
     t.integer  "client_id"
     t.string   "component_type"
+    t.string   "compartment"
+    t.integer  "custom_component_id"
   end
 
   create_table "customer_builds", :force => true do |t|

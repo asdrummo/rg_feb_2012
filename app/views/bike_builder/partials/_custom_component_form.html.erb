@@ -1,0 +1,499 @@
+<div class="center">
+<%= form_for('custom_component', :action => @nav_id ) do |f| %>
+
+<% if @new_custom_component == 'true'%>
+ <!-- select component type -->
+		<%= form_tag do %>
+			<%= select_tag :component_type, options_for_select(@custom_components_array), :include_blank => "select component", :onchange => 'this.form.submit()' %>
+		<% end %>
+<% else %>
+ <!-- if component type has been selected -->
+	 <!-- add client id -->
+<%= f.hidden_field :compartment, :value => @compartment %>
+
+<% if @component_type != nil %>
+<%= f.hidden_field :component_type, :value => @component_type %>
+<% elsif @custom_component.component_type != nil %>
+<%= f.hidden_field :component_type, :value =>  @custom_component.component_type %>
+<% end %>
+
+<div class="field">
+  <%= f.label :component_type %><br />
+ <strong> <%= @component_type %> </strong>
+</div>			
+
+<br />
+<% if session[:customer_id] %>
+<%= f.hidden_field :customer_id, :value =>  session[:customer_id] %>
+<% end %>
+<% @name = @component_type.computerize if @component_type %>
+compatability specs:
+<% if @name == 'bottom_bracket' %>
+<div class="field">
+  <%= f.label :threading %><br />
+  <%= f.text_field :threading %>
+</div>
+<div class="field">
+  <%= f.label :num_bolts %><br />
+  <%= f.text_field :num_bolts %>
+</div>
+<div class="field">
+  <%= f.label :spacing %><br />
+  <%= f.text_field :spacing %>
+</div>
+<div class="field">
+  <%= f.label :bolt %><br />
+  <%= f.text_field :bolt %>
+</div>
+<div class="field">
+  <%= f.label :taper %><br />
+  <%= f.text_field :taper %>
+</div>
+<div class="field">
+  <%= f.label :width %><br />
+  <%= f.text_field :width %>
+</div>
+<div class="field">
+  <%= f.label :shell_width %><br />
+  <%= f.text_field :shell_width %>
+</div>
+<div class="field">
+  <%= f.label :qfactor %><br />
+  <%= f.text_field :qfactor %>
+</div>
+<% elsif @name == 'chainring'%>
+<div class="field">
+  <%= f.label :bcd %><br />
+  <%= f.text_field :bcd %>
+</div>
+<div class="field">
+  <%= f.label :num_bolts %><br />
+  <%= f.text_field :num_bolts %>
+</div>
+<div class="field">
+  <%= f.label :chain_width %><br />
+  <%= f.text_field :chain_width %>
+</div>
+<div class="field">
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
+</div>
+<% elsif @name == 'chain'%>
+<div class="field">
+  <%= f.label :chain_width %><br />
+  <%= f.text_field :chain_width %>
+</div>
+<div class="field">
+  <%= f.label :cog_number %><br />
+  <%= f.text_field :cog_number %>
+</div>
+
+<% elsif @name == 'cog_cassette'%>
+<div class="field">
+  <%= f.label :num_bolts %><br />
+  <%= f.text_field :num_bolts %>
+</div>
+<div class="field">
+  <%= f.label :chain_width %><br />
+  <%= f.text_field :chain_width %>
+</div>
+<div class="field">
+  <%= f.label :rear_derailleur_type %><br />
+  <%= f.text_field :rear_derailleur_type %>
+</div>
+<div class="field">
+  <%= f.label :spline_thread_type %><br />
+  <%= f.text_field :spline_thread_type %>
+</div>
+<div class="field">
+  <%= f.label :cog_number %><br />
+  <%= f.text_field :cog_number %>
+</div>
+<% elsif @name == 'crank'%>
+<div class="field">
+  <%= f.label :num_bolts %><br />
+  <%= f.text_field :num_bolts %>
+</div>
+<div class="field">
+  <%= f.label :bcd %><br />
+  <%= f.text_field :bcd %>
+</div>
+<div class="field">
+  <%= f.label :taper %><br />
+  <%= f.text_field :taper %>
+</div>
+<div class="field">
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
+</div>
+<div class="field">
+  <%= f.label :qfactor %><br />
+  <%= f.text_field :qfactor %>
+</div>
+<% elsif @name == 'fork'%>
+
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+
+<div class="field">
+  <%= f.label :steer_tube_diameter %><br />
+  <%= f.text_field :steer_tube_diameter %>
+</div>
+
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<% elsif @name == 'front_brake'%>
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<div class="field">
+  <%= f.label :brake_pull %><br />
+  <%= f.text_field :brake_pull %>
+</div>
+<div class="field">
+  <%= f.label :mount_high %><br />
+  <%= f.text_field :mount_high %>
+</div>
+<div class="field">
+  <%= f.label :mount_low %><br />
+  <%= f.text_field :mount_low %>
+</div>
+<div class="field">
+  <%= f.label :tire_max_width %><br />
+  <%= f.text_field :tire_max_width %>
+</div>
+<% elsif @name == 'front_derailleur'%>
+
+<div class="field">
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
+</div>
+<div class="field">
+  <%= f.label :shifter_type %><br />
+  <%= f.text_field :shifter_type %>
+</div>
+<% elsif @name == 'front_lever'%>
+<div class="field">
+  <%= f.label :clamp_diameter_high %><br />
+  <%= f.text_field :clamp_diameter_high %>
+</div>
+<div class="field">
+  <%= f.label :clamp_diameter_low %><br />
+  <%= f.text_field :clamp_diameter_low %>
+</div>
+<div class="field">
+  <%= f.label :handlebar_type %><br />
+  <%= f.text_field :handlebar_type %>
+</div>
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<div class="field">
+  <%= f.label :brake_pull %><br />
+  <%= f.text_field :brake_pull %>
+</div>
+<% elsif @name == 'front_shifter'%>
+<div class="field">
+  <%= f.label :front_derailleur_type %><br />
+  <%= f.text_field :front_derailleur_type %>
+</div>
+<div class="field">
+  <%= f.label :clamp_diameter_low %><br />
+  <%= f.text_field :clamp_diameter_low %>
+</div>
+<div class="field">
+  <%= f.label :clamp_diameter_high %><br />
+  <%= f.text_field :clamp_diameter_high %>
+</div>
+<div class="field">
+  <%= f.label :handlebar_type %><br />
+  <%= f.text_field :handlebar_type %>
+</div>
+<div class="field">
+  <%= f.label :max_turn_size %><br />
+  <%= f.text_field :max_turn_size %>
+</div>
+<% elsif @name == 'front_tire'%>
+<div class="field">
+  <%= f.label :tire_size %><br />
+  <%= f.text_field :tire_size %>
+</div>
+<div class="field">
+  <%= f.label :tire_width %><br />
+  <%= f.text_field :tire_width %>
+</div>
+<div class="field">
+  <%= f.label :tire_max_size %><br />
+  <%= f.text_field :tire_max_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<% elsif @name == 'front_tube'%>
+<div class="field">
+  <%= f.label :tire_size %><br />
+  <%= f.text_field :tire_size %>
+</div>
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<div class="field">
+  <%= f.label :tire_width %><br />
+  <%= f.text_field :tire_width %>
+</div>
+<% elsif @name == 'front_wheel'%>
+
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<div class="field">
+  <%= f.label :hub_width %><br />
+  <%= f.text_field :hub_width %>
+</div>
+<% elsif @name == 'grip'%>
+<div class="field">
+  <%= f.label :size %><br />
+  <%= f.text_field :size %>
+</div>
+<% elsif @name == 'half_link'%>
+<div class="field">
+  <%= f.label :chain_width %><br />
+  <%= f.text_field :chain_width %>
+</div>
+<% elsif @name == 'handlebar'%>
+<div class="field">
+  <%= f.label :clamp_diameter %><br />
+  <%= f.text_field :clamp_diameter %>
+</div>
+<div class="field">
+  <%= f.label :handlebar_type %><br />
+  <%= f.text_field :handlebar_type %>
+</div>
+<div class="field">
+  <%= f.label :stem_clamp_diameter %><br />
+  <%= f.text_field :stem_clamp_diameter %>
+</div>
+<div class="field">
+  <%= f.label :max_turn_size %><br />
+  <%= f.text_field :max_turn_size %>
+</div>
+<% elsif @name == 'headset'%>
+<div class="field">
+  <%= f.label :head_tube_inner_diameter %><br />
+  <%= f.text_field :head_tube_inner_diameter %>
+</div>
+<div class="field">
+  <%= f.label :steer_tube_diameter %><br />
+  <%= f.text_field :steer_tube_diameter %>
+</div>
+<div class="field">
+  <%= f.label :crown_race_diameter %><br />
+  <%= f.text_field :crown_race_diameter %>
+</div>
+<% elsif @name == 'pedal'%>
+<div class="field">
+  <%= f.label :pedal_strap %><br />
+  <%= f.text_field :pedal_strap %>
+</div>
+<% elsif @name == 'rear_brake'%>
+<div class="field">
+  <%= f.label :brake_pull %><br />
+  <%= f.text_field :brake_pull %>
+</div>
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<div class="field">
+  <%= f.label :tire_width_max %><br />
+  <%= f.text_field :tire_width_max %>
+</div>
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<% elsif @name == 'rear_derailleur'%>
+
+<div class="field">
+  <%= f.label :rear_derailleur_type %><br />
+  <%= f.text_field :rear_derailleur_type %>
+</div>
+
+<div class="field">
+  <%= f.label :chain_width %><br />
+  <%= f.text_field :chain_width %>
+</div>
+<div class="field">
+  <%= f.label :cog_number %><br />
+  <%= f.text_field :cog_number %>
+</div>
+<% elsif @name == 'rear_lever'%>
+<div class="field">
+  <%= f.label :clamp_diameter_high %><br />
+  <%= f.text_field :clamp_diameter_high %>
+</div>
+<div class="field">
+  <%= f.label :clamp_diameter_low %><br />
+  <%= f.text_field :clamp_diameter_low %>
+</div>
+<div class="field">
+  <%= f.label :handlebar_type %><br />
+  <%= f.text_field :handlebar_type %>
+</div>
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<div class="field">
+  <%= f.label :brake_pull %><br />
+  <%= f.text_field :brake_pull %>
+</div>
+<% elsif @name == 'rear_shifter'%>
+<div class="field">
+  <%= f.label :rear_derailleur_type %><br />
+  <%= f.text_field :rear_derailleur_type %>
+</div>
+<div class="field">
+  <%= f.label :clamp_diameter_low %><br />
+  <%= f.text_field :clamp_diameter_low %>
+</div>
+<div class="field">
+  <%= f.label :clamp_diameter_high %><br />
+  <%= f.text_field :clamp_diameter_high %>
+</div>
+<div class="field">
+  <%= f.label :handlebar_type %><br />
+  <%= f.text_field :handlebar_type %>
+</div>
+<div class="field">
+  <%= f.label :max_turn_size %><br />
+  <%= f.text_field :max_turn_size %>
+</div>
+<% elsif @name == 'rear_tire'%>
+<div class="field">
+  <%= f.label :tire_size %><br />
+  <%= f.text_field :tire_size %>
+</div>
+<div class="field">
+  <%= f.label :tire_width %><br />
+  <%= f.text_field :tire_width %>
+</div>
+<div class="field">
+  <%= f.label :tire_max_size %><br />
+  <%= f.text_field :tire_max_size %>
+</div>
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<% elsif @name == 'rear_tube'%>
+<div class="field">
+  <%= f.label :tire_size %><br />
+  <%= f.text_field :tire_size %>
+</div>
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<div class="field">
+  <%= f.label :tire_width %><br />
+  <%= f.text_field :tire_width %>
+</div>
+<div class="field">
+  <%= f.label :tire_size %><br />
+  <%= f.text_field :tire_size %>
+</div>
+<% elsif @name == 'rear_wheel'%>
+<div class="field">
+  <%= f.label :hub_width %><br />
+  <%= f.text_field :hub_width %>
+</div>
+<div class="field">
+  <%= f.label :wheel_size %><br />
+  <%= f.text_field :wheel_size %>
+</div>
+<div class="field">
+  <%= f.label :rim_width %><br />
+  <%= f.text_field :rim_width %>
+</div>
+<div class="field">
+  <%= f.label :brake_type %><br />
+  <%= f.text_field :brake_type %>
+</div>
+<div class="field">
+  <%= f.label :cog_spline_thread %><br />
+  <%= f.text_field :cog_spline_thread %>
+</div>
+<% elsif @name == 'rim_strip'%>
+none
+<% elsif @name == 'saddle'%>
+<div class="field">
+  <%= f.label :clamp %><br />
+  <%= f.text_field :clamp %>
+</div>
+<div class="field">
+  <%= f.label :attachment_type %><br />
+  <%= f.text_field :attachment_type %>
+</div>
+<% elsif @name == 'seat_clamp'%>
+<div class="field">
+  <%= f.label :seat_tube_inner_diameter %><br />
+  <%= f.text_field :seat_tube_inner_diameter %>
+</div>
+<div class="field">
+  <%= f.label :seat_tube_outer_diameter %><br />
+  <%= f.text_field :seat_tube_outer_diameter %>
+</div>
+<% elsif @name == 'seat_post'%>
+<div class="field">
+  <%= f.label :seat_tube_inner_diameter %><br />
+  <%= f.text_field :seat_tube_inner_diameter %>
+</div>
+<div class="field">
+  <%= f.label :clamp %><br />
+  <%= f.text_field :clamp %>
+</div>
+<div class="field">
+  <%= f.label :attachment_type %><br />
+  <%= f.text_field :attachment_type %>
+</div>
+<% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+</div>
+<% end %>

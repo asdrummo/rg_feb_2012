@@ -9,41 +9,24 @@
 	<%= link_to('Already Have a Frame?', {:action => 'frames', :item => 'custom_frame'})%>
 </ul>
 
-<% elsif @nav_id == 'drivetrain'%>
+<% else %>
+
 <ul>
-	<% @drivetrain_components.each do |component|%>
-	<li>
-		<%= sidebar_link_helper(component, @nav_id )%>
+	<% @compartment_components.each do |component|%>
+	<% @style = "color:red" %>
+	<% @compartment_build.each do |selected_component| %>
+	<% if component == selected_component.component_type %>
+	<% @style = "color:green" %>
+	<% end %>
+	<% end %>
+	<li style= "<%= @style %>" >
+		<%= test_sidebar_link_helper(component, @nav_id, @style )%>
 	</li>
 	<% end %>
+	<%= link_to('Already Have a Component?', {:action => @nav_id, :item => 'custom_component'})%>
 </ul>	
 
-<% elsif @nav_id == 'front_end'%>
-	<ul>
-		<% @front_end_components.each do |component|%>
-		<li>
-		<%= sidebar_link_helper(component, @nav_id )%>
-		</li>
-		<% end %>
-	</ul>
 
-<% elsif @nav_id == 'wheels'%>
-	<ul>
-		<% @wheel_components.each do |component|%>
-		<li>
-			<%= sidebar_link_helper(component, @nav_id )%>
-		</li>
-		<% end %>
-	</ul>
-	
-<% elsif @nav_id == 'finishing'%>
-<ul>
-	<% @finishing_components.each do |component|%>
-	<li>
-		<%= sidebar_link_helper(component, @nav_id )%>
-	</li>
-	<% end %>
-</ul>
 <% end %>
 
 available packages

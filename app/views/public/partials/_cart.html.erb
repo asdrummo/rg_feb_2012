@@ -235,7 +235,7 @@
 		</td>
 		<td>
 			<p>quantity: <%= item.quantity %></p>
-			<p>subtotal: <%= number_to_currency(item.price) %></p>
+			<p>subtotal: <%= number_to_currency(CustomerBuild.find(item.customer_build_id).price) %></p>
 			<p><%= link_to('remove', {:action => 'remove_customer_build_from_cart', :id => item.customer_build.id}, :class => "remove_item") %></p>
 		</td>
 <% end %>

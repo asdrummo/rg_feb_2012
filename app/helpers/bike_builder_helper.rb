@@ -31,6 +31,21 @@ module BikeBuilderHelper
   end
 
 
+  def test_sidebar_link_helper(text, compartment, style)
+
+    options = {
+        :url => {:action => compartment, :type => text},
+        :update => 'component_grid',    
+    }
+    html_options = {
+      :title => text,
+      :style => style,
+      :href => url_for(:action => compartment, :type => text ),
+      :remote => true
+    }
+    link_to text, options, html_options, 
+  end
+  
   def sidebar_link_helper(text, compartment)
 
     options = {
