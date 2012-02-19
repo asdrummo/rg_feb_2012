@@ -5,15 +5,17 @@ class BikeBuilderController < ApplicationController
   def frames
 
     if params[:custom_frame]
+      @build.empty_all_items
       @custom_frame = CustomFrameModel.new(params[:custom_frame])
      # if @custom_frame.save
       add_custom_frame_to_build
-      redirect_to(:action => 'drivetrain')
+      #redirect_to(:action => 'drivetrain')
       #else
-      #  format.html { render :action => "frames" }
-       # format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
-      #end
-    end
+      respond_to do |format|
+        format.html { redirect_to :action => "drivetrain" }
+        format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
+      end
+    else
     
     frame_check
     #check_for_size_error
@@ -25,11 +27,11 @@ class BikeBuilderController < ApplicationController
     check_compartment_completion
     @custom_frame = FrameModel.new
     if params[:item] == 'custom_frame'
-      respond_to do |format|
-        format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity }
-        format.js {render 'custom_frame.js'}  
-      end
-    else
+    @frame_specs = 'true'
+    end
+        #format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity }
+        #format.js {render 'custom_frame.js'}  
+      
      render 'bike_builder' 
     end
   end
@@ -1570,7 +1572,7 @@ class BikeBuilderController < ApplicationController
   
   def reset_build
     @build.empty_all_items
-    session[:customer_build_id] = nil
+    #session[:customer_build_id] = nil
     flash[:notice] = 'your build has been reset'
     redirect_to(:action => 'frames')
   end
@@ -1785,10 +1787,11 @@ class BikeBuilderController < ApplicationController
      else
       @customer_build = CustomerBuild.new
     end
+    session[:frame].save
      @customer_build.customer_build_items << @build.items
      @customer_build.update_attributes(:customer_id => session[:customer_id], :price => @build.total_price)
      @customer_build.save
-      flash[:notice] = 'your build has been saved'
+    flash[:notice] = 'your build has been saved'
     session[:customer_build_id] = @customer_build.id
     redirect_back
   end
@@ -1806,6 +1809,9 @@ class BikeBuilderController < ApplicationController
       elsif item.component_id
         component = Component.find(item.component_id)
         @build.add_component_to_build(component)
+      elsif item.custom_frame_model_id
+        custom_frame = CustomFrameModel.find(item.custom_frame_model_id)
+        @build.add_custom_frame_to_build(custom_frame)
       end
     end
     @customer_build = CustomerBuild.find(params[:build_id])

@@ -5,11 +5,13 @@
 	</td>
 	<td id="main_comp_window">
 		
-		<%= render :partial => 'bike_builder/partials/sort' %>
+		<%= render :partial => 'bike_builder/partials/sort' unless @frame_specs %>
 			<div id="component_grid">
-				<% if @nav_id == 'frames' %>
-				<%= render :partial => 'bike_builder/partials/frame_table' %>	
-				<% else %>				
+				<% if @frame_specs %>
+				<%= render :partial => 'bike_builder/partials/custom_frame' %>	
+				<% elsif  @nav_id == 'frames' %>	
+				<%= render :partial => 'bike_builder/partials/frame_table' %>				
+				<% else %>
 				<%= render :partial => 'bike_builder/partials/component' %>	
 				<% end %>			
 			</div><!-- end component_grid div -->

@@ -12,11 +12,13 @@
   <% end %>
 
 <%= f.hidden_field :name, :value => 'custom' %>
-
+<table class="center">
+	<tr>
+		<td>
   <div class="field">
     <%= f.label :gears %><br />
     <%= f.text_field :gears %>
-  </div
+  </div>
   <div class="field">
     <%= f.label :rear_derailleur_mount %><br />
     <%= f.text_field :rear_derailleur_mount %>
@@ -45,6 +47,9 @@
     <%= f.label :front_wheel_size %><br />
     <%= f.text_field :front_wheel_size %>
   </div>
+	</td>
+	
+	<td>
   <div class="field">
     <%= f.label :rear_wheel_size %><br />
     <%= f.text_field :rear_wheel_size %>
@@ -81,9 +86,13 @@
     <%= f.label :seat_tube_outer_diameter %><br />
     <%= f.text_field :seat_tube_outer_diameter %>
   </div>
-
+	</td></tr></table>
   <div class="actions">
-    <%= f.submit 'Add Frame Specs'%>
+	<% if @build_component = 'true'%>
+    <%= f.submit 'Add Frame Specs', :confirm => 'this will reset your current build, proceed?'%>
+	<% else %>
+	<%= f.submit 'Add Frame Specs' %>
+	<% end %>
   </div>
 
 <% end %>

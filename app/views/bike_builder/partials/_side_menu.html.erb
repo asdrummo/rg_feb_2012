@@ -6,8 +6,7 @@
 	<li>
 		frame side bar
 	</li>
-	<%= remote_link_helper('Already Have a Frame?', 'component_grid', 'custom_frame', 'frames' )%>
-		
+	<%= link_to('Already Have a Frame?', {:action => 'frames', :item => 'custom_frame'})%>
 </ul>
 
 <% elsif @nav_id == 'drivetrain'%>
