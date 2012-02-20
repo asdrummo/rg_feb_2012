@@ -30,7 +30,7 @@
 	<% @build.items.each do |item| %>
 		<% if item.custom_frame_model %>
 			custom frame model<br />
-			gears:<%= item.gear.name %>
+			
 		<% end %>
 		<% if item.frame_model %>
 			<em>frame model:</em> <%= item.frame_model.name %><br />
@@ -143,7 +143,7 @@
 		<% end %>
 	<% end %>
 	<em><%= number_to_currency(@wheels_price) %></em><br />
-	<% end %>
+	<% end %><br />
 	
 	<% if @f_build_item == 'true' %>	
 	<strong><%= link_to('FINISHING', :action => 'finishing') %></strong>

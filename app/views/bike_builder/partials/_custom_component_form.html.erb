@@ -1,5 +1,17 @@
+<% @warning = "Add Custom Component to Build?"%>
 <div class="center">
-<%= form_for('custom_component', :action => @nav_id ) do |f| %>
+	<% @reset = 'none' %>
+	<% if @nav_id == 'drivetrain' && (@fe_build_item == 'true' || @w_build_item == 'true' ||  @f_build_item == 'true') %>
+	<% @reset = 'front_end' %>
+	<% elsif (@nav_id == 'front_end') && (@w_build_item == 'true' ||  @f_build_item == 'true') %>
+	<% @reset = 'wheels' %>
+	<% elsif (@nav_id == 'wheels') && (@f_build_item == 'true') %>
+	<% @reset = 'finishing' %>
+	<% end %>
+	<% if @reset_f == 'true' || @reset_w == 'true' || @reset_fe == 'true' %>
+	<% @warning = "Adding this component will clear out all following compartments"%>
+	<% end %>
+	<%= form_for('custom_component', :url => { :action => @nav_id, :reset => @reset }) do |f| %>
 
 <% if @new_custom_component == 'true'%>
  <!-- select component type -->
@@ -492,7 +504,7 @@ none
 </div>
 <% end %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :confirm => @warning %>
   </div>
 <% end %>
 </div>

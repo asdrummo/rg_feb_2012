@@ -4,20 +4,21 @@ class BikeBuilderController < ApplicationController
   
   def frames
     @gear_select == 'false'
-    if params[:gears]
-      @gear_select = 'true'
-      @selected_gear = Gear.find(params[:gears]).name
-      respond_to do |format|
-        format.js { render 'custom_frame_specs.js' }
-        format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
-      end
-    elsif params[:custom_frame]
+    #if params[:gears]
+     # @gear_select = 'true'
+      #@selected_gear = Gear.find(params[:gears]).name
+      #respond_to do |format|
+       # format.js { render 'custom_frame_specs.js' }
+        #format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
+      #end
+    if params[:custom_frame]
       @build.empty_all_items
       @custom_frame = CustomFrameModel.new(params[:custom_frame])
      # if @custom_frame.save
       add_custom_frame_to_build
       #redirect_to(:action => 'drivetrain')
       #else
+      flash[:notice] = 'your custom frame has been added to your build'
       respond_to do |format|
         format.html { redirect_to :action => "drivetrain" }
         format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
@@ -45,13 +46,8 @@ class BikeBuilderController < ApplicationController
  
   def submit_frame
     @frame = FrameModel.new(params[:frame_model])
-    if @frame.size_selection.blank?
-      redirect_to(:action => 'frames', :size_error => 'true')
-    else
-      @size_error = 'false'
-      add_frame_to_build
-      redirect_to(:action => 'drivetrain')
-    end
+    add_frame_to_build
+    redirect_to(:action => 'drivetrain')
   end
   
   def add_frame_to_build
@@ -82,12 +78,11 @@ class BikeBuilderController < ApplicationController
   def add_custom_frame_to_build
     frame = @custom_frame
     @frame_model = frame
-    gear = Gear.find(params[:gears])
     session[:frame] = frame
     if session[:build] != nil
        @build.empty_all_items
     end
-    @build.add_custom_frame_to_build(frame, gear)
+    @build.add_custom_frame_to_build(frame)
     
     session[:build] = @build
   end
@@ -97,8 +92,12 @@ class BikeBuilderController < ApplicationController
     @speed = 'multi'
     @build.items.each do |item| 
       if item.custom_frame_model
-        #@gear = Gear.where(:num_gears => @frame_model.gears).last
-        @gear = item.gear
+        if (item.custom_frame_model.front_derailleur_mount == 'no') && 
+          (item.custom_frame_model.rear_derailleur_mount == 'no')
+          @speed = 'single'
+          @drivetrain_type = 'drivetrain-single_speed'
+          @front_end_type = 'front_end-single_speed'
+        end
         @frame = 'true'
       elsif item.frame_model
          @gear = Gear.find(item.gear)
@@ -157,14 +156,14 @@ class BikeBuilderController < ApplicationController
       end
       
       #frame clearance
-      if @bottom_bracket_selected
-         @bottom_bracket_clearance = (@bottom_bracket_selected.width/2) 
-         @bb_frame_required_clearance = (@frame_model.clearance - @bottom_bracket_clearance)
-          if component.qfactor < @bb_frame_required_clearance
-            @ck_error_frame_clearance << component
-            @incompatible_components << component
-          end
-      end
+      #if @bottom_bracket_selected
+       #  @bottom_bracket_clearance = (@bottom_bracket_selected.width/2) 
+        # @bb_frame_required_clearance = (@frame_model.clearance - @bottom_bracket_clearance)
+         # if component.qfactor < @bb_frame_required_clearance
+          #  @ck_error_frame_clearance << component
+           # @incompatible_components << component
+          #end
+      #end
       
     end #end loop for cranks
     end #end if statement for cranks
@@ -209,14 +208,14 @@ class BikeBuilderController < ApplicationController
       end
 
       #frame clearance
-      if @crank_selected
-         @required_clearance = (@frame_model.clearance - @crank_selected.qfactor)
-         @bottom_bracket_clearance = (component.width)/2 
-          if @bottom_bracket_clearance < @required_clearance
-            @bb_error_frame_clearance << component
-            @incompatible_components << component
-          end
-      end
+     # if @crank_selected
+      #   @required_clearance = (@frame_model.clearance - @crank_selected.qfactor)
+       #  @bottom_bracket_clearance = (component.width)/2 
+        #  if @bottom_bracket_clearance < @required_clearance
+         #   @bb_error_frame_clearance << component
+          #  @incompatible_components << component
+        #  end
+    #  end
       end #end frame filters for bottom bracket
     
     end
@@ -632,13 +631,13 @@ class BikeBuilderController < ApplicationController
     
     if @components.where(:component_type => 'Headset').each do |component|
 
-      if @frame_model
+     if @frame_model
       #frame head tube inner diameter
-        if (component.head_tube_inner_diameter > (@frame_model.head_tube_inner_diameter + 1)) ||
-          (component.head_tube_inner_diameter < (@frame_model.head_tube_inner_diameter - 1))
-          @hs_error_frame_head_tube_inner_diameter << component
-          @incompatible_components << component
-        end
+    #    if (component.head_tube_inner_diameter > (@frame_model.head_tube_inner_diameter + 1)) ||
+     #     (component.head_tube_inner_diameter < (@frame_model.head_tube_inner_diameter - 1))
+      #    @hs_error_frame_head_tube_inner_diameter << component
+       #   @incompatible_components << component
+      #  end
       end
       
       if @fork_selected
@@ -681,15 +680,15 @@ class BikeBuilderController < ApplicationController
       
       if @handlebar_selected
         #stem clamp diameter high
-        if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
-          @st_error_handlebar_stem_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+     #   if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
+      #    @st_error_handlebar_stem_clamp_diameter_high << component
+       #   @incompatible_components << component
+      #  end
         #stem clamp diameter low
-        if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
-          @st_error_handlebar_stem_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+     #   if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
+      #    @st_error_handlebar_stem_clamp_diameter_low << component
+       #   @incompatible_components << component
+      #  end
       end      
     end #end headset loop
     end #end headset if statement
@@ -712,25 +711,25 @@ class BikeBuilderController < ApplicationController
       end
       if @handlebar_selected
         #handlebar clamp diameter low
-        if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
-          @fs_error_handlebar_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+     #   if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
+      #    @fs_error_handlebar_clamp_diameter_low << component
+       #   @incompatible_components << component
+    #    end
         #handlebar clamp diameter high
-        if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
-          @fs_error_handlebar_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+     #   if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
+      #    @fs_error_handlebar_clamp_diameter_high << component
+      #   @incompatible_components << component
+      #  end
         #handlebar type
         if component.handlebar_type != @handlebar_selected.handlebar_type
           @fs_error_handlebar_type << component
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_size > @handlebar_selected.max_turn_size
-          @fs_error_handlebar_max_turn_size << component
-          @incompatible_components << component
-        end
+  #      if component.max_turn_size > @handlebar_selected.max_turn_size
+   #       @fs_error_handlebar_max_turn_size << component
+    #      @incompatible_components << component
+     #   end
       end # end handlebar filters
     
     end # end front shifter loop
@@ -754,25 +753,25 @@ class BikeBuilderController < ApplicationController
       end
       if @handlebar_selected
         #handlebar clamp diameter low
-        if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
-          @rs_error_handlebar_clamp_diameter_low << component
-          @incompatible_components << component
-        end
-        #handlebar clamp diameter high
-        if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
-          @rs_error_handlebar_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+   #     if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
+    #      @rs_error_handlebar_clamp_diameter_low << component
+     #     @incompatible_components << component
+      #  end
+ #       #handlebar clamp diameter high
+  #      if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
+   #       @rs_error_handlebar_clamp_diameter_high << component
+    #      @incompatible_components << component
+     #   end
         #handlebar type
         if component.handlebar_type != @handlebar_selected.handlebar_type
           @rs_error_handlebar_type << component
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_size > @handlebar_selected.max_turn_size
-          @rs_error_handlebar_max_turn_size << component
-          @incompatible_components << component
-        end
+  #      if component.max_turn_size > @handlebar_selected.max_turn_size
+   #       @rs_error_handlebar_max_turn_size << component
+    #      @incompatible_components << component
+     #   end
       end # end handlebar filters
     
     end # end rear shifter loop
@@ -791,38 +790,38 @@ class BikeBuilderController < ApplicationController
       
       if @front_brake_selected
         #front brake type
-        if component.brake_type > @front_brake_selected.brake_type
-          @fl_error_front_brake_type << component
-          @incompatible_components << component
-        end 
+    #    if component.brake_type > @front_brake_selected.brake_type
+     #     @fl_error_front_brake_type << component
+      #    @incompatible_components << component
+    #    end 
         #front brake pull
-        if component.brake_pull > @front_brake_selected.brake_pull
-          @fl_error_front_brake_pull << component
-          @incompatible_components << component
-        end
+    #    if component.brake_pull > @front_brake_selected.brake_pull
+     #     @fl_error_front_brake_pull << component
+      #    @incompatible_components << component
+  #      end
       end
       
       if @handlebar_selected
         #handlebar clamp diameter low
-        if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
-          @fl_error_handlebar_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+   #     if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
+    #      @fl_error_handlebar_clamp_diameter_low << component
+     #     @incompatible_components << component
+      #  end
         #handlebar clamp diameter high
-        if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
-          @fl_error_handlebar_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
+   #       @fl_error_handlebar_clamp_diameter_high << component
+    #      @incompatible_components << component
+     #   end
         #handlebar type
         if component.handlebar_type != @handlebar_selected.handlebar_type
           @fl_error_handlebar_type << component
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_size > @handlebar_selected.max_turn_size
-          @fl_error_handlebar_max_turn_size << component
-          @incompatible_components << component
-        end
+  #      if component.max_turn_size > @handlebar_selected.max_turn_size
+   #       @fl_error_handlebar_max_turn_size << component
+    #      @incompatible_components << component
+     #   end
       end # end handlebar filters
     
     end # end front lever loop
@@ -841,38 +840,38 @@ class BikeBuilderController < ApplicationController
       
       if @rear_brake_selected
         #rear brake type
-        if component.brake_type > @rear_brake_selected.brake_type
-          @rl_error_rear_brake_type << component
-          @incompatible_components << component
-        end 
+   #     if component.brake_type > @rear_brake_selected.brake_type
+    #      @rl_error_rear_brake_type << component
+     #     @incompatible_components << component
+      #  end 
         #rear brake pull
-        if component.brake_pull > @rear_brake_selected.brake_pull
-          @rl_error_rear_brake_pull << component
-          @incompatible_components << component
-        end
+  #      if component.brake_pull > @rear_brake_selected.brake_pull
+   #       @rl_error_rear_brake_pull << component
+    #      @incompatible_components << component
+     #   end
       end
       
       if @handlebar_selected
         #handlebar clamp diameter low
-        if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
-          @rl_error_handlebar_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_low > @handlebar_selected.clamp_diameter_low
+   #       @rl_error_handlebar_clamp_diameter_low << component
+    #      @incompatible_components << component
+     #   end
         #handlebar clamp diameter high
-        if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
-          @rl_error_handlebar_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_high < @handlebar_selected.clamp_diameter_high
+   #       @rl_error_handlebar_clamp_diameter_high << component
+    #      @incompatible_components << component
+     #   end
         #handlebar type
         if component.handlebar_type != @handlebar_selected.handlebar_type
           @rl_error_handlebar_type << component
           @incompatible_components << component
         end
         #handlebar max turn diameter
-        if component.max_turn_size > @handlebar_selected.max_turn_size
-          @rl_error_handlebar_max_turn_size << component
-          @incompatible_components << component
-        end
+ #       if component.max_turn_size > @handlebar_selected.max_turn_size
+  #        @rl_error_handlebar_max_turn_size << component
+   #       @incompatible_components << component
+    #    end
       end # end handlebar filters
     
     end # end rear lever loop
@@ -902,102 +901,102 @@ class BikeBuilderController < ApplicationController
       
       if @stem_selected
         #stem clamp diameter high
-        if component.clamp_diameter_high > @stem_selected.clamp_diameter_high
-          @hb_error_stem_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_high > @stem_selected.clamp_diameter_high
+   #       @hb_error_stem_clamp_diameter_high << component
+    #      @incompatible_components << component
+     #   end
       end
 
       if @front_lever_selected
         # front lever clamp diameter high
-        if component.clamp_diameter_low > @front_lever_selected.clamp_diameter_low
-          @hb_error_front_lever_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_low > @front_lever_selected.clamp_diameter_low
+   #       @hb_error_front_lever_clamp_diameter_low << component
+    #      @incompatible_components << component
+     #   end
         #front lever clamp diameter high
-        if component.clamp_diameter_high < @front_lever_selected.clamp_diameter_high
-          @hb_error_front_lever_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+ #       if component.clamp_diameter_high < @front_lever_selected.clamp_diameter_high
+  #        @hb_error_front_lever_clamp_diameter_high << component
+   #       @incompatible_components << component
+    #    end
         #front lever type
         if component.handlebar_type != @front_lever_selected.handlebar_type
           @hb_error_front_lever_handlebar_type << component
           @incompatible_components << component
         end
         #front lever max turn diameter
-        if component.max_turn_size > @front_lever_selected.max_turn_size
-          @hb_error_front_lever_max_turn_size << component
-          @incompatible_components << component
-        end
+ #       if component.max_turn_size > @front_lever_selected.max_turn_size
+  #        @hb_error_front_lever_max_turn_size << component
+   #       @incompatible_components << component
+    #    end
       end
       
       if @rear_lever_selected
         # rear lever clamp diameter high
-        if component.clamp_diameter_low > @rear_lever_selected.clamp_diameter_low
-          @hb_error_rear_lever_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+ #       if component.clamp_diameter_low > @rear_lever_selected.clamp_diameter_low
+  #        @hb_error_rear_lever_clamp_diameter_low << component
+   #       @incompatible_components << component
+    #    end
         #rear lever clamp diameter high
-        if component.clamp_diameter_high < @rear_lever_selected.clamp_diameter_high
-          @hb_error_rear_lever_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+ #       if component.clamp_diameter_high < @rear_lever_selected.clamp_diameter_high
+  #        @hb_error_rear_lever_clamp_diameter_high << component
+   #       @incompatible_components << component
+    #    end
         #rear lever type
         if component.handlebar_type != @rear_lever_selected.handlebar_type
           @hb_error_rear_lever_handlebar_type << component
           @incompatible_components << component
         end
         #rear lever max turn diameter
-        if component.max_turn_size > @rear_lever_selected.max_turn_size
-          @hb_error_rear_lever_max_turn_size << component
-          @incompatible_components << component
-        end
+ #       if component.max_turn_size > @rear_lever_selected.max_turn_size
+  #        @hb_error_rear_lever_max_turn_size << component
+   #       @incompatible_components << component
+    #    end
       end
 
       if @front_shifter_selected
         # front shifter clamp diameter high
-        if component.clamp_diameter_low > @front_shifter_selected.clamp_diameter_low
-          @hb_error_front_shifter_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+ #       if component.clamp_diameter_low > @front_shifter_selected.clamp_diameter_low
+  #        @hb_error_front_shifter_clamp_diameter_low << component
+   #       @incompatible_components << component
+    #    end
         #front shifter clamp diameter high
-        if component.clamp_diameter_high < @front_shifter_selected.clamp_diameter_high
-          @hb_error_front_shifter_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_high < @front_shifter_selected.clamp_diameter_high
+   #       @hb_error_front_shifter_clamp_diameter_high << component
+    #      @incompatible_components << component
+     #   end
         #front shifter type
         if component.handlebar_type != @front_shifter_selected.handlebar_type
           @hb_error_front_shifter_handlebar_type << component
           @incompatible_components << component
         end
         #front shifter max turn diameter
-        if component.max_turn_size > @front_shifter_selected.max_turn_size
-          @hb_error_front_shifter_max_turn_size << component
-          @incompatible_components << component
-        end
+  #      if component.max_turn_size > @front_shifter_selected.max_turn_size
+   #       @hb_error_front_shifter_max_turn_size << component
+    #      @incompatible_components << component
+     #   end
       end
       
       if @rear_shifter_selected
         # rear shifter clamp diameter high
-        if component.clamp_diameter_low > @rear_shifter_selected.clamp_diameter_low
-          @hb_error_rear_shifter_clamp_diameter_low << component
-          @incompatible_components << component
-        end
+ #       if component.clamp_diameter_low > @rear_shifter_selected.clamp_diameter_low
+  #        @hb_error_rear_shifter_clamp_diameter_low << component
+   #       @incompatible_components << component
+    #    end
         #rear shifter clamp diameter high
-        if component.clamp_diameter_high < @rear_shifter_selected.clamp_diameter_high
-          @hb_error_rear_shifter_clamp_diameter_high << component
-          @incompatible_components << component
-        end
+  #      if component.clamp_diameter_high < @rear_shifter_selected.clamp_diameter_high
+   #       @hb_error_rear_shifter_clamp_diameter_high << component
+    #      @incompatible_components << component
+     #   end
         #rear shifter type
         if component.handlebar_type != @rear_shifter_selected.handlebar_type
           @hb_error_rear_shifter_handlebar_type << component
           @incompatible_components << component
         end
         #rear shifter max turn diameter
-        if component.max_turn_size > @rear_shifter_selected.max_turn_size
-          @hb_error_rear_shifter_max_turn_size << component
-          @incompatible_components << component
-        end
+  #      if component.max_turn_size > @rear_shifter_selected.max_turn_size
+   #       @hb_error_rear_shifter_max_turn_size << component
+    #      @incompatible_components << component
+     #   end
       end
 
     end # end handlebar loop
@@ -1010,7 +1009,8 @@ class BikeBuilderController < ApplicationController
     #@fb_error_front_tire_size = [] 
     #@fb_error_front_tire_width = [] 
     @fb_error_frame_front_brake_type = [] 
-    @fb_error_front_lever_brake_pull = [] 
+    @fb_error_front_lever_brake_pull = []
+    @fb_error_front_lever_brake_type = []  
     @fb_error_fork_front_brake_type = []
     @fb_error_fork_front_brake_pull = []
    # @fb_error_fork_brake_mount_high = []
@@ -1512,10 +1512,6 @@ class BikeBuilderController < ApplicationController
     if params[:custom_component]
       @custom_component = CustomComponent.new(params[:custom_component])
       add_custom_component_to_build
-      #respond_to do |format|
-        #format.html { redirect_to :action => @nav_id }
-        #format.xml  { render :xml => @custom_component.errors, :status => :unprocessable_entity }
-     # end
     else #if no custom_component parameter submitted
     
      #### SHOW AND LIST COMPONENTS ####

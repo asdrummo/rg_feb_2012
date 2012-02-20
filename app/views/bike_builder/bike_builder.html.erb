@@ -1,5 +1,11 @@
 <% @page_title = @nav_id.humanize + 'Selection | Bike Builder Beta' %>
 <%= render(:partial => 'bike_builder/partials/bike_builder_progress')%>
+<div id="instructions_wrap">
+<div id="instructions">
+this is the <strong><%= @nav_id.humanize %></strong> dialogue box.
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisi magna, aliquam vitae lobortis in, pharetra sit amet nibh. Nulla ullamcorper ultricies quam quis commodo. Vivamus volutpat pharetra neque, ac mollis nulla ornare sit amet. Curabitur bibendum fringilla urna in condimentum. Aliquam erat volutpat. Suspendisse eget urna vel risus pellentesque pretium a ac turpis. Praesent euismod adipiscing turpis, a molestie nisi pellentesque et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo enim, venenatis vitae suscipit eget, suscipit et augue. Maecenas nec dictum justo.</p>
+</div>
+</div>
 <div class="center"><h2>
 <% if @nav_id == 'drivetrain' %>
 	<% if @drivetrain_complete == 'true' %>
@@ -21,7 +27,6 @@
 		<% @completion_error = 'you need to complete your drivetrain!' %>
 	<% end %>
 
-
 <% elsif @nav_id == 'wheels' %>
 	<% if @wheels_complete == 'true' %>
 	<%= link_to('Continue', {:action => 'finishing'}) %>
@@ -42,7 +47,7 @@
 		<% @completion_error = 'you need to complete your wheels!' %>
 	<% end %>
 <% end %>
-</h2></center>
+</h2></div>
 
 <%= render(:partial => 'bike_builder/partials/component_window') unless @completion_error %>
 <hr>

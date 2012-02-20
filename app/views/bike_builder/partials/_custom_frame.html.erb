@@ -16,84 +16,94 @@
 	<tr>
 		<td>
   <div class="field">
-	<% gears_array = Gear.all.map { |gear| [gear.name, gear.id] }%>
-    <%= f.label :gears %><br /> 
-	<%= select_tag :gears, options_for_select(gears_array)%> <br />
+	<%= f.label :rear_derailleur_mount %><br />
+	<%= f.radio_button :rear_derailleur_mount, 'yes', :checked => true %> 
+	<%= label :rear_derailleur_mount, 'yes' %>
+	<%= f.radio_button :rear_derailleur_mount, 'no' %>
+	<%= label :rear_derailleur_mount, 'no' %>	
   </div>
-<% if @gear_select == 'false'%>
-	<%= form_tag do %>
-		<%= select_tag :gears, options_for_select(gears_array), :include_blank => "select gears", :onchange => 'this.form.submit()' %>
-	<% end %>
-<% else %>
-	
+  <div class="field">
+	<%= f.label :front_derailleur_mount %><br />
+	<%= f.radio_button :front_derailleur_mount, 'yes', :checked => true %> 
+	<%= label :front_derailleur_mount, 'yes' %>
+	<%= f.radio_button :front_derailleur_mount, 'no' %>
+	<%= label :front_derailleur_mount, 'no' %>	
+  </div>
 
   <div class="field">
-    <%= f.label :rear_derailleur_mount %><br />
-    <%= f.text_field :rear_derailleur_mount %>
-  </div>
-  <div class="field">
-    <%= f.label :front_derailleur_mount %><br />
-    <%= f.text_field :front_derailleur_mount %>
-  </div>
-  <div class="field">
-    <%= f.label :bottom_bracket_width %><br />
-    <%= f.text_field :bottom_bracket_width %>
-  </div>
-  <div class="field">
     <%= f.label :bottom_bracket_shell_width %><br />
-    <%= f.text_field :bottom_bracket_shell_width %>
-  </div>	
+	<% bb_shell_width_array = Component.where(:component_type => 'Bottom Bracket').map{|component| component.shell_width }
+	   bb_shell_width_array.uniq!
+	   bb_shell_width_array.delete_if {|x| x.nil? || x.blank?} %>
+	<%= f.select :bottom_bracket_shell_width, options_for_select(bb_shell_width_array, bb_shell_width_array.first), {:include_blank => false} %>
+  </div>
   <div class="field">
     <%= f.label :bottom_bracket_threading %><br />
-    <%= f.text_field :bottom_bracket_threading %>
-  </div>
-  <div class="field">
-    <%= f.label :clearance %><br />
-    <%= f.text_field :clearance %>
+	<% bb_threading_array = Component.where(:component_type => 'Bottom Bracket').map{|component| component.threading }
+	   bb_threading_array.uniq!
+	   bb_threading_array.delete_if {|x| x.nil? || x.blank?} %>
+	<%= f.select :bottom_bracket_threading, options_for_select(bb_threading_array, bb_threading_array.first), {:include_blank => false} %>
   </div>
   <div class="field">
     <%= f.label :front_wheel_size %><br />
-    <%= f.text_field :front_wheel_size %>
+	<% wheel_size_array = Component.all.map{|component| component.wheel_size }
+	   wheel_size_array.uniq!
+	   wheel_size_array.delete_if {|x| x.nil? || x.blank?} %>
+	<%= f.select :front_wheel_size, options_for_select(wheel_size_array, wheel_size_array.first), {:include_blank => false} %>
+  </div>
+  <div class="field">
+    <%= f.label :rear_wheel_size %><br />
+	<% wheel_size_array = Component.all.map{|component| component.wheel_size }
+	   wheel_size_array.uniq!
+	   wheel_size_array.delete_if {|x| x.nil? || x.blank?} %>
+	<%= f.select :rear_wheel_size, options_for_select(wheel_size_array, wheel_size_array.first), {:include_blank => false} %>
   </div>
 	</td>
 	
 	<td>
   <div class="field">
-    <%= f.label :rear_wheel_size %><br />
-    <%= f.text_field :rear_wheel_size %>
-  </div>
-  <div class="field">
     <%= f.label :front_brake_type %><br />
-    <%= f.text_field :front_brake_type %>
+	<% brake_array = Component.all.map { |component| component.brake_type }
+	   brake_array.uniq!
+	   brake_array.delete_if {|x| x.nil? || x.blank? || (x == "[Null]")} %>
+	<%= f.select :front_brake_type, options_for_select(brake_array, brake_array.first), :include_blank => false %>
   </div>
   <div class="field">
     <%= f.label :rear_brake_type %><br />
-    <%= f.text_field :rear_brake_type %>
+	<% brake_array = Component.all.map { |component| component.brake_type }
+	   brake_array.uniq!
+	   brake_array.delete_if {|x| x.nil? || x.blank? || (x == "[Null]")} %>
+	<%= f.select :rear_brake_type, options_for_select(brake_array, brake_array.first), :include_blank => false %>
   </div>
   <div class="field">
-    <%= f.label :front_brake_pull %><br />
-    <%= f.text_field :front_brake_pull %>
+    <%= f.label :head_tube_inner_diameter %> (mm)<br />
+	<% head_tube_inner_array = FrameModel.all.map{|frame| frame.head_tube_inner_diameter }
+	   head_tube_inner_array.uniq!
+	   head_tube_inner_array.delete_if {|x| x.nil? || x.blank? || (x == "[Null]")} %>
+	<%= f.select :head_tube_inner_diameter, options_for_select(head_tube_inner_array, head_tube_inner_array.first), :include_blank => false %>
   </div>
   <div class="field">
-    <%= f.label :rear_brake_pull %><br />
-    <%= f.text_field :rear_brake_pull %>
+    <%= f.label :steer_tube_length %> (mm)<br />
+	<% steer_tube_length_array = FrameModel.all.map{|frame| frame.steer_tube_length }
+	   steer_tube_length_array.uniq!
+	   steer_tube_length_array.delete_if {|x| x.nil? || x.blank? || (x == "[Null]")} %>
+	<%= f.select :steer_tube_length, options_for_select(steer_tube_length_array, steer_tube_length_array.first), :include_blank => false %>
   </div>
   <div class="field">
-    <%= f.label :head_tube_inner_diameter %><br />
-    <%= f.text_field :head_tube_inner_diameter %>
+    <%= f.label :seat_tube_inner_diameter %> (mm)<br />
+	<% seat_tube_inner_array = FrameModel.all.map{|frame| frame.seat_tube_inner_diameter }
+	   seat_tube_inner_array.uniq!
+	   seat_tube_inner_array.delete_if {|x| x.nil? || x.blank? || (x == "[Null]")} %>
+	<%= f.select :seat_tube_inner_diameter, options_for_select(seat_tube_inner_array, seat_tube_inner_array.first), :include_blank => false %>
   </div>
-  <div class="field">	
-    <%= f.label :steer_tube_length %><br />
-    <%= f.text_field :steer_tube_length %>
+  <div class="field">
+    <%= f.label :seat_tube_outer_diameter %> (mm)<br />
+	<% seat_tube_outer_array = FrameModel.all.map{|frame| frame.seat_tube_outer_diameter }
+	   seat_tube_outer_array.uniq!
+	   seat_tube_outer_array.delete_if {|x| x.nil? || x.blank? || (x == "[Null]")} %>
+	<%= f.select :seat_tube_outer_diameter, options_for_select(seat_tube_outer_array, seat_tube_outer_array.first), :include_blank => false %>
   </div>
-  <div class="field">	
-    <%= f.label :seat_tube_inner_diameter %><br />
-    <%= f.text_field :seat_tube_inner_diameter %>
-  </div>
-  <div class="field">	
-    <%= f.label :seat_tube_outer_diameter %><br />
-    <%= f.text_field :seat_tube_outer_diameter %>
-  </div>
+
 	</td></tr></table>
   <div class="actions">
 	<% if @build_component = 'true'%>
@@ -102,5 +112,4 @@
 	<%= f.submit 'Add Frame Specs' %>
 	<% end %>
   </div>
-<% end %>
 <% end %>

@@ -14,6 +14,7 @@
 			<%= flash[:notice] %>
 		</div><!-- end notice -->
 	<% end %>
+	
 	<div class="float_right">&nbsp;|&nbsp;
 	<%= link_to('View Cart', :controller => 'public', :action => 'show_cart') %>
 	<% if @cart != nil %>

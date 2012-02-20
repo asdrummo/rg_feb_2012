@@ -11,16 +11,16 @@
 
 <% else %>
 
-<ul>
+<ul class="sidelist">
 	<% @compartment_components.each do |component|%>
-	<% @style = "color:red" %>
+	<% @style = ""%>
 	<% @compartment_build.each do |selected_component| %>
 	<% if component == selected_component.component_type %>
-	<% @style = "color:green" %>
+	<% @style = "green" %>
 	<% end %>
 	<% end %>
-	<li style= "<%= @style %>" >
-		<%= test_sidebar_link_helper(component, @nav_id, @style )%>
+	<li class= "<%= @style %>" >
+		<%= sidebar_link_helper(component, @nav_id)%>
 	</li>
 	<% end %>
 	<%= link_to('Already Have a Component?', {:action => @nav_id, :item => 'custom_component'})%>
