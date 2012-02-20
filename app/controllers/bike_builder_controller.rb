@@ -1873,20 +1873,16 @@ class BikeBuilderController < ApplicationController
         session[:sort] = sort
         
        query = params[:search][:query] if params[:search]
-          
-       
-        
-        conditions = ["LOWER(name) LIKE ?", "%#{query.downcase}%"] unless query.nil?
+            
+       conditions = ["LOWER(name) LIKE ?", "%#{query.downcase}%"] unless query.nil?
 
        @components = @components.where(conditions).order(sort).paginate(:per_page => @per_page, :page => params[:page])
 
-        
         respond_to do |format|
           format.html { render 'bike_builder'}
           format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
           format.js {render 'sort.js'}  
         end
-    
   end
   
   def save_build
