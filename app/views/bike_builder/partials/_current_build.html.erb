@@ -12,7 +12,13 @@
 	&nbsp|&nbsp
 	<%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %>
 	<br />
-	<%= link_to('Add Build to Cart', {:controller => 'public', :action => 'add_build_to_cart'}) %>
+	<% if @finishing_complete == 'true' %>
+	<% @h = "h2"%>
+	<% else %>
+	<% @h = "p" %>
+	<% end %>
+	<<%=@h %>><%= link_to('Add Build to Cart', {:controller => 'public', :action => 'add_build_to_cart'}) %></<%=@h %>>
+	
 </div><br />
 
 

@@ -1571,6 +1571,7 @@ class BikeBuilderController < ApplicationController
       @build.add_component_to_build(c)
     end
     session[:build] = @build
+    flash[:notice] = 'the package was successfully added to your build'
     redirect_back
   end
   

@@ -22,14 +22,14 @@
 	<li class= "<%= @style %>" >
 		<%= sidebar_link_helper(component, @nav_id)%>
 	</li>
-	<% end %>
+	<% end %><br />
 	<%= link_to('Already Have a Component?', {:action => @nav_id, :item => 'custom_component'})%>
 </ul>	
 
 
 <% end %>
 
-available packages
+<h4>Available Packages</h4>
 <ul>
 	<% if @component_packages && @component_packages.each do |p| %>
 	<li>
