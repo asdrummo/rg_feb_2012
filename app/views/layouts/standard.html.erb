@@ -3,14 +3,15 @@
 <head>
   <title><%= @page_title %> | Roam &amp; Gauge</title>
   <%= stylesheet_link_tag 'style', 'admin_style'%>
-  <%= javascript_include_tag 'prototype', 'scriptaculous', 'lightview', :defaults %>
+  <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
+
 </head>
 <body>
 <div id="bodywrap">	
 <div id="header">
 	<% if !flash[:notice].blank? %>
-		<div class="notice">
+		<div id="flash" class="notice">
 			<%= flash[:notice] %>
 		</div><!-- end notice -->
 	<% end %>
