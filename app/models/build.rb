@@ -27,13 +27,13 @@ class Build
       @total_price += (frame.price + frame_size.price + gear.price + top_tube_style.price)
   end
   
-  def add_custom_frame_to_build (frame)
+  def add_custom_frame_to_build (frame, gear)
       existing_frame = @items.find {|item| (item.frame_model)}
       if existing_frame
         @items.delete(existing_frame)
-        @items << CustomerBuildItem.new_custom_frame_based_on(frame)
+        @items << CustomerBuildItem.new_custom_frame_based_on(frame, gear)
       else
-        @items << CustomerBuildItem.new_custom_frame_based_on(frame)
+        @items << CustomerBuildItem.new_custom_frame_based_on(frame, gear)
       end
   end
   

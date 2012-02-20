@@ -1,23 +1,23 @@
-<div class="center">subtotal: <%= number_to_currency(@build.total_price) %><br /><br />
+<% @warning = "Removing this component will clear out all following compartments"%>
+<div class="center">Subtotal: <strong><%= number_to_currency(@build.total_price) %></strong><br /><br />
 
-	<% if session[:customer_id] %>
-	 <%= link_to('Save Build', {:action => 'save_build'} ) %>&nbsp|&nbsp
-	 <%= link_to('New Build', {:action => 'new_build'} ) %>
-	<% else %>
+<% if session[:customer_id] %>
+	<%= link_to('Save Build', {:action => 'save_build'} ) %>&nbsp|&nbsp
+	<%= link_to('New Build', {:action => 'new_build'} ) %>
+<% else %>
 	<div id="build_login" style="display:inline">
 	please <%= login_link_helper('login', 'build_login') %> to save build
 	</div>
-	<% end %>
+<% end %>
 	&nbsp|&nbsp
 	<%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %>
 	<br />
 	<%= link_to('Add Build to Cart', {:controller => 'public', :action => 'add_build_to_cart'}) %>
-</div>
-<br />
+</div><br />
+
+
+<!-- current build info -->
 <div class="left">
-<% if @customer_build %>
-your build was last saved at: <strong><%= @customer_build.updated_at %></strong> <br />
-<% end %>
 <% if @build.items.count == 0 %>
 	<table class="center">
 		<tr>
@@ -25,130 +25,144 @@ your build was last saved at: <strong><%= @customer_build.updated_at %></strong>
 		</tr>
 	</table>
 <% else %>
-			---frame--- <%= link_to('clear frame/reset', {:action => 'reset_build' }, :class => "remove_item") %><br /> 
+	<strong><%= link_to('FRAME', :action => 'frames') %></strong> <%= link_to('clear', {:action => 'reset_build' }, 
+						   :class => "remove_item", :confirm => 'reset build?') %><br /> 
 	<% @build.items.each do |item| %>
 		<% if item.custom_frame_model %>
-		custom frame model<br />
-		gears:<%= @gear.name %>
+			custom frame model<br />
+			gears:<%= item.gear.name %>
 		<% end %>
 		<% if item.frame_model %>
-		<strong>frame model:</strong> <%= item.frame_model.name %><br />
-		<strong>size:</strong> <%= item.frame_model_size.name %><br />
-		<strong>gears:</strong> <%= item.gear.name %> <br />
-		<strong>top tube style:</strong> <%= item.top_tube_style.name %><br />
-		<strong><%= number_to_currency(item.frame_model.price) %></strong>
+			<em>frame model:</em> <%= item.frame_model.name %><br />
+			<em>size:</em> <%= item.frame_model_size.name %><br />
+			<em>gears:</em> <%= item.gear.name %> <br />
+			<em>top tube style:</em> <%= item.top_tube_style.name %><br />
+			<em><%= number_to_currency(item.frame_model.price) %></em><br />
+		<% end %>
+	<% end %><br />
+	
+	<% if @dt_build_item %>
+	<strong><%= link_to('DRIVETRAIN', :action => 'drivetrain') %></strong>
+	<% @drivetrain_price = 0.0 %>
+	<%= link_to('clear', {:action => @nav_id, :reset => @nav_id}, 
+	:class => "remove_item", :confirm => @warning) %><br /> 
+		<% @build.items.each do |item| %> 
+			<% if item.component && (item.component.compartment == 'drivetrain')%>
+				<em><%= item.component.component_type %>:</em> 	
+				<%= item.component.name %>,
+				<%= number_to_currency(item.component.price) %> 
+				<% if (@fe_build_item == 'true' || @w_build_item == 'true') %>
+						<%= link_to('x', {:action => 'remove_component_from_build', :id => item.component.id, 
+							:component => item.component.component_type, :reset => 'front_end'}, :class => "remove_item",
+							:confirm => @warning) %>
+				<% else %>
+						<%= link_to('x', {:action => 'remove_component_from_build', :id => item.component.id, 
+							:component => item.component.component_type}, :class => "remove_item") %>
+				<% end %><br />
+				<% @drivetrain_price += item.component.price %>
+			<% elsif item.custom_component && (item.custom_component.compartment == 'drivetrain')%>
+				<em><%= item.custom_component.component_type %>:</em> 	
+				custom 
+				<% if (@fe_build_item == 'x' || @w_build_item == 'true') %>
+						<%= link_to('remove', {:action => 'remove_custom_component_from_build', 
+							:component_type => item.custom_component.component_type, :reset => 'front_end'}, 
+							:class => "remove_item", :confirm => @warning) %><br />
+				<% else %>
+						<%= link_to('x', {:action => 'remove_custom_component_from_build', 
+							:component_type => item.custom_component.component_type}, :class => "remove_item") %><br />
+				<% end %>
+			<% end %>
+		<% end %>	
+	<em><%= number_to_currency(@drivetrain_price) %></em><br />
+	<% end %><br />
+	
+	<% if @fe_build_item == 'true' %>
+	<strong><%= link_to('FRONT END', :action => 'front_end') %></strong>
+	<% @front_end_price = 0.0 %>
+	<%= link_to('clear ', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", :confirm => @warning) %><br /> 
+		<% @build.items.each do |item| %>
+			<% if item.component && (item.component.compartment == 'front_end') %>
+				<em><%= item.component.component_type %>:</em> 	
+				<%= item.component.name %>,
+				<%= number_to_currency(item.component.price) %> 
+				<% if @w_build_item == 'true' %>
+					<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, 
+						:component => item.component.component_type, :reset => 'wheels'}, :class => "remove_item", 
+						:confirm => @warning) %><br />
+				<% else%>
+					<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, 
+						:component => item.component.component_type}, :class => "remove_item") %><br />
+				<% end %>
+				<% @front_end_price += item.component.price %>
+		<% elsif item.custom_component && (item.custom_component.compartment == 'front_end')%>
+			<em><%= item.custom_component.component_type %>:</em> 	
+			custom
+			<% if @w_build_item == 'true' %>
+				<%= link_to('remove', {:action => 'remove_custom_component_from_build', 
+					:component_type => item.custom_component.component_type, :reset => 'wheels'}, 
+					:class => "remove_item", :confirm => @warning) %><br />
+			<% else %>
+				<%= link_to('remove', {:action => 'remove_custom_component_from_build', 
+					:component_type => item.custom_component.component_type}, :class => "remove_item") %><br />
+			<% end %>
 		<% end %>
 	<% end %>
-	<br />
-		---drivetrain--- 
-		<% @drivetrain_price = 0.0 %>
-		<%= link_to('clear ' + @nav_id + ' items', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", :confirm => 'are you sure?') %><br /> 
-		<% @build.items.each do |item| %> 
-		<% if item.component && (item.component.compartment == 'drivetrain')%>
-		<strong><%= item.component.component_type %>:</strong> | 	
-		<%= item.component.name %> |
-		<%= number_to_currency(item.component.price) %> | 
-		<% if (@fe_build_item == 'true' || @w_build_item == 'true') %>
-						<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type, :reset => 'front_end'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %>
-		<% else %>
-		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %>
-		<% end %>
-		<br />
-		<% @drivetrain_price += item.component.price %>
-		<% elsif item.custom_component && (item.custom_component.compartment == 'drivetrain')%>
-		
-		<strong><%= item.custom_component.component_type %>:</strong> | 	
-		custom 
-		<% if (@fe_build_item == 'true' || @w_build_item == 'true') %>
-						<%= link_to('remove', {:action => 'remove_custom_component_from_build', :component_type => item.custom_component.component_type, :reset => 'front_end'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %><br />
-		<% else %>
-		<%= link_to('remove', {:action => 'remove_custom_component_from_build', :component_type => item.custom_component.component_type}, :class => "remove_item") %><br />
-		<% end %>
-		<% end %>
-		<% end %>
-		
-		<strong><%= number_to_currency(@drivetrain_price) %></strong>
-		
-	<br />
-		---front end--- 
-		<% @front_end_price = 0.0 %>
-		<%= link_to('clear ' + @nav_id + ' items', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", :confirm => 'are you sure?') %><br /> 
-		<% @build.items.each do |item| %>
-		<% if item.component && (item.component.compartment == 'front_end') %>
-		<strong><%= item.component.component_type %>:</strong> |  	
-		<%= item.component.name %> |
-		<%= number_to_currency(item.component.price) %> | 
-		<% if @w_build_item == 'true' %>
-		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type, :reset => 'wheels'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %><br />
-		<% else%>
-			<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %><br />
-		<% end %>
-		<% @front_end_price += item.component.price %>
-		<% elsif item.custom_component && (item.custom_component.compartment == 'front_end')%>
-		
-		<strong><%= item.custom_component.component_type %>:</strong> | 	
-		custom
-		<% if @w_build_item == 'true' %>
-						<%= link_to('remove', {:action => 'remove_custom_component_from_build', :component_type => item.custom_component.component_type, :reset => 'wheels'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %><br />
-		<% else %>
-		<%= link_to('remove', {:action => 'remove_custom_component_from_build', :component_type => item.custom_component.component_type}, :class => "remove_item") %><br />
-		<% end %>
-		<% end %>
-		<% end %>
-		<strong><%= number_to_currency(@front_end_price) %></strong>
-		<br />
-		
-		---wheels--- 
-		<% @wheels_price = 0.0 %>
-		<%= link_to('clear ' + @nav_id + ' items', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", :confirm => 'are you sure?') %><br /> 
-		<% @build.items.each do |item| %>
+	<em><%= number_to_currency(@front_end_price) %></em><br /><br />
+	<% end %>
+	
+	<% if @w_build_item == 'true' %>
+	<strong><%= link_to('WHEELS', :action => 'wheels') %></strong> 
+	<% @wheels_price = 0.0 %>
+	<%= link_to('clear' + @nav_id + ' items', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", 
+		:confirm => @warning) %><br /> 
+	<% @build.items.each do |item| %>
 		<% if item.component && (item.component.compartment == 'wheels') %>
-		<strong><%= item.component.component_type %>:</strong> |
-		<%= item.component.name %> |
-		<%= number_to_currency(item.component.price) %> |
-		<% if @f_build_item == 'true' %>
-		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type, :reset => 'finishing'}, :class => "remove_item", :confirm => "Adding this component will reset finishing components in your build") %><br />
-		<% else%>
-			<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %><br />
-		<% end %>
-		<% @wheels_price += item.component.price %>
+			<em><%= item.component.component_type %>:</em>
+			<%= item.component.name %>,
+			<%= number_to_currency(item.component.price) %>
+			<% if @f_build_item == 'true' %>
+				<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, 
+					:component => item.component.component_type, :reset => 'finishing'}, :class => "remove_item", 
+					:confirm => @warning) %><br />
+			<% else%>
+				<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, 
+					:component => item.component.component_type}, :class => "remove_item") %><br />
+			<% end %>
+			<% @wheels_price += item.component.price %>
 		<% elsif item.custom_component && (item.custom_component.compartment == 'wheels')%>
-		
-		<strong><%= item.custom_component.component_type %>:</strong> | 	
-		custom
-		<% if @f_build_item == 'true' %>
-						<%= link_to('remove', {:action => 'remove_custom_component_from_build', :component_type => item.custom_component.component_type, :reset => 'finishing'}, :class => "remove_item", :confirm => "Adding this component will reset your other compartments") %><br />
-		<% else %>
-		<%= link_to('remove', {:action => 'remove_custom_component_from_build', :component_type => item.custom_component.component_type}, :class => "remove_item") %><br />
+			<em><%= item.custom_component.component_type %>:</em> 	
+			custom
+			<% if @f_build_item == 'true' %>
+				<%= link_to('remove', {:action => 'remove_custom_component_from_build', 
+					:component_type => item.custom_component.component_type, :reset => 'finishing'}, 
+					:class => "remove_item", :confirm => @warning) %><br />
+			<% else %>
+				<%= link_to('remove', {:action => 'remove_custom_component_from_build', 
+					:component_type => item.custom_component.component_type}, :class => "remove_item") %><br />
+			<% end %>
 		<% end %>
-		<% end %>
-		<% end %>
-		<strong><%= number_to_currency(@wheels_price) %></strong>
-		<br />
-		
-		---finishing--- 
-		<% @finishing_price = 0.0 %>
-	<%= link_to('clear ' + @nav_id + ' items', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", :confirm => 'are you sure?') %><br /> 
-		<% @build.items.each do |item| %>
+	<% end %>
+	<em><%= number_to_currency(@wheels_price) %></em><br />
+	<% end %>
+	
+	<% if @f_build_item == 'true' %>	
+	<strong><%= link_to('FINISHING', :action => 'finishing') %></strong>
+	<% @finishing_price = 0.0 %>
+	<%= link_to('clear', {:action => @nav_id, :reset => @nav_id}, :class => "remove_item", :confirm => @warning) %><br /> 
+	<% @build.items.each do |item| %>
 		<% if item.component && (item.component.compartment == 'finishing') %>
-		<strong><%= item.component.component_type %>:</strong> |
-		<%= item.component.name %> |
-		<%= number_to_currency(item.component.price) %> |
-		<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, :component => item.component.component_type}, :class => "remove_item") %><br />
-		<% @finishing_price += item.component.price %>
+			<em><%= item.component.component_type %>:</em>
+			<%= item.component.name %>,
+			<%= number_to_currency(item.component.price) %>
+			<%= link_to('remove', {:action => 'remove_component_from_build', :id => item.component.id, 
+				:component => item.component.component_type}, :class => "remove_item") %><br />
+			<% @finishing_price += item.component.price %>
 		<% elsif item.custom_component && (item.custom_component.compartment == 'finishing')%>
-		
-		<strong><%= item.custom_component.component_type %>:</strong> | 	
-		custom<br />
+			<em><%= item.custom_component.component_type %>:</em>	
+			custom<br />
 		<% end %>
-		<% end %>
-		<strong><%= number_to_currency(@finishing_price) %></strong>
-
-
-		
+	<% end %>
+	<em><%= number_to_currency(@finishing_price) %></em>
+	<% end %>	
 <% end %>
-
-
-
-</div>
 </div>

@@ -26,10 +26,11 @@ belongs_to :option
     return line_item
   end
 
-  def self.new_custom_frame_based_on(frame)
+  def self.new_custom_frame_based_on(frame, gear)
     line_item = self.new
     line_item.component_type = 'Frame'
     line_item.compartment = 'Frame'
+    line_item.gear = gear
     line_item.custom_frame_model = frame
     return line_item
   end

@@ -16,9 +16,17 @@
 	<tr>
 		<td>
   <div class="field">
-    <%= f.label :gears %><br />
-    <%= f.text_field :gears %>
+	<% gears_array = Gear.all.map { |gear| [gear.name, gear.id] }%>
+    <%= f.label :gears %><br /> 
+	<%= select_tag :gears, options_for_select(gears_array)%> <br />
   </div>
+<% if @gear_select == 'false'%>
+	<%= form_tag do %>
+		<%= select_tag :gears, options_for_select(gears_array), :include_blank => "select gears", :onchange => 'this.form.submit()' %>
+	<% end %>
+<% else %>
+	
+
   <div class="field">
     <%= f.label :rear_derailleur_mount %><br />
     <%= f.text_field :rear_derailleur_mount %>
@@ -94,5 +102,5 @@
 	<%= f.submit 'Add Frame Specs' %>
 	<% end %>
   </div>
-
+<% end %>
 <% end %>

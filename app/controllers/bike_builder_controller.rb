@@ -3,8 +3,15 @@ class BikeBuilderController < ApplicationController
   before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
   
   def frames
-
-    if params[:custom_frame]
+    @gear_select == 'false'
+    if params[:gears]
+      @gear_select = 'true'
+      @selected_gear = Gear.find(params[:gears]).name
+      respond_to do |format|
+        format.js { render 'custom_frame_specs.js' }
+        format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
+      end
+    elsif params[:custom_frame]
       @build.empty_all_items
       @custom_frame = CustomFrameModel.new(params[:custom_frame])
      # if @custom_frame.save
@@ -75,11 +82,12 @@ class BikeBuilderController < ApplicationController
   def add_custom_frame_to_build
     frame = @custom_frame
     @frame_model = frame
+    gear = Gear.find(params[:gears])
     session[:frame] = frame
     if session[:build] != nil
        @build.empty_all_items
     end
-    @build.add_custom_frame_to_build(frame)
+    @build.add_custom_frame_to_build(frame, gear)
     
     session[:build] = @build
   end
@@ -89,7 +97,8 @@ class BikeBuilderController < ApplicationController
     @speed = 'multi'
     @build.items.each do |item| 
       if item.custom_frame_model
-        @gear = Gear.where(:num_gears => @frame_model.gears).last
+        #@gear = Gear.where(:num_gears => @frame_model.gears).last
+        @gear = item.gear
         @frame = 'true'
       elsif item.frame_model
          @gear = Gear.find(item.gear)
@@ -1840,7 +1849,7 @@ class BikeBuilderController < ApplicationController
         @f_build_item = 'true'
       end
     end
-    if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedal_selected) && (@pedal_strap_selected))
+    if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedal_selected) && (@pedal_strap_selected) && (@grip_selected))
       @finishing_complete = 'true'
     end
     
