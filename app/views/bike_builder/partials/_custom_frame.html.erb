@@ -106,7 +106,7 @@
 
 	</td></tr></table>
   <div class="actions">
-	<% if @build_component = 'true'%>
+	<% if @build_component == 'true'%>
     <%= f.submit 'Add Frame Specs', :confirm => 'this will reset your current build, proceed?'%>
 	<% else %>
 	<%= f.submit 'Add Frame Specs' %>
