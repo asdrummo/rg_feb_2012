@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120219102612) do
+ActiveRecord::Schema.define(:version => 20120221025830) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20120219102612) do
     t.integer  "front_derailleur_id"
     t.integer  "rear_derailleur_id"
     t.integer  "pedal_strap_id"
+    t.string   "compartment"
   end
 
   create_table "components", :force => true do |t|
@@ -253,6 +254,7 @@ ActiveRecord::Schema.define(:version => 20120219102612) do
     t.string   "component_type"
     t.string   "compartment"
     t.integer  "custom_component_id"
+    t.integer  "component_package_id"
   end
 
   create_table "customer_builds", :force => true do |t|

@@ -1,0 +1,28 @@
+<% @warning = "warning" %>
+<table class="center padded" style="width:100%">
+	
+<% @component_packages.each do |p| %>
+<tr class="<%= cycle('odd', 'even') %>">
+	<td>
+		<p>image?</p>
+	</td>
+	<td>
+		<p><strong><%= p.name %></strong></p>
+	</td>
+	<td>
+		<p>package description</p>
+	</td>
+	<td>	
+		<%= number_to_currency(p.price) %><br />
+		<div class="actions">
+		<% if @build_component == 'true' %>
+			<%= link_to('add', :action => 'add_package_to_build', :add_package => p.id, :confirm => @warning) %>	
+		<% else %>
+			<%= link_to('add', :action => 'add_package_to_build', :add_package => p.id) %>
+		<% end %>
+		</div>
+	</td>
+</tr>
+<% end %>
+</table>
+

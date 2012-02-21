@@ -26,7 +26,8 @@ resources :components, :accessories, :component_packages, :frame_models, :worksh
   match 'bike_builder', :to => 'bike_builder#welcome', :as => :bike_builder
   #match 'bike_builder/frames', :to => 'bike_builder#frames'   
   match ':controller(/:action(/:type(.:format)))'
-
+  match 'bike_builder', :to => 'bike_builder#welcome', :as => :bike_builder
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

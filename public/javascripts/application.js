@@ -7,3 +7,15 @@ $(document).ready(function() {
 });
 
 
+$(document).ready(function() {
+
+   $('#per_page').change(function(){
+     $.ajax({url: "<%= escape_javascript( @nav_id) %>",
+       data: 'per_page=' + this.value,
+       success: function(data){
+         $('#component_grid').html(data);
+         }
+     })
+   });
+ });
+

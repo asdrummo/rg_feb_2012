@@ -56,37 +56,63 @@ class Build
   def add_component_to_build (component)
       existing_component = @items.find {|item| (item.component && (item.component.component_type == component.component_type))}
       existing_custom_component = @items.find {|item| (item.custom_component && (item.custom_component.component_type == component.component_type))}
-      if existing_component
-        @items.delete(existing_component)
-        @total_price -= (existing_component.price)
-        @items << CustomerBuildItem.new_build_component_based_on(component)
-      elsif existing_custom_component
-        @items.delete(existing_custom_component)
+      existing_package = @items.find {|item| (item.component_package && (item.component_package.compartment == component.compartment))}
+      if existing_package
+        @items.delete(existing_package)
+        @total_price -= (existing_package.price)
         @items << CustomerBuildItem.new_build_component_based_on(component)
       else
-        @items << CustomerBuildItem.new_build_component_based_on(component)
+        if existing_component
+          @items.delete(existing_component)
+          @total_price -= (existing_component.price)
+          @items << CustomerBuildItem.new_build_component_based_on(component)
+        elsif existing_custom_component
+          @items.delete(existing_custom_component)
+          @items << CustomerBuildItem.new_build_component_based_on(component)
+        else
+          @items << CustomerBuildItem.new_build_component_based_on(component)
+        end
       end      
       @total_price += (component.price) 
   end
-   
+  
+  def add_component_package_to_build (package)
+    existing_package = @items.find {|item| (item.component_package && (item.component_package.compartment == package.compartment))}
+    if existing_package
+      @items.delete(existing_package)
+      @total_price -= (existing_package.price)
+      @items << CustomerBuildItem.new_package_based_on(package)
+    else
+      @items << CustomerBuildItem.new_package_based_on(package)
+    end
+      @total_price += (package.price) 
+  end
+  
   def remove_component_from_build(component)
     existing_component = @items.find {|item| (item.component && (item.component.component_type == component.component_type))}
     @items.delete(existing_component)
     @total_price -= component.price
   end
   
-   def remove_custom_component_from_build(component_type)
-     existing_custom_component = @items.find {|item| (item.custom_component && (item.custom_component.component_type == component_type))}
+  def remove_custom_component_from_build(component_type)
+     existing_custom_component = @items.find {|item| (item.custom_component && 
+       (item.custom_component.component_type == component_type))}
      @items.delete(existing_custom_component)
    end
 
   def remove_compartment_from_build(items_to_delete)
      items_to_delete.each do |item|
         @items.delete(item)
-        if item.component
+        if item.component || item.component_package
         @total_price -= item.price
         end
      end
+  end
+  
+  def remove_package_from_build(package)
+    existing_package = @items.find {|item| (item.component_package && (item.component_package.id == package.id))}
+      @items.delete(existing_package)
+      @total_price -= package.price
   end
 
 end

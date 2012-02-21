@@ -45,6 +45,17 @@ belongs_to :option
    return line_item
   end
   
+  def self.new_package_based_on(package)
+   line_item = self.new
+   line_item.component_package = package
+   #line_item.component_id = component.component_id
+   #line_item.component_type = component.component_type
+   line_item.compartment = package.compartment
+   #line_item.client_id = component.client_id
+   line_item.price = package.price
+   return line_item
+  end
+  
   def self.new_build_custom_component_based_on(component)
    line_item = self.new
    line_item.custom_component = component

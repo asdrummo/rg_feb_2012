@@ -1,7 +1,10 @@
 class BikeBuilderController < ApplicationController
   layout 'standard'
-  before_filter :confirm_logged_in, :find_or_create_build, :find_frame, :compatibility_check
-  
+  before_filter :confirm_logged_in
+  before_filter :find_or_create_build 
+  before_filter :find_frame
+  before_filter :compatibility_check
+
   def frames
     @gear_select == 'false'
     #if params[:gears]
@@ -493,6 +496,7 @@ class BikeBuilderController < ApplicationController
  
   def general_filters
     custom_component_select_or_add
+    reset_compartments
     frame_check
     check_compartment_completion
     list_components
@@ -516,10 +520,13 @@ class BikeBuilderController < ApplicationController
       @component_type = params[:type]
       @component = params[:type]
       @components = Component.where(:component_type => @component_type)
+    
     #filter for components by package
-    elsif params[:package_id]
-      find_package_components
-      @component = @package.name
+     elsif params[:package_id]
+       find_package_components
+       @component = @package.name
+      #@component = @package.name
+
     #all compartment components
     elsif params[:type] == 'all'
       @components = Component.where(:compartment => @nav_id)
@@ -544,17 +551,41 @@ class BikeBuilderController < ApplicationController
       elsif @nav_id == 'finishing'
         finishing_compatibility_check
       end
-    end
+    end  
+    
+    
+    #checkmark arrays
     @compartment_build = []
+    @package_build = []
     @build.items.each do |item|
-    if item.compartment == @nav_id
-    @compartment_build << item
+      if item.compartment == @nav_id
+        @compartment_build << item
+      end
+      
+      if item.component_package
+        @package_build << item
+        @package = ComponentPackage.find(item.component_package.id)
+        find_package_components
+      end
     end
-    end
-    reset_compartments
     component_sort
   end
-    
+  
+  def package_table
+    @nav_id = params[:package_id]
+    compartment = params[:package_id]
+    frame_check
+    if @nav_id == 'wheels' || @nav_id == 'finishing'
+      @component_packages = ComponentPackage.where(:package_type => @nav_id) #.order(:order => 'created_at ASC')
+    else
+      @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed') #.order(:order => 'created_at ASC')
+    end
+    respond_to do |format|
+        format.js { render 'packages.js'}
+        format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
+    end
+  end
+  
   def front_end
     @nav_id = 'front_end'
     @front_end = 'active_progress'
@@ -1566,13 +1597,36 @@ class BikeBuilderController < ApplicationController
   end
   
   def add_package_to_build
-    find_package_components
-    @components.each do |c|
-      @build.add_component_to_build(c)
+    #find_package_components
+    #@components.each do |c|
+      #@build.add_component_to_build(c)
+    #end
+
+    package = ComponentPackage.find(params[:add_package])
+    compartment = package.compartment
+    check_compartment_completion
+    ### Clear out necessary compartments ###
+    if compartment == 'drivetrain' && @dt_build_item == 'true'
+      params[:reset] = 'drivetrain'
+    elsif compartment == 'drivetrain' && @fe_build_item == 'true'
+      params[:reset] = 'front_end'
+    elsif compartment == 'front_end' && @fe_build_item == 'true'
+      params[:reset] = 'front_end'
+    elsif compartment == 'front_end' && @w_build_item == 'true'
+      params[:reset] = 'wheels'
+    elsif compartment == 'wheels' && @w_build_item == 'true'
+      params[:reset] = 'wheels'
+    elsif compartment == 'wheels' && @f_build_item == 'true'
+      params[:reset] = 'finishing'
+    elsif compartment == 'finishing' && @f_build_item == 'true'
+      params[:reset] = 'finishing'
     end
+    reset_compartments
+    @build.add_component_package_to_build(package)
+    params[:reset] = nil
     session[:build] = @build
     flash[:notice] = 'the package was successfully added to your build'
-    redirect_back
+    redirect_to(:action => compartment)
   end
   
   def remove_component_from_build
@@ -1597,17 +1651,23 @@ class BikeBuilderController < ApplicationController
   end
   
   def clear_compartment_from_build
-    @items_to_delete = []
+    @items_to_delete = @package_items_to_delete = []
     @compartment_name = params[:compartment]
     @build.items.each do |item|
 		if (item.component && (item.component.compartment == @compartment_name))  || (item.custom_component && (item.custom_component.compartment == @compartment_name))
 		  @items_to_delete << item
+		elsif (item.component_package && (item.component_package.compartment == @compartment_name))
+		  @package_items_to_delete << item
 		end
 	  end
+	  if !@items_to_delete.empty?
     @build.remove_compartment_from_build(@items_to_delete)
+    elsif !@package_items_to_delete.empty?
+    @build.remove_package_from_build(@package_items_to_delete)
+    end
     session[:build] = @build
     #clear from component select
-    if @result_of_component_select
+    if @result_of_component_select == 'true'
     else
     flash[:notice] = 'Compartment Successfully Removed From Build'
     redirect_back
@@ -1628,24 +1688,35 @@ class BikeBuilderController < ApplicationController
   end
   
   def find_package_components
-    @package = ComponentPackage.find(params[:package_id])
+    if params[:package_id]
+      @package = ComponentPackage.find(params[:package_id])
+    elsif params[:selected_package_id]
+      @package =  ComponentPackage.find(params[:selected_package_id])
+    end
+    
     if @package.package_type == 'drivetrain-single_speed'
-        @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.crank_id, @package.cog_id,  @package.bottom_bracket_id, @package.chain_id, @package.chainring_id)
-        
+        @package_components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.crank_id, @package.cog_id,  @package.bottom_bracket_id, @package.chain_id, @package.chainring_id)
+        @drivetrain_package_components = @package_components
     elsif @package.package_type == 'drivetrain-multi_speed'
-      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.rear_derailleur_id, @package.front_derailleur_id, @package.crank_id, @package.cog_id,  @package.bottom_bracket_id, @package.chain_id, @package.chainring_id)
-      
+      @package_components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.rear_derailleur_id, @package.front_derailleur_id, @package.crank_id, @package.cog_id,  @package.bottom_bracket_id, @package.chain_id, @package.chainring_id)
+        @drivetrain_package_components = @package_components
     elsif @package.package_type == 'front_end-single_speed'
-      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_brake_id, @package.rear_brake_id, @package.fork_id, @package.stem_id, @package.handlebar_id, @package.headset_id, @package.front_lever_id, @package.rear_lever_id)
-
+      @package_components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_brake_id, @package.rear_brake_id, @package.fork_id, @package.stem_id, @package.handlebar_id, @package.headset_id, @package.front_lever_id, @package.rear_lever_id)
+      @front_end_package_components = @package_components
     elsif @package.package_type == 'front_end-multi_speed'
-      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_brake_id, @package.rear_brake_id, @package.fork_id, @package.stem_id,  @package.front_shifter_id, @package.rear_shifter_id, @package.front_lever_id, @package.rear_lever_id, @package.handlebar_id, @package.headset_id)
-
+      @package_components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_brake_id, @package.rear_brake_id, @package.fork_id, @package.stem_id,  @package.front_shifter_id, @package.rear_shifter_id, @package.front_lever_id, @package.rear_lever_id, @package.handlebar_id, @package.headset_id)
+      @front_end_package_components = @package_components
     elsif @package.package_type == 'wheels'
-      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_wheel_id, @package.rear_wheel_id, @package.front_tube_id, @package.rear_tube_id, @package.front_tire_id, @package.rear_tire_id)
-
+      @package_components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.front_wheel_id, @package.rear_wheel_id, @package.front_tube_id, @package.rear_tube_id, @package.front_tire_id, @package.rear_tire_id)
+      @wheels_package_components = @package_components
     elsif @package.package_type == 'finishing'
-      @components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.saddle_id, @package.seat_post_id, @package.seat_clamp_id, @package.grip_id, @package.pedal_id, @package.pedal_strap_id, @package.half_link_id)
+      @package_components = Component.where('id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?', @package.saddle_id, @package.seat_post_id, @package.seat_clamp_id, @package.grip_id, @package.pedal_id, @package.pedal_strap_id, @package.half_link_id)
+      @finishing_package_components = @package_components
+    end
+    if params[:package_id]
+      @components = @package_components
+    elsif params[:selected_package_id]
+      @components = @package_components
     end
   end
   
@@ -1694,84 +1765,50 @@ class BikeBuilderController < ApplicationController
     #DRIVETRAIN CHECK
     @drivetrain_complete = 'false'
     @dt_build_item = 'false'
+    assign_selected_components
     @build.items.each do |item|  
       if item.component
-        component = item.component
+        @component_check = item.component
+        assign_selected_components
       elsif item.custom_component
-        component = item.custom_component
-      end
-         
-      if component && (component.component_type == 'Crank')
-         @dt_build_item = 'true'
-         @crank_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Cog Cassette')
-         @dt_build_item = 'true'
-         @cog_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Bottom Bracket')
-         @dt_build_item = 'true'
-         @bottom_bracket_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Chainring')
-        @dt_build_item = 'true'
-        @chainring_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Chain')
-        @dt_build_item = 'true'
-        @chain_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Front Derailleur')
-        @dt_build_item = 'true'
-        @front_derailleur_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Rear Derailleur')
-        @dt_build_item = 'true'
-        @rear_derailleur_selected = Component.find_by_id(component.id)
+        @component_check = item.custom_component
+        assign_selected_components
+      elsif item.component_package
+        @package = ComponentPackage.find(item.component_package.id)
+        find_package_components
+        if @drivetrain_package_components
+           @drivetrain_package_components.each do |component|
+        @component_check = component
+        assign_selected_components
+        end
+        end
+        if @front_end_package_components
+           @front_end_package_components.each do |component|
+        @component_check = component
+        assign_selected_components
+        end
+        end
+        if @wheels_package_components
+           @wheels_package_components.each do |component|
+        @component_check = component
+        assign_selected_components
+        end
+        end
+        if @finishing_package_components
+           @finishing_package_components.each do |component|
+        @component_check = component
+        assign_selected_components
+        end
+        end
       end
     end
+
     
     if ((@crank_selected) && (@cog_selected) && (@bottom_bracket_selected) && (@chainring_selected) && (@chain_selected))
       if @speed == 'single'
         @drivetrain_complete = 'true'
       elsif (@rear_derailleur_selected) && (@front_derailleur_selected)
         @drivetrain_complete = 'true'
-      end
-    end
-    #FRONT END CHECK
-    @front_end_complete = 'false'
-    @fe_build_item = 'false'
-    @build.items.each do |item|  
-      if item.component
-        component = item.component
-      elsif item.custom_component
-        component = item.custom_component
-      end
-      
-      if component && (component.component_type == 'Fork')
-         @fe_build_item = 'true'
-         @fork_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Stem')
-         @fe_build_item = 'true'
-         @stem_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Front Brake')
-         @fe_build_item = 'true'
-         @front_brake_selected = Component.find_by_id(component.id) 
-      elsif component && (component.component_type == 'Rear Brake')
-        @fe_build_item = 'true'
-        @rear_brake_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Front Lever')
-        @fe_build_item = 'true'
-        @front_lever_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Rear Lever')
-        @fe_build_item = 'true'
-        @rear_lever_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Front Shifter')
-        @fe_build_item = 'true'
-        @front_shifter_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Rear Shifter')
-        @fe_build_item = 'true'
-        @rear_shifter_selected = Component.find_by_id(component.id)
-      elsif component && (component.component_type == 'Handlebar')
-        @fe_build_item = 'true'
-        @handlebar_selected = Component.find_by_id(component.id) 
-      elsif component && (component.component_type == 'Headset')
-        @fe_build_item = 'true'
-        @headset_selected = Component.find_by_id(component.id)
       end
     end
     if (@fork_selected) && (@stem_selected) && (@front_brake_selected) && (@rear_brake_selected) && (@front_lever_selected) && (@rear_lever_selected) && (@handlebar_selected) && (@headset_selected)
@@ -1781,77 +1818,113 @@ class BikeBuilderController < ApplicationController
         @front_end_complete = 'true'
       end
     end
-    
-    #WHEEL CHECK 
-    @w_build_item = 'false'
-    @build.items.each do |item| 
-      if item.component
-        component = item.component
-      elsif item.custom_component
-        component = item.custom_component
-      end 
-      if component && (component.component_type == 'Front Wheel')
-         @front_wheel_selected = Component.find_by_id(component.id)
-         @w_build_item = 'true'
-      elsif component && (component.component_type == 'Rear Wheel')
-         @rear_wheel_selected = Component.find_by_id(component.id)
-         @w_build_item = 'true'
-      elsif component && (component.component_type == 'Front Tire')
-         @front_tire_selected = Component.find_by_id(component.id)
-         @w_build_item = 'true'
-      elsif component && (component.component_type == 'Rear Tire')
-        @rear_tire_selected = Component.find_by_id(component.id)
-        @w_build_item = 'true'
-      elsif component && (component.component_type == 'Front Tube')
-        @front_tube_selected = Component.find_by_id(component.id)
-        @w_build_item = 'true'
-      elsif component && (component.component_type == 'Rear Tube')
-        @rear_tube_selected = Component.find_by_id(component.id)
-        @w_build_item = 'true'
-      end
-    end
     if ((@front_wheel_selected) && (@rear_wheel_selected) && (@front_tire_selected) && (@rear_tire_selected) && (@front_tube_selected) && (@rear_tube_selected))
       @wheels_complete = 'true'
-    end
-
-    
-    #FINISHING CHECK 
-    @f_build_item = 'false'
-    @build.items.each do |item| 
-      if item.component
-        component = item.component
-      elsif item.custom_component
-        component = item.custom_component
-      end 
-      if component && (component.component_type == 'Saddle')
-         @saddle_selected = Component.find_by_id(component.id)
-         @f_build_item = 'true'
-      elsif component && (component.component_type == 'Seat Post')
-        @seat_post_selected = Component.find_by_id(component.id)
-        @f_build_item = 'true'
-      elsif component && (component.component_type == 'Seat Clamp')
-        @seat_clamp_selected = Component.find_by_id(component.id)
-        @f_build_item = 'true'
-      elsif component && (component.component_type == 'Pedal')
-        @pedal_selected = Component.find_by_id(component.id)
-        @f_build_item = 'true'
-      elsif component && (component.component_type == 'Pedal Strap')
-        @pedal_strap_selected = Component.find_by_id(component.id)
-        @f_build_item = 'true'
-      elsif component && (component.component_type == 'Grip')
-        @grip_selected = Component.find_by_id(component.id)
-        @f_build_item = 'true'
-      elsif component && (component.component_type == 'Half Link')
-        @half_link_selected = Component.find_by_id(component.id)
-        @f_build_item = 'true'
-      end
     end
     if ((@saddle_selected) && (@seat_post_selected) && (@seat_clamp_selected) && (@pedal_selected) && (@pedal_strap_selected) && (@grip_selected))
       @finishing_complete = 'true'
     end
-    
+
     if (@dt_build_item == 'true') || (@fe_build_item == 'true') || (@w_build_item =='true') || (@f_build_item == 'true')
       @build_component = 'true'
+    end
+    
+  end
+  
+  def assign_selected_components
+    if @component_check && (@component_check.component_type == 'Crank')
+       @dt_build_item = 'true'
+       @crank_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Cog Cassette')
+       @dt_build_item = 'true'
+       @cog_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Bottom Bracket')
+       @dt_build_item = 'true'
+       @bottom_bracket_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Chainring')
+      @dt_build_item = 'true'
+      @chainring_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Chain')
+      @dt_build_item = 'true'
+      @chain_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Front Derailleur')
+      @dt_build_item = 'true'
+      @front_derailleur_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Rear Derailleur')
+      @dt_build_item = 'true'
+      @rear_derailleur_selected = Component.find_by_id(@component_check.id)
+    ##FRONT END 
+    elsif @component_check && (@component_check.component_type == 'Fork')
+       @fe_build_item = 'true'
+       @fork_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Stem')
+       @fe_build_item = 'true'
+       @stem_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Front Brake')
+       @fe_build_item = 'true'
+       @front_brake_selected = Component.find_by_id(@component_check.id) 
+    elsif @component_check && (@component_check.component_type == 'Rear Brake')
+      @fe_build_item = 'true'
+      @rear_brake_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Front Lever')
+      @fe_build_item = 'true'
+      @front_lever_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Rear Lever')
+      @fe_build_item = 'true'
+      @rear_lever_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Front Shifter')
+      @fe_build_item = 'true'
+      @front_shifter_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Rear Shifter')
+      @fe_build_item = 'true'
+      @rear_shifter_selected = Component.find_by_id(@component_check.id)
+    elsif @component_check && (@component_check.component_type == 'Handlebar')
+      @fe_build_item = 'true'
+      @handlebar_selected = Component.find_by_id(@component_check.id) 
+    elsif @component_check && (@component_check.component_type == 'Headset')
+      @fe_build_item = 'true'
+      @headset_selected = Component.find_by_id(@component_check.id)
+    ### Wheels ###
+    elsif @component_check && (@component_check.component_type == 'Front Wheel')
+       @front_wheel_selected = Component.find_by_id(@component_check.id)
+       @w_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Rear Wheel')
+       @rear_wheel_selected = Component.find_by_id(@component_check.id)
+       @w_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Front Tire')
+       @front_tire_selected = Component.find_by_id(@component_check.id)
+       @w_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Rear Tire')
+      @rear_tire_selected = Component.find_by_id(@component_check.id)
+      @w_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Front Tube')
+      @front_tube_selected = Component.find_by_id(@component_check.id)
+      @w_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Rear Tube')
+      @rear_tube_selected = Component.find_by_id(@component_check.id)
+      @w_build_item = 'true'
+    ### Finishing ###
+    elsif @component_check && (@component_check.component_type == 'Saddle')
+       @saddle_selected = Component.find_by_id(@component_check.id)
+       @f_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Seat Post')
+      @seat_post_selected = Component.find_by_id(@component_check.id)
+      @f_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Seat Clamp')
+      @seat_clamp_selected = Component.find_by_id(@component_check.id)
+      @f_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Pedal')
+      @pedal_selected = Component.find_by_id(@component_check.id)
+      @f_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Pedal Strap')
+      @pedal_strap_selected = Component.find_by_id(@component_check.id)
+      @f_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Grip')
+      @grip_selected = Component.find_by_id(@component_check.id)
+      @f_build_item = 'true'
+    elsif @component_check && (@component_check.component_type == 'Half Link')
+      @half_link_selected = Component.find_by_id(@component_check.id)
+      @f_build_item = 'true'
     end
   end
   
@@ -1871,17 +1944,20 @@ class BikeBuilderController < ApplicationController
           sort = session[:sort] ||= "name ASC"
         end
         session[:sort] = sort
-        
        query = params[:search][:query] if params[:search]
             
        conditions = ["LOWER(name) LIKE ?", "%#{query.downcase}%"] unless query.nil?
 
        @components = @components.where(conditions).order(sort).paginate(:per_page => @per_page, :page => params[:page])
-
         respond_to do |format|
           format.html { render 'bike_builder'}
           format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
-          format.js {render 'sort.js'}  
+          if params[:reset]
+            flash[:notice] = 'Compartment successfully cleared.'
+            format.js {render 'clear.js'}  
+          else
+            format.js {render 'sort.js'}  
+          end
         end
   end
   
@@ -1922,6 +1998,9 @@ class BikeBuilderController < ApplicationController
       elsif item.custom_frame_model_id
         custom_frame = CustomFrameModel.find(item.custom_frame_model_id)
         @build.add_custom_frame_to_build(custom_frame)
+      elsif item.component_package_id
+        component_package = ComponentPackage.find(item.component_package_id)
+        @build.add_component_package_to_build(component_package)
       end
       
     end

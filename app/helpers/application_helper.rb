@@ -4,6 +4,14 @@ module ApplicationHelper
     render(:partial => 'shared/error_messages', :locals => {:object => object})
   end
   
+  def flash_display
+    response = ""
+    flash.each do |name, msg|
+      response = response + content_tag(:div, msg, :id => "flash_#{name}")
+    end
+    flash.discard
+    response
+  end
     
   class BraintreeFormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::AssetTagHelper

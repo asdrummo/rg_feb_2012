@@ -4,8 +4,9 @@
 		<%= render :partial => 'bike_builder/partials/side_menu' %>
 	</td>
 	<td id="main_comp_window">
-		
+		<div id="sort">
 		<%= render :partial => 'bike_builder/partials/sort' unless @frame_specs || @component_specs %>
+		</div>
 			<div id="component_grid">
 				<% if @frame_specs %>
 				<%= render :partial => 'bike_builder/partials/custom_frame' %>	

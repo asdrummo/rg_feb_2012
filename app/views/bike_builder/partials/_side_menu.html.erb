@@ -28,19 +28,23 @@
 
 
 <% end %>
-
+<% if @component_packages %>
 <h4>Available Packages</h4>
-<ul>
-	<% if @component_packages && @component_packages.each do |p| %>
-	<li>
-	<%= package_link_helper(p.name, p.id, @nav_id) %> | <%= link_to('add', :action => 'add_package_to_build', :package_id => p.id) %>
+<%= package_link_helper_all('View All', 'all', @nav_id) %>
+<ul class="sidelist">
+	<% @component_packages && @component_packages.each do |p| %>
+	<% @style = ""%>
+	<% @package_build.each do |item| %>
+	<% if p.id == item.component_package.id %>
+	<% @style = "green" %>
+	<% end %>
+	<% end %>
+	<li class="<%= @style %>">		
+	<%= package_link_helper(p.name, p.id, @nav_id) %>
 	</li>
-	<% end %>
-	<% end %>
+	<% end %><br />
 </ul>
-
-
-
-
+<% end %>
+dtbi = <%= @dt_build_item%>
 
 </div>

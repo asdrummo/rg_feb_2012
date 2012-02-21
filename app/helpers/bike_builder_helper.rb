@@ -73,6 +73,20 @@ module BikeBuilderHelper
     }
     link_to name, options, html_options, 
   end
+  
+  def package_link_helper_all(name, package_id, nav_id)
+
+    options = {
+        :url => {:action => 'package_table', :package_id => nav_id},
+        :update => 'component_grid',    
+    }
+    html_options = {
+      :title => name,
+      :href => url_for(:action => 'package_table', :package_id => nav_id ),
+      :remote => true
+    }
+    link_to name, options, html_options, 
+  end
 
   def login_link_helper(text, update)
 
