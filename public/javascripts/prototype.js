@@ -5709,34 +5709,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     return element;
   }
 
-  function fire(element, eventName, memo, bubble) {
-    element = $(element);
 
-    if (Object.isUndefined(bubble))
-      bubble = true;
-
-    if (element == document && document.createEvent && !element.dispatchEvent)
-      element = document.documentElement;
-
-    var event;
-    if (document.createEvent) {
-      event = document.createEvent('HTMLEvents');
-      event.initEvent('dataavailable', bubble, true);
-    } else {
-      event = document.createEventObject();
-      event.eventType = bubble ? 'ondataavailable' : 'onlosecapture';
-    }
-
-    event.eventName = eventName;
-    event.memo = memo || { };
-
-    if (document.createEvent)
-      element.dispatchEvent(event);
-    else
-      element.fireEvent(event.eventType, event);
-
-    return Event.extend(event);
-  }
 
   Event.Handler = Class.create({
     initialize: function(element, eventName, selector, callback) {
@@ -5775,14 +5748,14 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   Object.extend(Event, Event.Methods);
 
   Object.extend(Event, {
-    fire:          fire,
+    
     observe:       observe,
     stopObserving: stopObserving,
     on:            on
   });
 
   Element.addMethods({
-    fire:          fire,
+    
 
     observe:       observe,
 
@@ -5792,7 +5765,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   });
 
   Object.extend(document, {
-    fire:          fire.methodize(),
+    
 
     observe:       observe.methodize(),
 
@@ -5807,47 +5780,12 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   else window.Event = Event;
 })();
 
-(function() {
-  /* Support for the DOMContentLoaded event is based on work by Dan Webb,
-     Matthias Miller, Dean Edwards, John Resig, and Diego Perini. */
 
-  var timer;
 
-  function fireContentLoadedEvent() {
-    if (document.loaded) return;
-    if (timer) window.clearTimeout(timer);
-    document.loaded = true;
-    document.fire('dom:loaded');
-  }
 
-  function checkReadyState() {
-    if (document.readyState === 'complete') {
-      document.stopObserving('readystatechange', checkReadyState);
-      fireContentLoadedEvent();
-    }
-  }
 
-  function pollDoScroll() {
-    try { document.documentElement.doScroll('left'); }
-    catch(e) {
-      timer = pollDoScroll.defer();
-      return;
-    }
-    fireContentLoadedEvent();
-  }
 
-  if (document.addEventListener) {
-    document.addEventListener('DOMContentLoaded', fireContentLoadedEvent, false);
-  } else {
-    document.observe('readystatechange', checkReadyState);
-    if (window == top)
-      timer = pollDoScroll.defer();
-  }
 
-  Event.observe(window, 'load', fireContentLoadedEvent);
-})();
-
-Element.addMethods();
 
 /*------------------------------- DEPRECATED -------------------------------*/
 
