@@ -1578,7 +1578,7 @@ class BikeBuilderController < ApplicationController
       @id = params[:id]
       add_component_to_build
       reset_compartments
-      flash[:notice] = 'Component Added to Build'
+      flash[:notice] = 'Component Added to Build'  
       component = Component.find(params[:id])
       redirect_back
   end
