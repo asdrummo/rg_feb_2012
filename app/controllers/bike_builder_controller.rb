@@ -581,6 +581,7 @@ class BikeBuilderController < ApplicationController
       @component_packages = ComponentPackage.where(:package_type => @nav_id + '-' + @speed + '_speed') #.order(:order => 'created_at ASC')
     end
     respond_to do |format|
+        format.html {render @nav_id}
         format.js { render 'packages.js'}
         format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
     end
