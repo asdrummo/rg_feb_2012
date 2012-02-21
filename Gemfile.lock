@@ -47,7 +47,6 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
-    growl (1.0.3)
     httparty (0.8.1)
       multi_json
       multi_xml
@@ -105,7 +104,6 @@ DEPENDENCIES
   admin_data
   braintree (~> 2.10.2)
   doc_raptor
-  growl (~> 1.0.3)
   mail
   mysql2 (= 0.2.7)
   paperclip (~> 2.3)

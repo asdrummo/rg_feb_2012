@@ -40,7 +40,7 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototyp
 #gem 'jquery-rails', '>= 0.2.6'
 #gem "prototype-rails", "~> 0.3.1"
 gem "doc_raptor"
-gem "growl", "~> 1.0.3"
+#gem "growl", "~> 1.0.3"
 
 
 
