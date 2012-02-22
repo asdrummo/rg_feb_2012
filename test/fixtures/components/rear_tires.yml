@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  client_id: 1
+  product_id: MyString
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: 9.99
+  size: MyString
+  width: 9.99
+  max_size: 9.99
+  rear_wheel_size: MyString
+  rear_wheel_trim_width: 9.99
+
+two:
+  client_id: 1
+  product_id: MyString
+  sku: MyString
+  name: MyString
+  description: MyText
+  image_path: MyString
+  vendor: MyString
+  brand: MyString
+  material: MyString
+  color: MyString
+  finish: MyString
+  cost: 9.99
+  price: 9.99
+  size: MyString
+  width: 9.99
+  max_size: 9.99
+  rear_wheel_size: MyString
+  rear_wheel_trim_width: 9.99

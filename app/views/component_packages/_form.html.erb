@@ -1,0 +1,341 @@
+<% if session[:frame_model_id] != nil %>
+frame_model_selection: <%= session[:frame_model_id] %>
+<% end %>
+
+<%= form_for(@component_package) do |f| %>
+  <% if @component_package.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@component_package.errors.count, "error") %> prohibited this component_package from being saved:</h2>
+
+      <ul>
+      <% @component_package.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :client_id, :value => @user.client_id%>
+
+	<% if @component_package_select == 'true' %> 
+		<%= form_tag do %>
+			<%= select_tag :package_type, options_for_select(@package_types_array), :include_blank => "select package type", :onchange => 'this.form.submit()' %>
+		<% end %>
+	<% else %>
+	
+	
+	<div class="field">
+    <%= f.label :package_type %><br />
+    <%= @package_type %>
+  </div>
+
+	<% if @package_type %>
+	<%= f.hidden_field :package_type, :value => @package_type %>
+	<% end %>
+		
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.text_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :size => "30x5" %>
+ </div>
+	<br />
+	<% if (@package_type == 'full-multi_speed') || (@package_type == 'full-single_speed') %>
+		<%= f.label :frame_model_id %><br /> 
+		<% if @component_package.frame_model_id %>
+		<%= f.select :frame_model_id, options_from_collection_for_select(@frame_models, "id", "name", @component_package.frame_model_id) %>
+		<% else %>
+		<%= f.select :frame_model_id, options_from_collection_for_select(@frame_models, "id", "name") %>
+		<% end %>
+		<br />
+	
+		<%= f.label :seat_post_id %><br />
+		<% if @component_package.seat_post_id %>
+		<%= f.select :seat_post_id, options_from_collection_for_select(@seat_posts, "id", "name", @component_package.seat_post_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :seat_post_id, options_from_collection_for_select(@seat_posts, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :seat_clamp_id %><br />
+		<% if @component_package.seat_clamp_id %>
+		<%= f.select :seat_clamp_id, options_from_collection_for_select(@seat_clamps, "id", "name", @component_package.seat_clamp_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :seat_clamp_id, options_from_collection_for_select(@seat_clamps, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	   	<%= f.label :saddle_id %><br />
+		<% if @component_package.saddle_id %>
+		<%= f.select :saddle_id, options_from_collection_for_select(@saddles, "id", "name", @component_package.saddle_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :saddle_id, options_from_collection_for_select(@saddles, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	<% end %>
+	
+<% if (@package_type == 'full-multi_speed') || (@package_type == 'full-single_speed') || (@package_type =='front_end-single_speed') || (@package_type =='front_end-multi_speed') %>
+		<%= f.label :stem_id %><br />
+		<% if @component_package.stem_id %>
+		<%= f.select :stem_id, options_from_collection_for_select(@stems, "id", "name", @component_package.stem_id), :include_blank => true %>
+		<% else %>
+				<%= f.select :stem_id, options_from_collection_for_select(@stems, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :handlebar_id %><br />
+		<% if @component_package.handlebar_id %>
+		<%= f.select :handlebar_id, options_from_collection_for_select(@handlebars, "id", "name", @component_package.handlebar_id), :include_blank => true %>  
+		<% else %>
+		<%= f.select :handlebar_id, options_from_collection_for_select(@handlebars, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :front_lever_id %><br />
+		<% if @component_package.front_lever_id %>
+		<%= f.select :front_lever_id, options_from_collection_for_select(@front_levers, "id", "name", @component_package.front_lever_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :front_lever_id, options_from_collection_for_select(@front_levers, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :rear_lever_id %><br />
+		<% if @component_package.rear_lever_id %>
+		<%= f.select :rear_lever_id, options_from_collection_for_select(@rear_levers, "id", "name", @component_package.rear_lever_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :rear_lever_id, options_from_collection_for_select(@rear_levers, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+			<br />
+			<%= f.label :front_brake_id %><br />
+			<% if @component_package.front_brake_id %>
+			<%= f.select :front_brake_id, options_from_collection_for_select(@front_brakes, "id", "name", @component_package.front_brake_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :front_brake_id, options_from_collection_for_select(@front_brakes, "id", "name"), :include_blank => true %>
+			<% end %>
+
+			<br />
+			<%= f.label :rear_brake_id %><br />
+			<% if @component_package.rear_brake_id %>
+			<%= f.select :rear_brake_id, options_from_collection_for_select(@rear_brakes, "id", "name", @component_package.rear_brake_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :rear_brake_id, options_from_collection_for_select(@rear_brakes, "id", "name"), :include_blank => true %>
+			<% end %>
+			<br />
+			<%= f.label :fork_id %><br />
+			<% if @component_package.fork_id %>
+			<%= f.select :fork_id, options_from_collection_for_select(@forks, "id", "name", @component_package.fork_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :fork_id, options_from_collection_for_select(@forks, "id", "name"), :include_blank => true %>
+			<% end %>
+			<br />
+
+			<%= f.label :headset_id %><br />
+			<% if @component_package.headset_id %>
+			<%= f.select :headset_id, options_from_collection_for_select(@headsets, "id", "name", @component_package.headset_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :headset_id, options_from_collection_for_select(@headsets, "id", "name"), :include_blank => true %>
+			<% end %><br />
+
+			<%= f.label :grip_id %><br />
+			<% if @component_package.grip_id %>
+			<%= f.select :grip_id, options_from_collection_for_select(@grips, "id", "name", @component_package.grip_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :grip_id, options_from_collection_for_select(@grips, "id", "name"), :include_blank => true %>
+			<% end %><br />
+	<% end %>
+	<% if (@package_type == 'full-multi_speed') || (@package_type =='front_end-multi_speed') %>
+			<br />
+			<%= f.label :front_shifter_id %><br />
+			<% if @component_package.front_shifter_id %>
+			<%= f.select :front_shifter_id, options_from_collection_for_select(@front_shifters, "id", "name", @component_package.front_shifter_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :front_shifter_id, options_from_collection_for_select(@front_shifters, "id", "name"), :include_blank => true %>
+			<% end %>
+
+			<br />
+			<%= f.label :rear_shifter_id %><br />
+			<% if @component_package.rear_shifter_id %>
+			<%= f.select :rear_shifter_id, options_from_collection_for_select(@rear_shifters, "id", "name", @component_package.rear_shifter_id), :include_blank => true %>
+			<% else %>
+			<%= f.select :rear_shifter_id, options_from_collection_for_select(@rear_shifters, "id", "name"), :include_blank => true %>
+			<% end %>
+	<% end %>
+	<% if (@package_type == 'full-multi_speed')  || (@package_type == 'full-single_speed') || (@package_type =='wheels') %>
+		<%= f.label :front_wheel_id %><br />
+		<% if @component_package.front_wheel_id %>
+		<%= f.select :front_wheel_id, options_from_collection_for_select(@front_wheels, "id", "name", @component_package.front_wheel_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :front_wheel_id, options_from_collection_for_select(@front_wheels, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :rear_wheel_id %><br />
+		<% if @component_package.rear_wheel_id %>
+		<%= f.select :rear_wheel_id, options_from_collection_for_select(@rear_wheels, "id", "name", @component_package.rear_wheel_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :rear_wheel_id, options_from_collection_for_select(@rear_wheels, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :rim_strip_id %><br />
+		<% if @component_package.rim_strip_id %>
+		<%= f.select :rim_strip_id, options_from_collection_for_select(@rim_strips, "id", "name", @component_package.rim_strip_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :rim_strip_id, options_from_collection_for_select(@rim_strips, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :front_tire_id %><br />
+		<% if @component_package.front_tire_id %>
+		<%= f.select :front_tire_id, options_from_collection_for_select(@front_tires, "id", "name", @component_package.front_tire_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :front_tire_id, options_from_collection_for_select(@front_tires, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :rear_tire_id %><br />
+		<% if @component_package.rear_tire_id %>
+		<%= f.select :rear_tire_id, options_from_collection_for_select(@rear_tires, "id", "name", @component_package.rear_tire_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :rear_tire_id, options_from_collection_for_select(@rear_tires, "id", "name"), :include_blank => true %>
+		<% end %>
+	
+		<br />
+		<%= f.label :front_tube_id %><br />
+		<% if @component_package.front_tube_id %>
+		<%= f.select :front_tube_id, options_from_collection_for_select(@front_tubes, "id", "name", @component_package.front_tube_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :front_tube_id, options_from_collection_for_select(@front_tubes, "id", "name"), :include_blank => true %>
+		<% end %>
+	
+		<br />
+		<%= f.label :rear_tube_id %><br />
+		<% if @component_package.rear_tube_id %>
+		<%= f.select :rear_tube_id, options_from_collection_for_select(@rear_tubes, "id", "name", @component_package.rear_tube_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :rear_tube_id, options_from_collection_for_select(@rear_tubes, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	<% end %>
+	
+	<% if (@package_type == 'full-multi_speed') || (@package_type =='drivetrain-multi_speed') %>
+		<%= f.label :front_derailleur_id %><br />
+		<% if @component_package.front_derailleur_id %>
+		<%= f.select :front_derailleur_id, options_from_collection_for_select(@front_derailleurs, "id", "name", @component_package.front_derailleur_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :front_derailleur_id, options_from_collection_for_select(@front_derailleurs, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	
+		<%= f.label :rear_derailleur_id %><br />
+		<% if @component_package.rear_derailleur_id %>
+		<%= f.select :rear_derailleur_id, options_from_collection_for_select(@rear_derailleurs, "id", "name", @component_package.rear_derailleur_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :rear_derailleur_id, options_from_collection_for_select(@rear_derailleurs, "id", "name"), :include_blank => true %>
+		<% end %>
+		<br />
+	<% end %>
+	<% if (@package_type == 'full-multi_speed') || (@package_type == 'full-single_speed') || (@package_type =='drivetrain-multi_speed') || (@package_type =='drivetrain-single_speed')%>
+		<%= f.label :cog_id %><br />
+		<% if @component_package.cog_id %>
+		<%= f.select :cog_id, options_from_collection_for_select(@cogs, "id", "name", @component_package.cog_id), :include_blank => true %>
+		<br />
+		<% else %>
+		<%= f.select :cog_id, options_from_collection_for_select(@cogs, "id", "name"), :include_blank => true %>
+		<% end %>
+	
+		<br />
+	   	<%= f.label :bottom_bracket_id %><br />
+		<% if @component_package.bottom_bracket_id %>
+		<%= f.select :bottom_bracket_id, options_from_collection_for_select(@bottom_brackets, "id", "name", @component_package.bottom_bracket_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :bottom_bracket_id, options_from_collection_for_select(@bottom_brackets, "id", "name"), :include_blank => true %>
+		<% end %>
+	
+	    <br />
+	   	<%= f.label :crank_id %><br />
+		<% if @component_package.crank_id %>
+		<%= f.select :crank_id, options_from_collection_for_select(@cranks, "id", "name", @component_package.crank_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :crank_id, options_from_collection_for_select(@cranks, "id", "name"), :include_blank => true %>
+		<% end %>
+	
+	    <br />
+	   	<%= f.label :chainring_id %><br />
+		<% if @component_package.chainring_id %>
+		<%= f.select :chainring_id, options_from_collection_for_select(@chainrings, "id", "name", @component_package.chainring_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :chainring_id, options_from_collection_for_select(@chainrings, "id", "name"), :include_blank => true %>
+		<% end %>
+	
+		<br />
+	   	<%= f.label :chain_id %><br />
+		<% if @component_package.chain_id %>
+		<%= f.select :chain_id, options_from_collection_for_select(@chains, "id", "name", @component_package.chain_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :chain_id, options_from_collection_for_select(@chains, "id", "name"), :include_blank => true %>
+		<% end %>
+	<% end %>
+		
+		<% if (@package_type == 'full-multi_speed') || (@package_type == 'full-single_speed') || (@package_type =='drivetrain-multi_speed') || (@package_type =='drivetrain-single_speed') || (@package_type =='finishing')%>
+		<br />
+	   	<%= f.label :half_link_id %><br />
+		<% if @component_package.half_link_id %>
+		<%= f.select :half_link_id, options_from_collection_for_select(@half_links, "id", "name", @component_package.half_link_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :half_link_id, options_from_collection_for_select(@half_links, "id", "name"), :include_blank => true %>
+		<% end %><br />
+		
+		<%= f.label :pedal_id %><br />
+		<% if @component_package.pedal_id %>
+		<%= f.select :pedal_id, options_from_collection_for_select(@pedals, "id", "name", @component_package.pedal_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :pedal_id, options_from_collection_for_select(@pedals, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :pedal_strap_id %><br />
+		<% if @component_package.pedal_strap_id %>
+		<%= f.select :pedal_strap_id, options_from_collection_for_select(@pedal_straps, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :pedal_strap_id, options_from_collection_for_select(@pedal_straps, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :seat_post_id %><br />
+		<% if @component_package.seat_post_id %>
+		<%= f.select :seat_post_id, options_from_collection_for_select(@seat_posts, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :seat_post_id, options_from_collection_for_select(@seat_posts, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :saddle_id %><br />
+		<% if @component_package.saddle_id %>
+		<%= f.select :saddle_id, options_from_collection_for_select(@saddles, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :saddle_id, options_from_collection_for_select(@saddles, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+		
+		<%= f.label :seat_clamp_id %><br />
+		<% if @component_package.seat_clamp_id %>
+		<%= f.select :seat_clamp_id, options_from_collection_for_select(@seat_clamps, "id", "name", @component_package.pedal_strap_id), :include_blank => true %>
+		<% else %>
+		<%= f.select :seat_clamp_id, options_from_collection_for_select(@seat_clamps, "id", "name"), :include_blank => true %>
+		<% end %>	<br />
+	<% end %>
+   	
+	
+   	<br />
+
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<% end %>

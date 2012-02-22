@@ -1,0 +1,34 @@
+<fieldset>
+	<table>
+		<tr>
+			<th>
+				color
+			</th>
+			<th>
+				size
+			</th>
+			<th>
+				quantity
+			</th>
+		</tr>
+    <% if !f.object.new_record? %>
+		<tr>
+			<td>
+        		existing options go here
+			</td>
+		</tr>
+    <% end %>
+		<tr>
+			<td>
+    			<%= f.text_field :color %>
+			</td>
+			<td>
+				<%= f.text_field :size %>
+			</td>
+			<td>
+				<%= f.text_field :quantity %>
+			</td>
+		</tr>
+	</table>
+    <%= delete_option(f) %>
+</fieldset>

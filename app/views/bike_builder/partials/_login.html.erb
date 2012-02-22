@@ -1,0 +1,14 @@
+<%= form_tag(:controller => 'public', :action=> 'attempt_login') do %>
+		<div id="login_build">
+		<div >
+			<%= label_tag(:email) %>:
+			<%= text_field_tag(:email) %>
+		</div>
+		<div style="padding-top:5px">
+			<%= label_tag(:password) %>:
+			<%= password_field_tag(:password) %>
+		</div>
+		
+			<%= submit_tag("login") %>
+		</div>
+	<% end %>

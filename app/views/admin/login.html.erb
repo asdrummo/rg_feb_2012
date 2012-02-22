@@ -1,0 +1,21 @@
+<% @page_title = "Admin Login" %>
+<div class = "customer_login">
+	<%= form_tag(:controller => 'admin', :action=> 'attempt_login') do %>
+		<table class="center">
+			<div id="login_fields">
+			<tr>
+				<td><%= label_tag(:username) %>:</td>
+				<td><%= text_field_tag(:username) %></td>
+			</tr>
+			<tr>
+					<td><%= label_tag(:password) %>:</td>
+					<td><%= password_field_tag(:password) %></td>
+			</tr>
+			<tr>
+					<td>&nbsp</td>
+					<td><%= submit_tag("login") %></td>
+			</tr>
+			</div>
+		</table>
+		<% end %>
+</div>

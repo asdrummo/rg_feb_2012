@@ -1,0 +1,58 @@
+
+<div id="nav_container">
+
+<ul id="navlist">
+	<% if @page_id == "bike_builder" %>
+	<li class="active">
+	<% else %>
+	<li>
+	<% end %>
+	<%= link_to('Bike Builder', :controller => 'bike_builder', :action => 'redirect_to_current_compartment')%>
+	</li>
+	<% if @nav_id == "do_it_yourself" %>
+	<li class="active">
+	<% else %>
+	<li>
+	<% end %>
+	<%= link_to('Do it Yourself', do_it_yourself_url)%>
+	</li>
+	
+	<% if @nav_id == "bikes_to_buy" %>
+	<li class="active">
+	<% else %>
+	<li>
+	
+	<% end %>
+	<%= link_to('Buy a Bike', bikes_to_buy_url)%>
+	</li>
+	
+	<% if @nav_id == "show_components" %>
+	<li class="active">
+	<% else %>
+	<li>
+	<% end %>
+	<%= link_to('Components', show_components_url)%>
+	</li>
+	
+	<% if @nav_id == "" %>
+	<li class="active">
+	<% else %>
+	<li><a href="#">services</a>
+	<% end %>
+	</li>
+	
+	<% if @nav_id == "" %>
+	<li class="active">finishing
+	<% else %>
+	<li><a href="#">gear</a>
+	<% end %>
+	</li>
+	
+	<% if @nav_id == "" %>
+	<li class="active">blog
+	<% else %>
+	<li><a href="#">blog</a>
+	<% end %>
+	</li>
+</ul>
+</div>

@@ -1,0 +1,22 @@
+<% customer = Customer.find(order.customer_id) %>
+<div id="order_block" style="padding:25px;background-color:gray">
+<table class="invoice_table">
+<tr style="background-color:white">
+	<td colspan="4" class="left" >
+		<% order_no = order.invoice_number %>
+		Order No.:<%= order_no %><br>
+		Order Date: <%= order.created_at.strftime("%m/%d/%y") %><br />
+		Customer: <%= customer.first_name %> <%= customer.last_name %><br/>
+		Email: <%= customer.email %><br />
+		Phone: <%= customer.phone_number %>
+	</td>
+	<td colspan="5" class="left" style="vertical-align:top">
+		<% shipping = ShippingAddress.find(order.shipping_id)%>
+		Shipping Address:<br />
+		<%= shipping.street %><br />
+		<%= shipping.city %>,<%= shipping.state %> <%= shipping.zip_code %><br />
+		<%= shipping.country %><br />
+	</td>
+</tr>
+<% order_count += 1 %>
+

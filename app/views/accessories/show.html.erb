@@ -1,0 +1,45 @@
+<p>
+  <b>Product:</b>
+  <%= @accessory.product_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @accessory.name %>
+</p>
+<%= form_for(@accessory, :html => {:multipart => true}) do |f| %>
+<%= render(:partial => "accessories/list_photos", :locals => { :f => f}) %>
+<div class="actions">
+  <%= f.submit('set default') %>
+</div>
+<% end %>
+<p>
+  <b>Description:</b>
+  <%= @accessory.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @accessory.price %>
+</p>
+<% if @accessory.options %>
+<%= render(:partial => "accessories/list_options") %>
+<% else %>
+<p>
+  <b>Size:</b>
+  <%= @accessory.size %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @accessory.color %>
+</p>
+<% end %>
+
+<p>
+  <b>Image path:</b>
+  <%= @accessory.image_path %>
+</p>
+
+<%= link_to 'Edit', edit_accessory_path(@accessory) %> |
+<%= link_to 'Back', accessories_path %>

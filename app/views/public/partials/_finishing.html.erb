@@ -1,0 +1,57 @@
+<table class="center padded">
+	<tr>
+		<th>&nbsp;</th>
+		<th>name</th>
+		<th>description</th>
+		<th>options</th>
+		<th>price</th>
+		<th>&nbsp;</th>
+	</tr>
+<% @accessories.each do |a| %>
+	<%= form_for(@option, :url => {:action => 'submit_accessory', :id => a.id }) do |f| %> 
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td>
+			<p>	<%= image_tag(a.image_path, :alt => "item", :size => "100x100", :class => "",:rel => "",
+				:class => "lightview", :rel => "iframe", :title => a.name)  %></p>
+				
+
+		</td>
+		<td>
+			<p><%= a.name %></p>
+		</td>
+				
+		<td>
+		<p><%= raw a.description %></p>
+		</td>
+		<td>
+			<% @options = [] %>
+		<% a.options.each do |option| %>
+	
+			<% if a.id == option.accessory_id
+				
+				@options << option %>
+			<% end %>
+		<% end %>
+		<% if @options.to_a.empty? %>
+		no opts
+		<% else%>
+			
+			
+			<%= f.select :id, options_from_collection_for_select(@options.sort_by {|x|[x.color,x.size,-x.quantity]} , "id", "color_size"), 
+							:include_blank => "select size & color" %>
+			
+		<% end %>
+		</td>
+		
+		<td>
+			<%= number_to_currency(a.price) %>
+		</td>
+		<td>
+				<div class="actions">
+			    <%= f.submit "Add to Cart" %>	
+			  </div>
+			<%end %>
+		</td>
+	</tr>
+<% end %>
+</table>

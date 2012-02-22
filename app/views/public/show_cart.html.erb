@@ -1,0 +1,13 @@
+<% @page_title = 'Shopping Cart' %>
+
+
+<%= render(:partial => 'public/partials/cart')%>
+<br />
+<div id="cart_links" class="center">
+<% if @cart.items.count == 0 %>
+	<%= link_to('Continue Shopping', :action => 'index') %>
+<% else %>
+<%= link_to('Continue Shopping', :action => 'index') %> | <%= link_to('Checkout', :action => 'checkout') %> |
+ <%= link_to('Empty Cart', {:action => 'empty_cart'}, :confirm => 'Are you Sure?') %>
+<% end %>
+</div><!-- end cart links -->

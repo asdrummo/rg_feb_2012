@@ -1,0 +1,25 @@
+<% @page_title = @component %>
+<div id="component_grid" style="">
+<% i = 0 %>
+<% @components.each do |component|  %>
+
+	<div class="item">	
+		<%= image_tag(component.image_path, :alt => "item", :size => "100x100", :class => "",:rel => "",
+		:class => "lightview", :rel => "iframe", :title => component.name)  %><br />
+		<div class="item_name"><%= component.name %><br />
+	    <%= number_to_currency(component.price) %><br />
+		<%= link_to('add to cart', :action => 'submit_component', :component => @component, :id => component.id) %>
+		</div>
+	
+		<% i += 1 %>
+		
+	</div>
+	 <% if i == 5 %>
+	<div style="clear:both"></div>
+	<% i = 0 %>
+	<!-- end clear -->
+	<% end %>
+
+<% end %>
+<div class="clear"></div>
+</div><!-- end component grid -->

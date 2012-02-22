@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <b>Component Type:</b>
+  <%= @component.component_type %>
+</p>
+<p>
+  <b>Product:</b>
+  <%= @component.product_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @component.name %>
+</p>
+<%= form_for(@component, :html => {:multipart => true}) do |f| %>
+<% @component.photos.each do |photo| %>
+  <%= image_tag photo.data.url(:thumb) %>
+<%= link_to('X', {:controller => 'accessories', :action => 'delete_photo', 
+	:id => @component.id, :photo => photo.id}, :class => 'remove', :title => 'remove photo')  %>
+	<% photo = ("accessories/" + photo.id.to_s + "/original/"+ photo.data_file_name) %>
+	use as product icon: 
+	<%= f.radio_button :image_path, photo %>
+<% end %>
+<div class="actions">
+  <%= f.submit('set default') %>
+</div>
+<% end %>
+<p>
+  <b>Description:</b>
+  <%= @component.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @component.price %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%= @component.size %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @component.color %>
+</p>
+
+
+<p>
+  <b>Image path:</b>
+  <%= @component.image_path %>
+</p>
+
+
+<%= link_to 'Edit', edit_component_path(@component) %> |
+<%= link_to 'Back', components_path %> | <%= link_to 'Add New Component', new_component_path %>

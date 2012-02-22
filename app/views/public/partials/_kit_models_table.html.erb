@@ -1,0 +1,72 @@
+<table class="center padded">
+	<tr>
+		<th>&nbsp;</th>
+		<th>name</th>
+		<th>description</th>
+		<th>options</th>
+		<th>price</th>
+		<th>&nbsp;</th>
+	</tr>
+<% @frame_models.each do |m| %>
+
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td>
+			<p><%= image_tag(m.image_path, :size => "100x100", :alt => "", :class => "product_image") %></p>
+		</td>
+		<td>
+			<p><%= m.name %></p>
+		</td>
+				
+		<td>
+		<p class="left"><%= raw m.description %></p>
+		</td>
+		
+		<td>
+			<% 	if m.sizes
+			 	model_sizes = m.sizes.split('x') 
+				@frame_model_sizes = []
+				model_sizes.each do |x|
+					@frame_model_sizes << FrameModelSize.find(x)
+				end 
+				end %>
+			<%= form_for(m, :url => {:action => 'submit_kit_model', :id => m.id }) do |f| %> 
+	
+				<%= f.select :size_selection, options_from_collection_for_select(@frame_model_sizes, "id", "name"), :include_blank => @size_selection %>
+		
+				<% if m.options && m.options >= 3 %>
+
+
+						<%= f.select :top_tube_selection, options_from_collection_for_select(@top_tube_styles, "id", "name"), :include_blank => @top_tube_selection %>
+
+				<% end %>
+
+			<% if m.options && ((m.options == 2) || (m.options == 4)) && ( m.gears != nil) %>
+			<% model_gears = m.gears.split('x') 
+			@gears = []
+			model_gears.each do |x|
+			@gears << Gear.find(x)
+			end
+			%>	
+		
+					<%= f.select :gear_selection, options_from_collection_for_select(@gears, "id", "name"), :include_blank => @gear_selection %>
+		
+			<% end %>
+			
+
+		</td>
+			
+		<td>
+			<%= number_to_currency(m.price) %>
+		</td>
+		<td>
+	
+			
+			
+				<div class="actions">
+			    <%= f.submit "Select Kit Frame" %>	
+			  </div>
+			<%end %>
+		</td>
+	</tr>
+<% end %>
+</table>

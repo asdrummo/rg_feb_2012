@@ -1,0 +1,6 @@
+$('#flash').delay().fadeIn('normal', function() {
+   $(this).delay(2500).fadeOut();
+});
+$('#flash').html("<%= escape_javascript raw(flash_display) %>");
+$( "#content" ).html( "<%= escape_javascript( render( :partial => "bike_builder/partials/content" ) ) %>" );
+

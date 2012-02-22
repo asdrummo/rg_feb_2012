@@ -1,0 +1,49 @@
+<% @page_title = 'Workshop Selection' %>
+<div id="workshops">
+<%= render(:partial => 'public/partials/workshop_progress')%>
+<table class="center padded">
+	<tr>
+		<th>type</th>
+		<th>location</th>
+		<th>dates</th>
+		<th>spaces</th>
+		<th>&nbsp;</th>
+	</tr>
+<% @workshops.each do |w|  %>
+<% if w.start_date.future? %>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td>
+			<p><%= w.experience %></p>
+		</td>
+		<td>
+			<%= w.address %><br />
+			<%= w.location %>
+		</td>
+		<td>
+			<%= w.start_date.to_date.strftime("%m/%d/%Y") %> to <br />
+			<%= w.end_date.to_date.strftime("%m/%d/%Y") %>
+		</td>
+		<td>
+			<% @quantity = w.quantity%>		
+			 <% @workshop_cart.items.each do |item|
+				if item.workshop && item.frame_model_id
+					if item.workshop.id == w.id
+					@quantity = w.quantity -= 1
+			 		end 
+				end 
+			end %>
+			<p><%= @quantity %></p>
+		</td>
+		<td>
+			<% if @quantity == 0 %>
+			<p>sold out</p>
+			<% else %>
+			<p><%= link_to('select', :action => 'submit_reservation', :id => w.id) %></p>
+			<% end %>
+		</td>
+	</tr>
+
+<% end %>
+<% end %>
+</table>
+</div><!-- end workshops -->

@@ -1,0 +1,24 @@
+<div class="sort">
+	<div id="sort_info">
+	<%= form_for 'search', :url => {:action => @nav_id, :component_type => @component_type }, :html => {:style => "display:inline;", :remote => true}, :remote => true do |f| %>
+	<%= f.hidden_field :component_type => @component_type %>
+	<%= f.text_field :query, :size => 10 %>
+	<%= f.submit 'search'%>
+	<% end %>
+&nbsp;&nbsp;
+or sort: 
+
+	
+	<%= sort_link_helper "Name", "name", @component_type, @nav_id %>&nbsp|&nbsp
+	<%= sort_link_helper "Price", "price", @component_type, @nav_id %>&nbsp|&nbsp
+	<%= sort_link_helper "Type", "type", @component_type, @nav_id %>
+	
+	items per page:
+	<%= select_tag :per_page, options_for_select([10,20,50], @per_page.to_i),
+	    :onchange =>  remote_function(:update => 'component_grid', :url => {:action => @nav_id}, :with => "'per_page=' + this.value")%>
+		
+	view: 	<%= select_tag :component_view, options_for_select(['grid', 'list'], @component_view),
+		    :onchange => remote_function(:update => 'component_grid', :url => {:action => @nav_id }, :with => "'component_view=' + this.value") %>
+
+</div>	
+</div>

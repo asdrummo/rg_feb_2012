@@ -1,0 +1,35 @@
+<table id="show_components">
+<tr>
+	<td id="component_nav">
+		<%= render :partial => 'bike_builder/partials/side_menu' %>
+	</td>
+	<td id="main_comp_window">
+		<div id="sort">
+		<%= render :partial => 'bike_builder/partials/sort' unless @frame_specs || @component_specs %>
+		</div>
+			<div id="component_grid">
+				<% if @frame_specs %>
+				<%= render :partial => 'bike_builder/partials/custom_frame' %>	
+				<% elsif  @nav_id == 'frames' %>	
+				<%= render :partial => 'bike_builder/partials/frame_table' %>	
+				<% elsif  @component_specs %>	
+				<%= render :partial => 'bike_builder/partials/custom_component_form' %>			
+				<% else %>
+				<%= render :partial => 'bike_builder/partials/component' %>	
+				<% end %>			
+			</div><!-- end component_grid div -->
+	</td>
+	<td >
+		<%= render(:partial => 'bike_builder/partials/current_build')%>
+	</td>
+</tr>
+</table>
+<div class="clear"></div>
+compatibility: 	<%= select_tag :compatibility, options_for_select(['on', 'off'], @compatibility_check),
+	    :onchange => "if(this.value){window.location='?compatibility='+this.value;}" %>
+
+<% if @compatibility_check == 'on' %>
+<%= render(:partial => 'bike_builder/partials/incompatible_components')%>
+<% end %>
+
+

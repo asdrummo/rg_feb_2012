@@ -1,0 +1,30 @@
+<% if @accessory.options %>
+<TABLE style="width:200px">
+<tr class="center">
+	<th>
+		color
+	</th>
+	<th>
+		size
+	</th>
+	<th>
+		quantity
+	</th>
+<tr>
+
+<% @accessory.options.each do |option| %>
+<tr>
+	<td>
+		<%= option.color %>	
+	</td>
+	<td>
+		<%= option.size %>	
+	</td>
+  	<td>
+		<%= option.quantity %>
+	</td>
+</tr>
+<% end %>
+
+</table>
+<% end %>

@@ -1,0 +1,16 @@
+<% @page_title = 'Model Selection' %>
+<%= render(:partial => 'public/partials/workshop_progress')%>
+<div id="models">
+
+<% if @size_error == 'true' %>
+<div class="error"><h2>please select size to continue</h2></div>
+<% end %>
+
+<% if session[:workshop]%>
+
+<%= render(:partial => 'public/partials/models_table')%>
+
+<% else %>
+<h2 class="center"> please go back and select a <%= link_to('reservation', {:action => 'reservations'}, :class => "remove_item") %> before selecting a model.</h2>
+<% end %>
+</div><!-- end Model Selection -->

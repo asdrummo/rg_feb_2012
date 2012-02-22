@@ -1,0 +1,252 @@
+	
+<% if @cart.items.count == 0 %>
+	<table class="center">
+		<tr>
+			<td colspan="7" class="center"><h2>Empty As Satan's Heart</h2></td>
+		</tr>
+	</table>
+<% else %>
+<table id="cart" class="center">
+
+	<tr>
+		<td colspan="7" class="center"><h1>Your Shopping Cart</h1></td>
+	</tr>
+
+<% @cart.items.each do |item| %>
+<% if item.frame_model && item.workshop %>
+
+	<% if @work_count == 0 %>
+	<tr>
+		<td colspan="7" class="center"><h2>Workshops & Kits</h2></td>
+	</tr>
+	<tr id="cart_header">
+		<th colspan="3">Reservation Details</th>
+		
+		<th colspan="2">Bike Build</th>
+		<th>Component Package</th>
+	
+		<th>Price</th>
+	</tr>
+	<% end %>
+	<% @work_count += 1 %>
+<tr class="<%= cycle('odd', 'even') %>">
+
+	<td colspan="3">
+	  	<% if Workshop.find(item.workshop.id).quantity <= 0  %>
+			sorry, this reservation has filled up while you were shopping! please remove from cart and select another reservation
+		<% @soldout = 'true' %>
+		<% elsif item.quantity > Workshop.find(item.workshop.id).quantity %>
+		you have way too many workshops in your cart. please unload <%= item.quantity - Workshop.find(item.workshop.id).quantity %> items
+		<% @soldout = 'true' %>
+		<% else %>
+		experience: <%= item.workshop.experience %><br />
+		location: <%= item.workshop.location %><br />
+		dates:	  	<%= item.workshop.start_date.to_date.strftime("%m/%d/%Y") %> to <br />
+			<%= item.workshop.end_date.to_date.strftime("%m/%d/%Y") %>
+		<% end %>
+	</td>
+	<td colspan="2">
+		<%= image_tag(item.frame_model.image_path, :size => "100x100", :alt => "", :class => "product_image") %><br />
+		<%= item.frame_model.name %>(<%= number_to_currency(item.frame_model.price) %>)<br />
+		size:<%= item.frame_model_size.name %>(<%= number_to_currency(item.frame_model_size.price) %>)<br />
+		top tube style: <%= item.top_tube_style.name %>(<%= number_to_currency(item.top_tube_style.price)%>)<br />
+		gears: <%= item.gear.name %>(<%= number_to_currency(item.gear.price)%>)
+	</td>
+	<td>
+		<% if item.component_package %>
+		<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
+		<%= raw item.component_package.description %><br />
+		
+		<%= link_to('see components', show_component_package_path(item.component_package), :target => '_blank' ) %><br />
+		<% @component_package_id = item.component_package.id %>
+		<% @component_package_price = item.component_package.price %>
+		<% else %>
+		no component package selected
+		<% @component_package_id = 'false' %>
+		<% @component_package_price = 0 %>
+		<% end %>	
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.frame_model.price + item.frame_model_size.price + item.gear.price + item.top_tube_style.price + @component_package_price) %></p>
+		<p><%= link_to('remove', {:action => 'remove_frame_model_from_cart', :id => item.frame_model.id, :size_id => item.frame_model_size.id, :workshop_id => item.workshop.id, :top_tube_style_id => item.top_tube_style.id, :gear_id => item.gear.id, :component_package_id => @component_package_id}, :class => 'remove_item') %></p>
+	</td>
+</tr>
+
+<% elsif item.frame_model && item.workshop == nil %>
+<% if @work_count == 0 %>
+<tr>
+
+	<td colspan="7" class="center"><h2>Kits & Workshops</h2></td>
+</tr>
+<tr id="cart_header">
+
+	<th colspan="3">Reservation Details</th>
+	
+	<th colspan="2">Bike Build</th>
+	<th>Component Package</th>
+
+	<th>Price</th>
+</tr>
+<% end %>
+<% @work_count += 1 %>
+<tr class="<%= cycle('odd', 'even') %>">
+
+	<td colspan="3">
+		Bamboo Bike Kit
+	</td>
+	<td colspan="2">
+		<%= image_tag(item.frame_model.image_path, :size => "100x100", :alt => "", :class => "product_image") %><br />
+		<%= item.frame_model.name %>(<%= number_to_currency(item.frame_model.price) %>)<br />
+		size:<%= item.frame_model_size.name %>(<%= number_to_currency(item.frame_model_size.price) %>)<br />
+		top tube style: <%= item.top_tube_style.name %>(<%= number_to_currency(item.top_tube_style.price)%>)<br />
+		gears: <%= item.gear.name %>(<%= number_to_currency(item.gear.price)%>)
+	</td>
+	<td>
+		<% if item.component_package %>
+		<%= item.component_package.name %>(<%= number_to_currency(item.component_package.price)%>)<br />
+		<%= raw item.component_package.description %>
+		<% @component_package_id = item.component_package.id %>
+		<% @component_package_price = item.component_package.price %>
+		<% else %>
+		no component package selected
+		<% @component_package_id = 'false' %>
+		<% @component_package_price = 0 %>
+		<% end %>	
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.frame_model.price + item.frame_model_size.price + item.gear.price + item.top_tube_style.price + @component_package_price) %></p>
+		<p><%= link_to('remove', {:action => 'remove_frame_model_from_cart', :id => item.frame_model.id, :size_id => item.frame_model_size.id, :top_tube_style_id => item.top_tube_style.id, :gear_id => item.gear.id, :component_package_id => @component_package_id}, :class => 'remove_item') %></p>
+	</td>
+</tr>
+<% end %>
+<% end %>
+<% @cart.items.each do |item| %>
+<% if item.accessory %>
+<% if @comp_count == 0 %>	
+<tr>
+
+	<td colspan="7" class="center"><h2>Components & Accessories</h2></td>
+</tr>
+<tr id="cart_header">
+
+	<th colspan="3">Product Image</th>
+	
+	<th colspan="2">Name</th>
+	<th>Description</th>
+
+	<th>Price</th>
+</tr>
+<% end %>
+<% @comp_count += 1 %>	
+<tr class="<%= cycle('odd', 'even') %>">
+
+	<td colspan="3">
+		<%= image_tag(item.accessory.image_path, :size => "100x100", :alt => "", :class => "product_image") %>
+	</td>
+	<td colspan="2">
+		<p><%= item.accessory.name %></p>
+	</td>
+	<td>
+		<p><%= item.accessory.description %></p>
+	</td>
+
+
+	<td>
+		<p>quantity: <%= item.quantity %></p>
+		<p>subtotal: <%= number_to_currency(item.accessory.price) %></p>
+		<p><%= link_to('remove', {:action => 'remove_accessory_from_cart', :id => item.accessory.id}, :class => "remove_item") %></p>
+	</td>
+</tr>
+<% end %>
+<% end %>
+<% @cart.items.each do |item| %>
+<% if item.component %>
+<% if @comp_count == 0 %>	
+<tr>
+
+	<td colspan="7" class="center"><h2>Components & Accessories</h2></td>
+</tr>
+	<tr id="cart_header">
+
+		<th colspan="3">Product Image</th>
+		
+		<th colspan="2">Name</th>
+		<th>Description</th>
+	
+		<th>Price</th>
+	</tr>
+<% end %>
+<% @comp_count += 1 %>
+		
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td colspan="3">
+			<%= image_tag(item.component.image_path, :size => "100x100", :alt => "", :class => "product_image") %>
+		</td>
+		<td colspan="2">
+			<p><%= item.component.name %></p>
+		</td>
+		<td>
+			<p><%= item.component.description %></p>
+		</td>
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(item.component.price) %></p>
+			<p><%= link_to('remove', {:action => 'remove_component_from_cart', :id => item.component.id}, :class => "remove_item") %></p>
+		</td>
+<% end %>
+<% end %>
+
+<% @cart.items.each do |item| %>
+<% if item.customer_build %>
+<% if @comp_count == 0 %>	
+<tr>
+
+	<td colspan="7" class="center"><h2>Bike Builder Build</h2></td>
+</tr>
+	<tr id="cart_header">
+
+		<th colspan="3">Product Image</th>
+		
+		<th colspan="2">Name</th>
+		<th>Description</th>
+	
+		<th>Price</th>
+	</tr>
+<% end %>
+<% @comp_count += 1 %>
+		
+	<tr class="<%= cycle('odd', 'even') %>">
+
+		<td colspan="3">
+			<%= image_tag('default.png', :size => "100x100", :alt => "", :class => "product_image") %>
+		</td>
+		<td colspan="2">
+			<p>custom build #<%= item.customer_build_id %></p>
+		</td>
+		<td>
+			<p>bike via the bike builder</p>
+		</td>
+		<td>
+			<p>quantity: <%= item.quantity %></p>
+			<p>subtotal: <%= number_to_currency(CustomerBuild.find(item.customer_build_id).price) %></p>
+			<p><%= link_to('remove', {:action => 'remove_customer_build_from_cart', :id => item.customer_build.id}, :class => "remove_item") %></p>
+		</td>
+<% end %>
+<% end %>
+
+	<tr id="cart_total">
+		<td></td>
+		<td></td>
+		<td colspan="4">Shopping Cart Total</td>
+		
+		<td><%= number_to_currency(@cart.total_price) %></td>
+	</tr>
+<% end %>
+</table>

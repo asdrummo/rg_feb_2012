@@ -1,0 +1,24 @@
+<% @page_title = 'Browse Components' %>
+<table id="show_components">
+<tr>
+	<td id="component_nav">
+		<%= render(:partial => 'public/partials/components_side_menu') %>
+	</td>
+	<td id="main_comp_window">
+	<% if @component != nil %>
+		<%= render(:partial => "public/partials/sort") %>
+		<div id="table">
+			<%= render(:partial => 'public/partials/component') %>
+		</div><!-- end table div -->
+
+<% else %>	
+			
+			  
+				<h2 class="center">Recently Added Components</h2>
+				<%= render(:partial => "public/partials/sort") %>
+				<%= render(:partial => 'public/partials/component') %>
+<% end %>
+	</td>
+</tr>
+</table>
+<div class="clear"></div>

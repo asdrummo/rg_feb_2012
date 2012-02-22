@@ -1,0 +1,12 @@
+<% if @accessory.photos %>
+<% @accessory.photos.each do |photo| %>
+<div style="float:left">
+  <%= link_to((image_tag photo.data.url(:thumb)), (root_url + "images/product_uploads/" + photo.id.to_s + "/original/"+photo.data_file_name), :class => 'lightview', :rel => ('gallery[' + @accessory.name + ']')) %><br />
+<%= link_to('X', {:controller => 'accessories', :action => 'delete_photo', 
+	:id => @accessory.id, :photo => photo.id}, :class => 'remove', :title => 'remove photo')  %><br />
+	use as product icon: 
+	<%= f.radio_button :image_path, photo.data.url(:thumb) %>
+</div>
+<% end %>
+<div class="clear"></div>
+<% end %>

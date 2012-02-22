@@ -1,0 +1,31 @@
+<div class="sort">
+	<div id="sort_info"><p>
+	<form name="sform" action="" style="display:inline;">
+	<label for="item_name">search: </label>
+	<%= text_field_tag("query", params['query'],  :size => 10 ) %>
+	<%= hidden_field_tag("type", @component) %>
+	
+	
+
+	
+&nbsp;&nbsp;
+or sort: 
+	
+	<%= sort_link_helper2 "Name", "name", @component %>&nbsp|&nbsp
+	<%= sort_link_helper2 "Price", "price", @component %>
+	<%= image_tag("spinner.gif",
+	              :align => "absmiddle",
+	              :border => 0,
+	              :id => "spinner",
+	              :style =>"display: none;",
+	 			  :size => "15x15") %>
+	</p>
+	
+	<%= observe_field 'query',  :frequency => 2,
+	         :update => 'table',
+	         :before => "Element.show('spinner')",
+	         :success => "Element.hide('spinner')",
+	         :url => {:action => 'sort_components', :component => @component },
+	         :with => 'query' %>
+</div>	
+</div>

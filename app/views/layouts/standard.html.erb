@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title %> | Roam &amp; Gauge</title>
+  <%= stylesheet_link_tag 'style', 'admin_style'%>
+
+
+ <%= javascript_include_tag 'prototype', 'scriptaculous',  'jquery', 'jquery_ujs',  'application' %>
+
+
+<%= csrf_meta_tag %>
+
+</head>
+<body>
+<div id="bodywrap">	
+<div id="header">
+
+	<% if !flash[:notice].blank? %>
+		<div id="flash" class="notice">
+			<% flash.each do |name, msg| %>
+		    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+		  <% end %>
+		<% flash.discard(:notice) %>
+		</div>
+	<% end %>
+	
+	<div class="float_right">&nbsp;|&nbsp;
+	<%= link_to('View Cart', :controller => 'public', :action => 'show_cart') %>
+	<% if @cart != nil %>
+		<% @quantity = 0 %>
+		<% @cart.items.each do |item| 
+		@quantity += item.quantity %>
+		<% end %>
+	(<%= @quantity %>)
+	<% else %>
+	
+	<% end %>
+	</div>
+<div id="login" class="float_right">
+<% if session[:first_name] %>
+	<div class="">
+		Logged in as: <%= link_to(session[:first_name], :controller => 'public', :action => 'my_account') %>&nbsp|&nbsp
+		<%= link_to('Log Out', :controller => 'public', :action => 'logout') %>
+	</div><!-- end login -->
+<% else %>
+	<div class="float_right" id="top_login">
+		<%= login_link_helper('Login', 'top_login') %>&nbsp|&nbsp
+		<%= link_to('Register', :controller => 'public', :action => 'register') %>
+	</div><!-- end logout -->
+<% end %>
+
+</div><!-- end login div -->
+<div class="clear"></div>
+<div id="title">
+	<h1><%= link_to('ROAM & GAUGE', :controller => 'public') %><h1>
+</div>
+</div><!-- end header -->
+
+<%= render(:partial => "public/partials/menu") %>
+<div id="content">
+<%= yield %>
+</div><!-- end content -->
+
+</div><!-- end bodywrap div -->
+<div id="footer">
+	footer info | <%= link_to('admin area', :controller => 'admin', :action => 'menu') %>
+</div>
+</body>
+</html>
+

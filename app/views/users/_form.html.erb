@@ -1,0 +1,30 @@
+<%= form_for(@user, :url => {:action => 'create'}) do |f| %>
+<%= render(:partial => 'shared/error_messages', :locals => {:object => @user}) %>
+
+<table summary="Admin user form fields">
+	<tr>
+		<th><%= f.label(:first_name) %></th>
+		<td><%= f.text_field(:first_name) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:last_name) %></th>
+		<td><%= f.text_field(:last_name) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:email) %></th>
+		<td><%= f.text_field(:email) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:username) %></th>
+		<td><%= f.text_field(:username) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:password) %></th>
+		<td><%= f.password_field(:password) %></td>
+	</tr>
+	<% f.hidden_field(:privilege, :value => "client")%>
+		<div class="form-buttons">
+			<%= submit_tag('Create Admin User') %>
+		</div>
+	<% end %>
+</table>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Product:</b>
+  <%= @frame_model.product_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @frame_model.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @frame_model.description %>
+</p>
+
+<p>
+  <b>Image path:</b>
+  <%= @frame_model.image_path %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @frame_model.price %>
+</p>
+
+
+<%= link_to 'Edit', edit_frame_model_path(@frame_model) %> |
+<%= link_to 'Back', frame_models_path %>

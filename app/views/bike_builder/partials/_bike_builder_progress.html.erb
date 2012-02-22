@@ -1,0 +1,38 @@
+<ul id="bike_builder_progress">
+	<h1 class="center" style="display:inline">Bike Builder Beta</h1>
+	<% if session[:customer_build_id] %>(build:<%= session[:customer_build_id] %>)<% end %><br /><br />
+	<li class="<%= @model %>"><%= link_to('1. Select Model', :action => 'frames') %></li>
+	
+	<li class="<%= @drivetrain %>">
+	<% if (@frame == 'true') %>
+		<%= link_to('2. Select Drivetrain', :action => 'drivetrain') %>
+		<% else %>
+		2. Select Drivetrain
+		</li>
+		<% end %>
+		
+		<li class="<%= @front_end %>">
+		<% if (@frame == 'true') && (@drivetrain_complete == 'true') %>
+		<%= link_to('3. Select Front End', :action => 'front_end') %>
+		<% else %>
+		3. Select Front End
+		</li>
+		<% end %>
+		
+		<li class="<%= @wheels %>">
+		<% if (@frame == 'true') && (@drivetrain_complete == 'true') && (@front_end_complete == 'true') %>
+		<%= link_to('4. Select Wheels', :action => 'wheels') %>
+		<% else%>
+		4. Select Wheels
+		<% end %>
+		</li>
+		
+		<li class="<%= @finishing %>">
+		<% if (@frame == 'true') && (@drivetrain_complete == 'true') && (@front_end_complete == 'true') && (@wheels_complete == 'true') %>
+		<%= link_to('5. Finishing', :action => 'finishing') %>
+		<% else%>
+		5. Finishing
+		<% end %>
+		</li>
+
+</ul>

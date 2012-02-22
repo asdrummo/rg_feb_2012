@@ -1,0 +1,44 @@
+<div id="component_packages">
+
+
+<table class="center padded">
+	<tr>
+		<th>&nbsp;</th>
+		<th>name</th>
+		<th>description</th>
+		<th>price</th>
+		<th>&nbsp;</th>
+	</tr>
+<% i = 0 %>
+<% @component_packages.each do |c| %>
+	<% if c.frame_model_id == session[:frame_model].id %>
+	<% i += 1%>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td>
+			<p><%= image_tag("default.png", :size => "100x100", :alt => "", :class => "product_image") %></p>
+		</td>
+		<td>
+			<p><%= c.name %></p>
+		</td>
+				
+		<td>
+		<p class="left"><%= raw c.description %></p>
+		<p><%= link_to('see components', show_component_package_path(c), :target => '_blank' ) %></p>
+		</td>
+		
+		<td>
+			<%= number_to_currency(c.price) %>
+		</td>
+		<td>
+	
+			<p><%= link_to('Select', :action => 'submit_component_packages', :id => c.id) %></p>
+		</td>
+	</tr>
+	<% end %>
+<% end %>
+<% if i == 0 %>
+<tr><td colspan="5">
+Sorry, There are no Component Packages available at this time for the <b><%= session[:frame_model].name %></b> model you selected.
+</td></tr>
+<% end %>
+</table>

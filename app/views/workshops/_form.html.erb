@@ -1,0 +1,54 @@
+
+<%= form_for(@workshop) do |f| %>
+  <% if @workshop.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workshop.errors.count, "error") %> prohibited this workshop from being saved:</h2>
+
+      <ul>
+      <% @workshop.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <%= f.hidden_field :client_id, :value => @user.client_id%>
+
+<% if @workshop_select == 'true'%> 
+
+		<%= form_tag do %>
+			<%= select_tag :workshop_type, options_for_select(@workshops_array), :include_blank => "select experience", :onchange => 'this.form.submit()' %>
+		<% end %>
+<% else %>
+<%= f.label :experience %><br />
+<b><%= @workshop_type %></b>
+<% end %>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.datetime_select :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br />
+    <%= f.datetime_select :end_date %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price, :value => 0.0 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

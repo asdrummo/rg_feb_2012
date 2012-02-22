@@ -1,0 +1,2 @@
+class WorkshopCart
+end

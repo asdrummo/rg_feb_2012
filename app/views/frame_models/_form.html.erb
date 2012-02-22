@@ -1,0 +1,80 @@
+<%= form_for(@frame_model) do |f| %>
+  <% if @frame_model.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@frame_model.errors.count, "error") %> prohibited this frame_model from being saved:</h2>
+
+      <ul>
+      <% @frame_model.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.text_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+
+
+	<%= f.label :options %><br /> 
+	<% if @frame_model.options %>
+	<%= f.select :options, options_for_select([['Size Only', 1], ['Size & Gears', 2], ['Size & Top Tube', 3], ['Size & Top Tube & Gears', 4]], @frame_model.options)%>
+	<% else %>
+	<%= f.select :options, options_for_select([['Size Only', 1], ['Size & Gears', 2], ['Size & Top Tube', 3], ['Size & Top Tube & Gears', 4]]) %>
+	<% end %>
+	
+	
+	<br />
+	<% gears_array = Gear.all.map { |gear| [gear.name, gear.id] }%>
+	<% if @frame_model.gears %>
+		<% model_gears = @frame_model.gears.split('x') 
+		@pre_selected_gears = []
+		model_gears.each do |x|
+		@pre_selected_gears << Gear.find(x)
+		end
+		%>
+	<% end %>
+	<%= f.label :gears %><br /> 
+	<% if @frame_model.gears %>
+    <%= select_tag 'gears[]', options_for_select(gears_array, @pre_selected_gears.map {|g| g.id}),{ :multiple => true, :size => 5 } %> <br />
+	<% else %>
+	<%= select_tag 'gears[]', options_for_select(gears_array),{ :multiple => true, :size => 5 } %> <br />
+	<% end %>
+
+
+	<% if @frame_model.sizes %>
+		<% model_sizes = @frame_model.sizes.split('x') 
+		@pre_selected_sizes = []
+		model_sizes.each do |x|
+		@pre_selected_sizes << FrameModelSize.find(x)
+		end
+		%>
+	<% end %>
+	<%= f.label :sizes %><br /> 
+	<% sizes_array = FrameModelSize.all.map { |size| [size.name, size.id] }%>
+	<% if @frame_model.sizes %>
+    <%= select_tag 'sizes[]', options_for_select(sizes_array, @pre_selected_sizes.map {|s| s.id} ),{ :multiple => true, :size => 5 } %>
+	<% else %>
+	<%= select_tag 'sizes[]', options_for_select(sizes_array),{ :multiple => true, :size => 5 } %>
+	<% end %>
+  <div class="field">
+    <%= f.label :image_path %><br />
+    <%= f.text_field :image_path %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

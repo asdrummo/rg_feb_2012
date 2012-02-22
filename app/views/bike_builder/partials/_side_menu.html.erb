@@ -1,0 +1,49 @@
+
+<div id="side_menu">
+<% if @nav_id == 'frames' %>
+<h4>Frames (<%= link_to('#link')%>)</h4>
+<ul>
+	<li>
+		frame side bar
+	</li>
+	<%= link_to('Already Have a Frame?', {:action => 'frames', :item => 'custom_frame'})%>
+</ul>
+
+<% else %>
+<h4>Components (<%= sidebar_link_helper('all', @nav_id )%>)</h4>
+<ul class="sidelist">
+	<% @compartment_components.each do |component|%>
+	<% @style = ""%>
+	<% @compartment_build.each do |selected_component| %>
+	<% if component == selected_component.component_type %>
+	<% @style = "green" %>
+	<% end %>
+	<% end %>
+	<li class= "<%= @style %>" >
+		<%= sidebar_link_helper(component, @nav_id)%>
+	</li>
+	<% end %><br />
+	<%= link_to('Already Have a Component?', {:action => @nav_id, :item => 'custom_component'})%>
+</ul>	
+
+
+<% end %>
+<% if @component_packages %>
+<h4>Available Packages</h4>
+<%= package_link_helper_all('View All', 'all', @nav_id) %>
+<ul class="sidelist">
+	<% @component_packages && @component_packages.each do |p| %>
+	<% @style = ""%>
+	<% @package_build.each do |item| %>
+	<% if p.id == item.component_package.id %>
+	<% @style = "green" %>
+	<% end %>
+	<% end %>
+	<li class="<%= @style %>">		
+	<%= package_link_helper(p.name, p.id, @nav_id) %>
+	</li>
+	<% end %><br />
+</ul>
+<% end %>
+
+</div>

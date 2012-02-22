@@ -1,0 +1,75 @@
+<% @page_title = 'My Account'%>
+Customer Name: <%=  @customer.last_name %>, <%=  @customer.first_name %><br /><br />
+<%= link_to('edit profile', edit_info_path(@customer)) %><br /><br />
+<%= link_to('edit login/password', edit_login_path(@customer)) %><br />
+<table id="orders" class="center">
+<% if @builds.count > 0 %>
+<% total = 0 %>
+
+	<tr>
+		<td colspan="5"><h2>My builds:</h2></td>
+	</tr>
+	<tr id="builds_header" >
+		<th>build #</th>
+		<th>last saved (UTC)</th>
+		<th>action</th>
+
+	</tr>
+	<% @builds.each do |build| %>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td><%= build.id %></td>
+		<td><%= build.updated_at.strftime("%m/%d/%y: %l:%M%P") %></td>
+		<td><%= link_to('resume', :controller => 'bike_builder', :action => 'resume_build', :build_id => build.id) %> |
+			<%= link_to('buy', :action => 'add_build_to_cart') %> | 
+		<%= link_to('delete', :controller => 'bike_builder', :action => 'delete_build', :build_id => build.id) %></td>
+		
+	</tr>
+	<% end %>
+
+
+<% else %>
+<tr><td>
+you have no builds
+</tr></td>
+<% end %>
+</table>
+
+<% if @orders.count > 0 %>
+<% total = 0 %>
+<table id="orders" class="center">
+	<tr>
+		<td colspan="5"><h2>My Orders:</h2></td>
+	</tr>
+	<tr id="orders_header" >
+		<th>date</th>
+		<th>order #</th>
+		<th>price</th>
+		<th>status</th>
+		<th>tracking</th>
+		
+	</tr>
+	<% @orders.each do |order| %>
+	<% order_no = order.invoice_number %>
+	<tr class="<%= cycle('odd', 'even') %>">
+		<td><%= order.created_at.strftime("%m/%d/%y") %></td>
+		<td><%= link_to(order.invoice_number, :action => 'show_invoice', :id => order.invoice_number) %></td>
+		<% order.line_items.each do |item| %>
+			<% total += item.price %>
+		<% end %>
+		<td><%= total%></td>
+		<% total = 0 %>
+		<td><%= order.status %></td>
+		<td>
+		<% if order.status == "shipped"%>
+		<%= order.status %>
+		<% else %>
+		unavailable
+		<% end %>
+		</td>
+	</tr>
+	<% end %>
+
+</table>
+<% else %>
+you have no orders
+<% end %>

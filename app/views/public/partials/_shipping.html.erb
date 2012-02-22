@@ -1,0 +1,82 @@
+<table class="center">
+<tr>
+	<td>
+<b>Ship to a new address:</b>
+<%= form_for(@shipping_address, :url => {:controller => 'public', :action => 'payment'}) do |f| %>
+  <% if @shipping_address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shipping_address.errors.count, "error") %> prohibited this address from being saved:</h2>
+      <ul>
+      <% @shipping_address.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ <%= f.hidden_field :customer_id, :value => @customer.id %>
+	
+		
+  <div class="field">
+    <%= f.label :name, "Name" %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :street, "Street" %><br />
+    <%= f.text_field :street %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city, "City" %><br />
+    <%= f.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= f.label :state, "State" %><br />
+	<%= f.select :state, options_for_select(us_states) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :zip_code, "Zip Code" %><br />
+    <%= f.text_field :zip_code %>
+  </div>
+
+  <div class="field">
+    <%= f.label :country, "Country" %><br />
+    <%= f.text_field :country %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number, "Phone Number" %><br />
+	<% if @customer.phone_number %>
+    <%= f.text_field :phone_number, :value => @customer.phone_number %>
+	<% else %>
+	<%= f.text_field :phone_number %>
+	<% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<% if @prev_shipping.count > 0 %>
+</td>
+<td style="vertical-align:top; padding-left:20px; text-align:left">
+<b>Ship to a previous address:</b>
+<%= form_tag(:action => 'payment') %>
+<% @prev_shipping.each do |shipping| %>
+<%= shipping.name %><br />
+<%= shipping.street %>
+<%= radio_button_tag :shipping_id, shipping.id %>
+<br />
+<% end %>
+<div class="actions">
+  <%= submit_tag('select address') %>
+</div>
+<% end %>
+</td>
+</tr>
+</table>
+
+
+
+

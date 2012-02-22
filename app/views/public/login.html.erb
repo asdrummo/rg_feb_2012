@@ -1,0 +1,22 @@
+<% @page_title = "Customer Login" %>
+
+<div class = "customer_login">
+	<%= form_tag(:action=> 'attempt_login', :redirect => 'index') do %>
+		<table class="center">
+			<div id="login_fields">
+			<tr>
+				<td><%= label_tag(:email) %>:</td>
+				<td><%= text_field_tag(:email) %></td>
+			</tr>
+			<tr>
+					<td><%= label_tag(:password) %>:</td>
+					<td><%= password_field_tag(:password) %></td>
+			</tr>
+			<tr>
+					<td>&nbsp</td>
+					<td><%= submit_tag("login") %></td>
+			</tr>
+			</div>
+		</table>
+		<% end %>
+</div>
