@@ -88,7 +88,6 @@ module BikeBuilderHelper
     link_to name, options, html_options, 
   end
 
-<<<<<<< HEAD
   def top_login_link_helper(text, update)
 
     options = {
@@ -102,9 +101,6 @@ module BikeBuilderHelper
     }
     link_to text, options, html_options, 
   end
-  
-=======
->>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
   def login_link_helper(text, update)
 
     options = {

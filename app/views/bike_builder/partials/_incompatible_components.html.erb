@@ -141,11 +141,7 @@
 		<% if @fd_error_frame_front_derailleur_mount != [] %>
 		incompatible with selected frame (front_derailleur_mount): <br />
 			<% @fd_error_frame_front_derailleur_mount.each do |component| %>
-<<<<<<< HEAD
 				<%= component.name %>: <%= component.front_derailleur_mount %> != <%=  @frame_model.front_derailleur_mount %>: (<%= @frame_model.name %>)<br />
-=======
-				<%= component.name %>: <%= component.front_derailleur_mount %> != <%=  @frame_model.front_deraill_mount %>: (<%= @frame_model.name %>)<br />
->>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 			<% end %><br />
 		<% end %>
 
