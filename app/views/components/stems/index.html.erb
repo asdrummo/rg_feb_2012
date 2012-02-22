@@ -1,0 +1,57 @@
+<h1>Listing components_stems</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Stem clamp diameter</th>
+    <th>Steerer tube diameter</th>
+    <th>Steerer tube inner diameter</th>
+    <th>Stem clamp low</th>
+    <th>Stem clamp high</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_stems.each do |components_stem| %>
+  <tr>
+    <td><%= components_stem.client_id %></td>
+    <td><%= components_stem.product_id %></td>
+    <td><%= components_stem.sku %></td>
+    <td><%= components_stem.name %></td>
+    <td><%= components_stem.description %></td>
+    <td><%= components_stem.image_path %></td>
+    <td><%= components_stem.vendor %></td>
+    <td><%= components_stem.brand %></td>
+    <td><%= components_stem.material %></td>
+    <td><%= components_stem.color %></td>
+    <td><%= components_stem.finish %></td>
+    <td><%= components_stem.cost %></td>
+    <td><%= components_stem.price %></td>
+    <td><%= components_stem.stem_clamp_diameter %></td>
+    <td><%= components_stem.steerer_tube_length %></td>
+    <td><%= components_stem.steerer_tube_inner_diameter %></td>
+    <td><%= components_stem.stem_clamp_low %></td>
+    <td><%= components_stem.stem_clamp_high %></td>
+    <td><%= link_to 'Show', components_stem %></td>
+    <td><%= link_to 'Edit', edit_components_stem_path(components_stem) %></td>
+    <td><%= link_to 'Destroy', components_stem, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stem', new_components_stem_path %>

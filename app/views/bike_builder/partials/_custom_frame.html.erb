@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%= form_for(@custom_frame_model, :url => {:controller => 'bike_builder', :action => 'frames'} ) do |f| %>
   <% if @custom_frame_model.errors.any? %>
     <div id="error_explanation">
@@ -5,6 +6,15 @@
 
       <ul>
       <% @custom_frame_model.errors.full_messages.each do |msg| %>
+=======
+<%= form_for('custom_frame', :action => 'frames' ) do |f| %>
+  <% if @custom_frame.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@custom_frame.errors.count, "error") %> prohibited this frame from being saved:</h2>
+
+      <ul>
+      <% @custom_frame.errors.full_messages.each do |msg| %>
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -105,12 +115,20 @@
   </div>
 
 	</td></tr></table>
+<<<<<<< HEAD
   <div class="actions">	
 
 	<% if @build_component == 'true'%>
     <%= f.submit @frame_submit_text, :confirm => 'this will reset your current build, proceed?'%>
 	<% else %>
 	<%= f.submit @frame_submit_text %>
+=======
+  <div class="actions">
+	<% if @build_component == 'true'%>
+    <%= f.submit 'Add Frame Specs', :confirm => 'this will reset your current build, proceed?'%>
+	<% else %>
+	<%= f.submit 'Add Frame Specs' %>
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 	<% end %>
   </div>
 <% end %>

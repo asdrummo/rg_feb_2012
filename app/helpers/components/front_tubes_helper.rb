@@ -1,0 +1,2 @@
+module Components::FrontTubesHelper
+end

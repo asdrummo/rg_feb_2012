@@ -7,7 +7,15 @@
 	<% else %>
 	<li>
 	<% end %>
+<<<<<<< HEAD
 	<%= link_to('Bike Builder', :controller => 'bike_builder', :action => 'redirect_to_current_compartment')%>
+=======
+	<% if session[:build] %>
+	<%= link_to('Bike Builder', :controller => 'bike_builder', :action => 'frames')%>
+	<% else %>
+	<%= link_to('Bike Builder', :controller => 'bike_builder')%>
+	<% end %>
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 	</li>
 	<% if @nav_id == "do_it_yourself" %>
 	<li class="active">

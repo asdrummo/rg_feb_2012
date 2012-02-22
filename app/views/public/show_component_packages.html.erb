@@ -2,7 +2,11 @@
 <%= render(:partial => 'public/partials/workshop_progress')%>
 <% if session[:frame_model]%>
 <%= render(:partial => 'public/partials/component_packages_table')%>
+<<<<<<< HEAD
 <div class="center"><%= link_to('bike builder beta', :controller => 'bike_builder', :action => 'drop_in') %> or <%= link_to('skip component packages', :action => 'show_finishing') %></div>
+=======
+<div class="center"><%= link_to('bike builder beta', :controller => 'bike_builder', :action => 'component_build') %> or <%= link_to('skip component packages', :action => 'show_finishing') %></div>
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 </div><!-- end Component Package Selection -->
 
 <% else %>

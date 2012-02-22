@@ -1,0 +1,15 @@
+<% @page_title = 'Finishing Selection | Bike Builder Beta' %>
+<%= render(:partial => 'bike_builder/partials/bike_builder_progress')%>
+<div class="center"><h2>
+<% if @finishing_complete == 'true' %>
+let's check out!<br />
+<%= link_to('Continue', {:controller => 'public', :action => 'checkout'}) %>
+<% else %>
+Finishing Components
+<% end %>
+</h2></center>
+<% if @wheels_complete == 'false' %>
+you need to finish your drivetrain!
+<% else %>
+<%= render(:partial => 'bike_builder/partials/component_window')%>
+<% end %>

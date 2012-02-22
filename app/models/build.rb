@@ -12,11 +12,16 @@ class Build
     @total_price = 0.0
   end
 
+<<<<<<< HEAD
   def add_frame_to_build (frame, frame_size, gear, top_tube_style, drop_in)
+=======
+  def add_frame_to_build (frame, frame_size, gear, top_tube_style)
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
       existing_frame = @items.find {|item| (item.frame_model)}
       existing_custom_model = @items.find {|item| (item.custom_frame_model)}
       if existing_frame
         @items.delete(existing_frame)
+<<<<<<< HEAD
         @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style, drop_in)
       elsif existing_custom_model
         @items.delete(existing_custom_model)
@@ -28,6 +33,16 @@ class Build
       else
       @total_price += (frame.price + frame_size.price + gear.price + top_tube_style.price)
       end
+=======
+        @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+      elsif existing_custom_model
+        @items.delete(existing_custom_model)
+        @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+      else
+        @items << CustomerBuildItem.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+      end
+      @total_price += (frame.price + frame_size.price + gear.price + top_tube_style.price)
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
   end
   
   def add_custom_frame_to_build (frame)

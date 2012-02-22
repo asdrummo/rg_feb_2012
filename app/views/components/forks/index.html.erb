@@ -1,0 +1,67 @@
+<h1>Listing components_forks</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Front wheel size</th>
+    <th>Rake</th>
+    <th>Crown diamter</th>
+    <th>Crown to hub</th>
+    <th>Max tire width</th>
+    <th>Max tire size</th>
+    <th>Front hub width</th>
+    <th>Steerer tube diameter</th>
+    <th>Steerer tube length</th>
+    <th>Front brake type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_forks.each do |components_fork| %>
+  <tr>
+    <td><%= components_fork.client_id %></td>
+    <td><%= components_fork.product_id %></td>
+    <td><%= components_fork.sku %></td>
+    <td><%= components_fork.name %></td>
+    <td><%= components_fork.description %></td>
+    <td><%= components_fork.image_path %></td>
+    <td><%= components_fork.vendor %></td>
+    <td><%= components_fork.brand %></td>
+    <td><%= components_fork.material %></td>
+    <td><%= components_fork.color %></td>
+    <td><%= components_fork.finish %></td>
+    <td><%= components_fork.cost %></td>
+    <td><%= components_fork.price %></td>
+    <td><%= components_fork.front_wheel_size %></td>
+    <td><%= components_fork.rake %></td>
+    <td><%= components_fork.crown_diamter %></td>
+    <td><%= components_fork.crown_to_hub %></td>
+    <td><%= components_fork.max_tire_width %></td>
+    <td><%= components_fork.max_tire_size %></td>
+    <td><%= components_fork.front_hub_width %></td>
+    <td><%= components_fork.steerer_tube_diameter %></td>
+    <td><%= components_fork.steerer_tube_length %></td>
+    <td><%= components_fork.front_brake_type %></td>
+    <td><%= link_to 'Show', components_fork %></td>
+    <td><%= link_to 'Edit', edit_components_fork_path(components_fork) %></td>
+    <td><%= link_to 'Destroy', components_fork, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Fork', new_components_fork_path %>

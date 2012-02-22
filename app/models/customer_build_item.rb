@@ -13,7 +13,11 @@ belongs_to :top_tube_style
 belongs_to :option
 
   
+<<<<<<< HEAD
   def self.new_frame_based_on(frame, frame_size, gear, top_tube_style, drop_in)
+=======
+  def self.new_frame_based_on(frame, frame_size, gear, top_tube_style)
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     line_item = self.new
     line_item.frame_model = frame
     line_item.frame_model_size = frame_size
@@ -22,11 +26,15 @@ belongs_to :option
     line_item.gear = gear
     line_item.top_tube_style = top_tube_style
     #line_item.client_id = frame.client_id
+<<<<<<< HEAD
     if drop_in == 'true'
     line_item.price = 0
     else
     line_item.price = (frame.price + frame_size.price + gear.price + top_tube_style.price)
     end
+=======
+    line_item.price = (frame.price + frame_size.price + gear.price + top_tube_style.price)
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     return line_item
   end
 

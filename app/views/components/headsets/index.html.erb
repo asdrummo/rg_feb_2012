@@ -1,0 +1,53 @@
+<h1>Listing components_headsets</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Head tube inner diameter</th>
+    <th>Steerer tube diameter</th>
+    <th>Crown race diameter</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_headsets.each do |components_headset| %>
+  <tr>
+    <td><%= components_headset.client_id %></td>
+    <td><%= components_headset.product_id %></td>
+    <td><%= components_headset.sku %></td>
+    <td><%= components_headset.name %></td>
+    <td><%= components_headset.description %></td>
+    <td><%= components_headset.image_path %></td>
+    <td><%= components_headset.vendor %></td>
+    <td><%= components_headset.brand %></td>
+    <td><%= components_headset.material %></td>
+    <td><%= components_headset.color %></td>
+    <td><%= components_headset.finish %></td>
+    <td><%= components_headset.cost %></td>
+    <td><%= components_headset.price %></td>
+    <td><%= components_headset.head_tube_inner_diameter %></td>
+    <td><%= components_headset.steerer_tube_diameter %></td>
+    <td><%= components_headset.crown_race_diameter %></td>
+    <td><%= link_to 'Show', components_headset %></td>
+    <td><%= link_to 'Edit', edit_components_headset_path(components_headset) %></td>
+    <td><%= link_to 'Destroy', components_headset, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Headset', new_components_headset_path %>

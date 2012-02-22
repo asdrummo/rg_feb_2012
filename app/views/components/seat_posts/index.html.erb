@@ -1,0 +1,47 @@
+<h1>Listing components_seat_posts</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Product</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_seat_posts.each do |components_seat_post| %>
+  <tr>
+    <td><%= components_seat_post.client_id %></td>
+    <td><%= components_seat_post.sku %></td>
+    <td><%= components_seat_post.name %></td>
+    <td><%= components_seat_post.description %></td>
+    <td><%= components_seat_post.image_path %></td>
+    <td><%= components_seat_post.product_id %></td>
+    <td><%= components_seat_post.vendor %></td>
+    <td><%= components_seat_post.brand %></td>
+    <td><%= components_seat_post.material %></td>
+    <td><%= components_seat_post.color %></td>
+    <td><%= components_seat_post.finish %></td>
+    <td><%= components_seat_post.cost %></td>
+    <td><%= components_seat_post.price %></td>
+    <td><%= link_to 'Show', components_seat_post %></td>
+    <td><%= link_to 'Edit', edit_components_seat_post_path(components_seat_post) %></td>
+    <td><%= link_to 'Destroy', components_seat_post, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Seat post', new_components_seat_post_path %>

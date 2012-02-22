@@ -4,6 +4,10 @@ class PublicController < ApplicationController
   before_filter :find_or_create_cart, :except => [:index]
   before_filter :find_or_create_customer, :only => [:checkout, :payment, :my_account, :login]
  
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
   def submit_component
       @component_name = params[:component]
       @id = params[:id]
@@ -255,7 +259,10 @@ class PublicController < ApplicationController
     
     if session[:top_tube_selection] == nil
       top_tube_style = TopTubeStyle.find(1)
+<<<<<<< HEAD
       session[:top_tube_selection] = top_tube_style
+=======
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     else
       top_tube_style = session[:top_tube_selection]
     end

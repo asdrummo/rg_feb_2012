@@ -1,0 +1,128 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Client:</b>
+  <%= @components_bottom_bracket.client_id %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @components_bottom_bracket.product_id %>
+</p>
+<%= form_for(@components_bottom_bracket, :html => {:multipart => true}) do |f| %>
+<% @components_bottom_bracket.photos.each do |photo| %>
+  <%= image_tag photo.data.url(:thumb) %>
+<%= link_to('X', {:controller => 'bottom_brackets', :action => 'delete_photo', 
+	:id => @components_bottom_bracket.id, :photo => photo.id}, :class => 'remove', :title => 'remove photo')  %>
+	<% photo = ("components/" + photo.id.to_s + "/original/"+ photo.data_file_name) %>
+	use as product icon: 
+	<%= f.radio_button :image_path, photo %>
+<% end %>
+<div class="actions">
+  <%= f.submit('set default') %>
+</div>
+<% end %>
+
+
+
+<p>
+  <b>Sku:</b>
+  <%= @components_bottom_bracket.sku %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @components_bottom_bracket.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @components_bottom_bracket.description %>
+</p>
+
+<p>
+  <b>Image path:</b>
+	<% if @components_bottom_bracket.image_path.blank? %>
+	blank
+	<% end %>
+  <%= @components_bottom_bracket.image_path %>
+</p>
+
+<p>
+  <b>Vendor:</b>
+  <%= @components_bottom_bracket.vendor %>
+</p>
+
+<p>
+  <b>Brand:</b>
+  <%= @components_bottom_bracket.brand %>
+</p>
+
+<p>
+  <b>Material:</b>
+  <%= @components_bottom_bracket.material %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @components_bottom_bracket.color %>
+</p>
+
+<p>
+  <b>Finish:</b>
+  <%= @components_bottom_bracket.finish %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @components_bottom_bracket.cost %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @components_bottom_bracket.price %>
+</p>
+
+<p>
+  <b>Threading:</b>
+  <%= @components_bottom_bracket.threading %>
+</p>
+
+<p>
+  <b>Num bolts:</b>
+  <%= @components_bottom_bracket.num_bolts %>
+</p>
+
+<p>
+  <b>Spacing:</b>
+  <%= @components_bottom_bracket.spacing %>
+</p>
+
+<p>
+  <b>Bolt:</b>
+  <%= @components_bottom_bracket.bolt %>
+</p>
+
+<p>
+  <b>Taper:</b>
+  <%= @components_bottom_bracket.taper %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%= @components_bottom_bracket.width %>
+</p>
+
+<p>
+  <b>Shell width:</b>
+  <%= @components_bottom_bracket.shell_width %>
+</p>
+
+<p>
+  <b>Qfactor:</b>
+  <%= @components_bottom_bracket.qfactor %>
+</p>
+
+
+<%= link_to 'Edit', edit_components_bottom_bracket_path(@components_bottom_bracket) %> |
+<%= link_to 'Back', components_bottom_brackets_path %>

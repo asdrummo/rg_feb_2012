@@ -1,0 +1,111 @@
+<%= form_for(@components_bottom_bracket, :html => {:multipart => true}) do |f| %>
+  <% if @components_bottom_bracket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@components_bottom_bracket.errors.count, "error") %> prohibited this components_bottom_bracket from being saved:</h2>
+
+      <ul>
+      <% @components_bottom_bracket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <%= f.hidden_field :client_id, :value => @user.client_id%>
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.text_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sku %><br />
+    <%= f.text_field :sku %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :image_path %><br />
+    <%= f.text_field :image_path %>
+  </div>
+
+
+	<div class="field">
+    <%= f.label :photo %><br />
+    <%= add_photo(f) %>
+	<%= render(:partial => "list_photos", :locals => { :f => f}) %>
+	</div>
+
+
+
+
+		
+		
+  <div class="field">
+    <%= f.label :vendor %><br />
+    <%= f.text_field :vendor %>
+  </div>
+  <div class="field">
+    <%= f.label :brand %><br />
+    <%= f.text_field :brand %>
+  </div>
+  <div class="field">
+    <%= f.label :material %><br />
+    <%= f.text_field :material %>
+  </div>
+  <div class="field">
+    <%= f.label :color %><br />
+    <%= f.text_field :color %>
+  </div>
+  <div class="field">
+    <%= f.label :finish %><br />
+    <%= f.text_field :finish %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :threading %><br />
+    <%= f.text_field :threading %>
+  </div>
+  <div class="field">
+    <%= f.label :num_bolts %><br />
+    <%= f.text_field :num_bolts %>
+  </div>
+  <div class="field">
+    <%= f.label :spacing %><br />
+    <%= f.text_field :spacing %>
+  </div>
+  <div class="field">
+    <%= f.label :bolt %><br />
+    <%= f.text_field :bolt %>
+  </div>
+  <div class="field">
+    <%= f.label :taper %><br />
+    <%= f.text_field :taper %>
+  </div>
+  <div class="field">
+    <%= f.label :width %><br />
+    <%= f.text_field :width %>
+  </div>
+  <div class="field">
+    <%= f.label :shell_width %><br />
+    <%= f.text_field :shell_width %>
+  </div>
+  <div class="field">
+    <%= f.label :qfactor %><br />
+    <%= f.text_field :qfactor %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

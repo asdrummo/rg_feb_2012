@@ -1,0 +1,2 @@
+module Components::HandlebarsHelper
+end

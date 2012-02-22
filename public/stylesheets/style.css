@@ -52,7 +52,10 @@ table.componentIndex{
 #login {
 	text-align:right;	
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 #cart {
 	text-align:right;
 }
@@ -369,7 +372,10 @@ div.field, div.actions {
   font-size: 12px;
   list-style: square;
 }
+<<<<<<< HEAD
 /* bike builder */
 #login_build {
 	text-align: left;
 }
+=======
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963

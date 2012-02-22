@@ -1,0 +1,49 @@
+<h1>Listing components_pedals</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Strap</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_pedals.each do |components_pedal| %>
+  <tr>
+    <td><%= components_pedal.client_id %></td>
+    <td><%= components_pedal.product_id %></td>
+    <td><%= components_pedal.sku %></td>
+    <td><%= components_pedal.name %></td>
+    <td><%= components_pedal.description %></td>
+    <td><%= components_pedal.image_path %></td>
+    <td><%= components_pedal.vendor %></td>
+    <td><%= components_pedal.brand %></td>
+    <td><%= components_pedal.material %></td>
+    <td><%= components_pedal.color %></td>
+    <td><%= components_pedal.finish %></td>
+    <td><%= components_pedal.cost %></td>
+    <td><%= components_pedal.price %></td>
+    <td><%= components_pedal.strap %></td>
+    <td><%= link_to 'Show', components_pedal %></td>
+    <td><%= link_to 'Edit', edit_components_pedal_path(components_pedal) %></td>
+    <td><%= link_to 'Destroy', components_pedal, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pedal', new_components_pedal_path %>

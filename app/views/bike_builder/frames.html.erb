@@ -1,0 +1,12 @@
+<% @page_title = 'Frame Selection | Bike Builder Beta' %>
+<%= render(:partial => 'bike_builder/partials/bike_builder_progress')%>
+<div class="center"><h2>let's pick out a frame.</h2></center>
+	<%= remote_link_helper('Already Have a Frame?', 'frame', 'custom_frame', 'frames' )%>
+	
+
+	<% if @size_error == 'true' %>
+	<div class="error"><h2>please select size to continue</h2></div>
+	<% end %>
+	<div id="frame">
+	<%= render(:partial => 'bike_builder/partials/frame_table')%>
+	</div><!-- end Frame Selection -->

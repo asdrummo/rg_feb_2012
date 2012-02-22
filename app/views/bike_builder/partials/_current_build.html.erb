@@ -6,8 +6,13 @@
 	<%= link_to('New Build', {:action => 'new_build'} ) %>
 <% else %>
 	<div id="build_login" style="display:inline">
+<<<<<<< HEAD
 	please <%= top_login_link_helper('login', 'build_login') %> to save build
 	
+=======
+	please <%= login_link_helper('login', 'build_login') %> to save build
+	</div>
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 <% end %>
 	&nbsp|&nbsp
 	<%= link_to('Reset', {:action => 'reset_build'}, :confirm => 'Are you Sure?') %>
@@ -18,7 +23,11 @@
 	<% @h = "p" %>
 	<% end %>
 	<<%=@h %>><%= link_to('Add Build to Cart', {:controller => 'public', :action => 'add_build_to_cart'}) %></<%=@h %>>
+<<<<<<< HEAD
 	</div>
+=======
+	
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 </div><br />
 
 
@@ -35,20 +44,29 @@
 						   :class => "remove_item", :confirm => 'reset build?') %><br /> 
 	<% @build.items.each do |item| %>
 		<% if item.custom_frame_model %>
+<<<<<<< HEAD
 			<em>Custom Frame</em><br />
 			<em>Front Derailleur Mount:</em><%= item.custom_frame_model.front_derailleur_mount %> <br />
 			<em>Rear Derailleur Mount:</em><%= item.custom_frame_model.rear_derailleur_mount %> <br />
 			<%= link_to 'info/edit', {:action => 'frames', :item => 'custom_frame'} %><br />
+=======
+			custom frame model<br />
+			
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 		<% end %>
 		<% if item.frame_model %>
 			<em>frame model:</em> <%= item.frame_model.name %><br />
 			<em>size:</em> <%= item.frame_model_size.name %><br />
 			<em>gears:</em> <%= item.gear.name %> <br />
 			<em>top tube style:</em> <%= item.top_tube_style.name %><br />
+<<<<<<< HEAD
 			<em><%= number_to_currency(item.price) %>
 					<%if item.price == 0 %>
 						(Drop In)
 					<% end %></em><br />
+=======
+			<em><%= number_to_currency(item.frame_model.price) %></em><br />
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
 		<% end %>
 	<% end %><br />
 	

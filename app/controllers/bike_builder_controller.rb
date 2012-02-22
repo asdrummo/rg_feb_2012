@@ -14,9 +14,15 @@ class BikeBuilderController < ApplicationController
        # format.js { render 'custom_frame_specs.js' }
         #format.xml  { render :xml => @custom_frame_model.errors, :status => :unprocessable_entity }
       #end
+<<<<<<< HEAD
     if params[:custom_frame_model]
       @build.empty_all_items
       @custom_frame_model = CustomFrameModel.new(params[:custom_frame_model])
+=======
+    if params[:custom_frame]
+      @build.empty_all_items
+      @custom_frame = CustomFrameModel.new(params[:custom_frame])
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
      # if @custom_frame.save
       add_custom_frame_to_build
       #redirect_to(:action => 'drivetrain')
@@ -33,6 +39,7 @@ class BikeBuilderController < ApplicationController
     @frames = FrameModel.find(:all, :order => 'name ASC') 
     @nav_id = 'frames'
     @model = 'active_progress'
+<<<<<<< HEAD
     
     @frame_sizes = FrameModelSize.find(:all, :order => 'id ASC') 
     @top_tube_styles = TopTubeStyle.find(:all, :order => 'id ASC')
@@ -47,6 +54,14 @@ class BikeBuilderController < ApplicationController
     @frame_specs = 'true'
     else
       @custom_frame_model = CustomFrameModel.new
+=======
+    @frame_sizes = FrameModelSize.find(:all, :order => 'id ASC') 
+    @top_tube_styles = TopTubeStyle.find(:all, :order => 'id ASC')
+    check_compartment_completion
+    @custom_frame = FrameModel.new
+    if params[:item] == 'custom_frame'
+    @frame_specs = 'true'
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     end
         #format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity }
         #format.js {render 'custom_frame.js'}  
@@ -62,6 +77,7 @@ class BikeBuilderController < ApplicationController
   end
   
   def add_frame_to_build
+<<<<<<< HEAD
     if params[:id]
       frame = FrameModel.find(params[:id])
     elsif @drop_in_frame 
@@ -69,6 +85,10 @@ class BikeBuilderController < ApplicationController
     end
     
     session[:build_frame] = @frame
+=======
+    frame = FrameModel.find(params[:id])
+    session[:frame] = frame
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     if @frame.gear_selection == nil
       gear = Gear.find(1)
       session[:gear_selection] = gear
@@ -87,33 +107,54 @@ class BikeBuilderController < ApplicationController
     if session[:build] != nil
        @build.empty_all_items
     end
+<<<<<<< HEAD
     @build.add_frame_to_build(frame, frame_size, gear, top_tube_style, 'false')
+=======
+    @build.add_frame_to_build(frame, frame_size, gear, top_tube_style)
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     session[:build] = @build
   end
   
   def add_custom_frame_to_build
+<<<<<<< HEAD
     frame = @custom_frame_model
     @frame_model = frame
     session[:build_frame] = frame
+=======
+    frame = @custom_frame
+    @frame_model = frame
+    session[:frame] = frame
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     if session[:build] != nil
        @build.empty_all_items
     end
     @build.add_custom_frame_to_build(frame)
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     session[:build] = @build
   end
   
   def frame_check
     @frame = 'false'
+<<<<<<< HEAD
     @frame_submit_text = 'add frame specs'
     @build.items.each do |item| 
       if item.custom_frame_model
         @custom_frame_build = 'true'
         @frame_submit_text = 'update frame'
+=======
+    @speed = 'multi'
+    @build.items.each do |item| 
+      if item.custom_frame_model
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
         if (item.custom_frame_model.front_derailleur_mount == 'no') && 
           (item.custom_frame_model.rear_derailleur_mount == 'no')
           @speed = 'single'
           @drivetrain_type = 'drivetrain-single_speed'
           @front_end_type = 'front_end-single_speed'
+<<<<<<< HEAD
           @front_derailleur = 'false'
           @rear_derailleur = 'false'
         elsif   (item.custom_frame_model.front_derailleur_mount == 'yes') && 
@@ -130,6 +171,8 @@ class BikeBuilderController < ApplicationController
           @front_derailleur = 'true'
           @rear_derailleur = 'true'
           @speed = 'multi'          
+=======
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
         end
         @frame = 'true'
       elsif item.frame_model
@@ -142,10 +185,13 @@ class BikeBuilderController < ApplicationController
           @speed = 'single'
           @drivetrain_type = 'drivetrain-single_speed'
           @front_end_type = 'front_end-single_speed'
+<<<<<<< HEAD
         else
           @drivetrain_type = 'drivetrain-multi_speed'
           @front_end_type = 'front_end-multi_speed'
            @speed = 'multi'
+=======
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
         end
       end
     end
@@ -349,7 +395,11 @@ class BikeBuilderController < ApplicationController
       end
       
       #frame front derailleur mount
+<<<<<<< HEAD
       if @frame_model
+=======
+      if @frame_model =='true'
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
         if component.front_derailleur_mount != @frame_model.front_derailleur_mount
           @fd_error_frame_front_derailleur_mount << component
           @incompatible_components << component
@@ -369,7 +419,11 @@ class BikeBuilderController < ApplicationController
       if @components.where(:component_type => 'Chainring').each do |component|
       
         #crank number of bolts
+<<<<<<< HEAD
         if @crank_selected
+=======
+        if @crank =='true'
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
           if component.num_bolts != @crank_selected.num_bolts
             @cr_error_crank_num_bolts << component
             @incompatible_components << component
@@ -379,7 +433,11 @@ class BikeBuilderController < ApplicationController
         end
         
         #chain chain width
+<<<<<<< HEAD
         if @chain_selected
+=======
+        if @chain =='true'
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
           if component.chain_width != @chain_selected.chain_width
             @cr_error_chain_chain_width << component
             @incompatible_components << component
@@ -389,7 +447,11 @@ class BikeBuilderController < ApplicationController
         end
         
         #front deraileur type
+<<<<<<< HEAD
         if @front_derailleur_selected
+=======
+        if @front_derailleur =='true'
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
           if component.front_derailleur_type != @front_derailleur_selected.front_derailleur_type
             @cr_error_front_derailleur_type << component
             @incompatible_components << component
@@ -587,6 +649,10 @@ class BikeBuilderController < ApplicationController
       end
     end  
     
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     #checkmark arrays
     @compartment_build = []
     @package_build = []
@@ -1709,6 +1775,7 @@ class BikeBuilderController < ApplicationController
   end
   
   def list_components
+<<<<<<< HEAD
     
     if (@speed == 'multi' && @gear != nil) || (@font_derailleur == 'true' &&  @rear_derailleur == 'true')
     @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Shifter', 'Rear Shifter', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
@@ -1724,6 +1791,14 @@ class BikeBuilderController < ApplicationController
       @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Rear Shifter', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
       @drivetrain_components = ['Crank', 'Cog Cassette', 'Bottom Bracket', 'Chainring', 'Chain', 'Rear Derailleur',]
       
+=======
+    @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Shifter', 'Rear Shifter', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
+    @drivetrain_components = ['Crank', 'Cog Cassette', 'Bottom Bracket', 'Front Derailleur', 'Rear Derailleur', 'Chainring', 'Chain']
+    
+    if @speed == 'single'
+      @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
+      @drivetrain_components = ['Crank', 'Cog Cassette', 'Bottom Bracket', 'Chainring', 'Chain']
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     end
 
     @wheel_components = ['Front Wheel', 'Rear Wheel', 'Front Tube', 'Rear Tube', 'Front Tire', 'Rear Tire']
@@ -1802,6 +1877,7 @@ class BikeBuilderController < ApplicationController
       clear_compartment_from_build
     end
   end
+<<<<<<< HEAD
   
   def drop_in
     @build.empty_all_items
@@ -1824,6 +1900,9 @@ class BikeBuilderController < ApplicationController
       
   end
   
+=======
+   
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
   def check_compartment_completion
     @build_component = 'false'
     #DRIVETRAIN CHECK
@@ -2034,7 +2113,11 @@ class BikeBuilderController < ApplicationController
      else
       @customer_build = CustomerBuild.new
     end
+<<<<<<< HEAD
     session[:build_frame].save
+=======
+    session[:frame].save
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
      @customer_build.customer_build_items << @build.items
      @customer_build.update_attributes(:customer_id => session[:customer_id], :price => @build.total_price)
      @customer_build.save
@@ -2072,6 +2155,7 @@ class BikeBuilderController < ApplicationController
     session[:customer_build_id] = params[:build_id]
     session[:build] = @build
     flash[:notice] = 'your build has been resumed'
+<<<<<<< HEAD
     
     redirect_to_current_compartment
 
@@ -2080,6 +2164,10 @@ class BikeBuilderController < ApplicationController
   def redirect_to_current_compartment
     frame_check
     check_compartment_completion
+=======
+    check_compartment_completion
+    frame_check
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     if @finishing_complete
       redirect_to(:action => 'finishing')
     elsif @wheels_complete == 'true'
@@ -2090,12 +2178,19 @@ class BikeBuilderController < ApplicationController
       redirect_to(:action => 'front_end')
     elsif @frame == 'true'
       redirect_to(:action => 'drivetrain')
+<<<<<<< HEAD
     elsif session[:customer_build_id] = nil
       redirect_to(:controller => 'bike_builder')
+=======
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
     else
       redirect_to(:action => 'frames')
     end
   end
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
   def new_build
     session[:customer_build_id] = nil
     @build = Build.new
@@ -2238,7 +2333,11 @@ class BikeBuilderController < ApplicationController
 
   def login
     respond_to do |format|
+<<<<<<< HEAD
       format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity }
+=======
+      format.xml  { render :xml => @publication.errors, :status => :unprocessable_entity } 
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
       format.js {render 'login.js'}  
     end
   end
@@ -2253,7 +2352,11 @@ private
   end
 
   def find_frame
+<<<<<<< HEAD
      @frame_model = session[:build_frame]
+=======
+     @frame_model = session[:frame]
+>>>>>>> 8cff72b39e01647914c41b8ad6d61250f4c3f963
   end
   
   def compatibility_check

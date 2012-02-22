@@ -1,0 +1,57 @@
+<h1>Listing components_handlebars</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Sku</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Image path</th>
+    <th>Vendor</th>
+    <th>Brand</th>
+    <th>Material</th>
+    <th>Color</th>
+    <th>Finish</th>
+    <th>Cost</th>
+    <th>Price</th>
+    <th>Clamp diamter</th>
+    <th>Tube</th>
+    <th>Type</th>
+    <th>Stem clamp diamter</th>
+    <th>Max turn size</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @components_handlebars.each do |components_handlebar| %>
+  <tr>
+    <td><%= components_handlebar.client_id %></td>
+    <td><%= components_handlebar.product_id %></td>
+    <td><%= components_handlebar.sku %></td>
+    <td><%= components_handlebar.name %></td>
+    <td><%= components_handlebar.description %></td>
+    <td><%= components_handlebar.image_path %></td>
+    <td><%= components_handlebar.vendor %></td>
+    <td><%= components_handlebar.brand %></td>
+    <td><%= components_handlebar.material %></td>
+    <td><%= components_handlebar.color %></td>
+    <td><%= components_handlebar.finish %></td>
+    <td><%= components_handlebar.cost %></td>
+    <td><%= components_handlebar.price %></td>
+    <td><%= components_handlebar.clamp_diamter %></td>
+    <td><%= components_handlebar.tube %></td>
+    <td><%= components_handlebar.type %></td>
+    <td><%= components_handlebar.stem_clamp_diamter %></td>
+    <td><%= components_handlebar.max_turn_size %></td>
+    <td><%= link_to 'Show', components_handlebar %></td>
+    <td><%= link_to 'Edit', edit_components_handlebar_path(components_handlebar) %></td>
+    <td><%= link_to 'Destroy', components_handlebar, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Handlebar', new_components_handlebar_path %>
