@@ -2047,7 +2047,13 @@ class BikeBuilderController < ApplicationController
         frame_size = FrameModelSize.find(item.frame_model_size_id)
         gear = Gear.find(item.gear_id)
         top_tube_style = TopTubeStyle.find(item.top_tube_style_id)
-        @build.add_frame_to_build(frame, frame_size, gear, top_tube_style)
+        price = item.price
+        if item.price == 0
+          drop_in = 'true'
+        else
+          drop_in = 'false'
+        end
+        @build.add_frame_to_build(frame, frame_size, gear, top_tube_style, drop_in)
       elsif item.component_id
         component = Component.find(item.component_id)
         @build.add_component_to_build(component)
