@@ -15,9 +15,9 @@
 <%= form_for(@component, :html => {:multipart => true}) do |f| %>
 <% @component.photos.each do |photo| %>
   <%= image_tag photo.data.url(:thumb) %>
-<%= link_to('X', {:controller => 'accessories', :action => 'delete_photo', 
-	:id => @component.id, :photo => photo.id}, :class => 'remove', :title => 'remove photo')  %>
-	<% photo = ("accessories/" + photo.id.to_s + "/original/"+ photo.data_file_name) %>
+<%= link_to('delete', {:controller => 'components', :action => 'delete_photo', 
+	:component_id => @component.id, :photo => photo.id}, :class => 'remove', :title => 'remove photo')  %>
+	<% photo = ("components/" + photo.id.to_s + "/thumb/"+ photo.data_file_name) %>
 	use as product icon: 
 	<%= f.radio_button :image_path, photo %>
 <% end %>

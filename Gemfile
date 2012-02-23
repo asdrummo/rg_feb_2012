@@ -36,11 +36,13 @@ gem "mail"
 gem 'admin_data'
 gem 'will_paginate'
 gem "paperclip", "~> 2.3"
-gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
+#gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git'
 #gem 'jquery-rails', '>= 0.2.6'
 #gem "prototype-rails", "~> 0.3.1"
 gem "doc_raptor"
 #gem "growl", "~> 1.0.3"
+gem 'aws-sdk', '~> 1.3.4'
+gem 'rake', '~>0.9.0'
 
 
 

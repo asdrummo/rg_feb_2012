@@ -25,6 +25,11 @@ ActiveRecord::Schema.define(:version => 20120221025830) do
     t.datetime "updated_at"
   end
 
+  create_table "builds", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "component_packages", :force => true do |t|
     t.string   "product_id"
     t.string   "name"
@@ -417,10 +422,10 @@ ActiveRecord::Schema.define(:version => 20120221025830) do
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id",                       :null => false
+    t.string   "session_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "data",       :limit => 2147483647
+    t.text     "data"
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -440,7 +445,7 @@ ActiveRecord::Schema.define(:version => 20120221025830) do
   end
 
   create_table "signups", :force => true do |t|
-    t.string   "email",      :limit => 100, :default => "", :null => false
+    t.string   "email",      :limit => 100, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"

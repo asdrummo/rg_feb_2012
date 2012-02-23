@@ -1712,7 +1712,6 @@ class BikeBuilderController < ApplicationController
     if (@speed == 'multi' && @gear != nil) || (@font_derailleur == 'true' &&  @rear_derailleur == 'true')
     @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Shifter', 'Rear Shifter', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
     @drivetrain_components = ['Crank', 'Cog Cassette', 'Bottom Bracket', 'Front Derailleur', 'Rear Derailleur', 'Chainring', 'Chain']
-    
     elsif @speed == 'single'
       @front_end_components = ['Fork', 'Stem', 'Front Brake', 'Rear Brake', 'Front Lever', 'Rear Lever', 'Handlebar', 'Headset']
       @drivetrain_components = ['Crank', 'Cog Cassette', 'Bottom Bracket', 'Chainring', 'Chain']
@@ -1988,7 +1987,6 @@ class BikeBuilderController < ApplicationController
   end
   
   def component_sort
- 
       if params[:sort]
         sort = case params['sort']
                when "name"  then "name ASC"
@@ -2073,14 +2071,12 @@ class BikeBuilderController < ApplicationController
     session[:customer_build_id] = params[:build_id]
     session[:build] = @build
     flash[:notice] = 'your build has been resumed'
-  
     redirect_to_current_compartment
   end
   
   def redirect_to_current_compartment
     frame_check
     check_compartment_completion
-    
     if @finishing_complete
       redirect_to(:action => 'finishing')
     elsif @wheels_complete == 'true'

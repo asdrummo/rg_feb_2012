@@ -1,0 +1,9 @@
+# config/s3.yml
+development:
+  access_key_id: AKIAIBJOJM67DSVXXSAA
+  secret_access_key: 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
+  bucket: roamandgauge
+#production:
+ # access_key_id: AKIAIBJOJM67DSVXXSAA
+  #secret_access_key: 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
+ # bucket: bike_builder_production

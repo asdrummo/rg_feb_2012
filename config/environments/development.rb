@@ -26,7 +26,15 @@ Drummlins::Application.configure do
   
   
   
-
+  ActionController::Base.asset_host = Proc.new { |source|
+    if source.starts_with?('/images/components/defaults')
+      "http://localhost:5000"
+    elsif source.starts_with?('/images/components')
+      "http://s3.amazonaws.com/roamandgauge"
+    else
+      "http://localhost:5000"
+    end
+  }
   
 
   

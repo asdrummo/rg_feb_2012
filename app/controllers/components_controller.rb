@@ -26,15 +26,19 @@ class ComponentsController < ApplicationController
   # GET /components/1
   # GET /components/1.xml
   def show
-    @component = Component.find(params[:id])
-    if @user.client_id == @component.client_id
-      @component = Component.find(params[:id])
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @component }
-      end
+    if params[:photo]
+      remove_photo
     else
-      render 'public/422.html'
+      @component = Component.find(params[:id])
+      if @user.client_id == @component.client_id
+        @component = Component.find(params[:id])
+        respond_to do |format|
+          format.html # show.html.erb
+          format.xml  { render :xml => @component }
+        end
+      else
+        render 'public/422.html'
+      end
     end
   end
 
@@ -59,11 +63,16 @@ class ComponentsController < ApplicationController
 
   # GET /components/1/edit
   def edit
+    if params[:photo]
+      remove_photo
+    else
     @new_component = 'false'
     @component = Component.find(params[:id])
     @component_type = @component.component_type
     @compartment = @component.compartment
+    @component_id = @component.id
     find_component(@component_type)
+    end
   end
 
   # POST /components
@@ -224,22 +233,21 @@ class ComponentsController < ApplicationController
     end
   end
   
-    def delete_photo
-      @component = Component.find(params[:id])     
-      photo = Photo.find(params[:photo])
-      deleted_photo_path = ("components/" + photo.id.to_s + "/original/"+ photo.data_file_name)
-      if @component.image_path.to_s == deleted_photo_path.to_s
-          @component.update_attributes(:image_path => "components/default.png")
-      end
-       if photo.destroy #Will queue the attachment to be deleted
-         flash[:notice] = "photo deleted"
-         redirect_to :back
-        else 
-
-            flash[:notice] = "nothing happened"
-              redirect_to :back
-          end
+  def remove_photo
+    @component = Component.find(params[:component_id])     
+    photo = Photo.find(params[:photo])
+    deleted_photo_path = ("components/" + photo.id.to_s + "/original/"+ photo.data_file_name)
+    if @component.image_path.to_s == deleted_photo_path.to_s
+      @component.update_attributes(:image_path => "components/default.png")
     end
+    if photo.destroy #Will queue the attachment to be deleted
+      flash[:notice] = "photo deleted"
+      redirect_to :back
+    else 
+      flash[:notice] = "nothing happened"
+      redirect_to :back
+    end
+  end
 
     private 
 
