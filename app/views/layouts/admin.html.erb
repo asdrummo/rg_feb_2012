@@ -3,16 +3,19 @@
 <head>
   <title><%= @page_title %> | Roam &amp; Gauge</title>
   <%= stylesheet_link_tag 'style', 'admin_style', 'lightview.css' %>
-  <%= javascript_include_tag 'application', 'jquery', 'jquery_ujs', 'lightview_jq', 'excanvas', 'spinners', 'moo_tools', 'prototype' %>
+  <%= javascript_include_tag  'jquery', 'jquery_ujs', 'lightview_jq', 'excanvas', 'spinners', 'moo_tools', 'prototype' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 <div id="admin_bodywrap">	
 <div id="header">
 	<% if !flash[:notice].blank? %>
-		<div class="notice">
-			<%= flash[:notice] %>
-		</div><!-- end notice -->
+		<div id="flash" class="notice">
+			<% flash.each do |name, msg| %>
+		    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+		  <% end %>
+		<% flash.discard(:notice) %>
+		</div>
 	<% end %>
 	
 
