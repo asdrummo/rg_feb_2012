@@ -47,7 +47,7 @@ gem 'rake', '0.9.2'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem "daemons"
-gem 'delayed_paperclip'
+gem 'delayed_paperclip', :git => 'git://github.com/jstorimer/delayed_paperclip.git'
 
 
 

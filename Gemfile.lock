@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/jstorimer/delayed_paperclip.git
+  revision: 87cdef269a680b0c111788be0394eae1066edd01
+  specs:
+    delayed_paperclip (2.4.5.1)
+      paperclip (>= 2.4.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -46,8 +53,6 @@ GEM
     delayed_job_active_record (0.3.2)
       activerecord (> 2.1.0)
       delayed_job (~> 3.0.0)
-    delayed_paperclip (2.4.5.1)
-      paperclip (>= 2.4.5)
     doc_raptor (0.2.2)
       httparty (>= 0.4.3)
     erubis (2.6.6)
@@ -116,7 +121,7 @@ DEPENDENCIES
   daemons
   delayed_job
   delayed_job_active_record
-  delayed_paperclip
+  delayed_paperclip!
   doc_raptor
   mail
   mysql2 (= 0.2.7)
