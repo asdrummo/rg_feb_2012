@@ -17,34 +17,9 @@ class Photo < ActiveRecord::Base
   
 
      # cancel post-processing now, and set flag...
-     before_data_post_process do |photo|
-       if photo.source_changed?
-         photo.processing = true
-         false # halts processing
-       end
-     end
+    
 
-     # ...and perform after save in background
-     after_save do |photo| 
-       if photo.source_changed?
-         Delayed::Job.enqueue PhotoJob.new(photo.id)
-       end
-     end
-
-     # generate styles (downloads original first)
-     def regenerate_styles!
-       self.data.reprocess! 
-       self.processing = false   
-       self.save(false)
-     end
-
-     # detect if our source file has changed
-     def source_changed?
-       self.data_file_size_changed? ||
-       self.data_file_name_changed? ||
-       self.data_content_type_changed? ||
-       self.data_update_at_changed?
-     end
+     
 
 end
 
