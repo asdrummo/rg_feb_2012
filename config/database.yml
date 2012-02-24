@@ -7,6 +7,7 @@
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
   adapter: mysql2
+  host: 127.0.0.1
   encoding: utf8
   reconnect: false
   database: drummlins_development

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120221025830) do
+ActiveRecord::Schema.define(:version => 20120224061328) do
 
   create_table "accessories", :force => true do |t|
     t.string   "product_id"
@@ -287,6 +287,22 @@ ActiveRecord::Schema.define(:version => 20120221025830) do
     t.integer  "payment_processor_subscription_id"
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "frame_model_sizes", :force => true do |t|
     t.string   "name"
     t.decimal  "price",          :precision => 8, :scale => 2
@@ -385,40 +401,11 @@ ActiveRecord::Schema.define(:version => 20120221025830) do
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.datetime "data_updated_at"
-    t.integer  "bottom_bracket_id"
-    t.integer  "front_brake_id"
-    t.integer  "chainring_id"
-    t.integer  "chain_id"
-    t.integer  "cog_id"
-    t.integer  "crank_id"
-    t.integer  "fork_id"
-    t.integer  "front_deraileur_id"
-    t.integer  "front_lever_id"
-    t.integer  "front_shifter_id"
-    t.integer  "front_tire_id"
-    t.integer  "front_tube_id"
-    t.integer  "front_wheel_id"
-    t.integer  "grip_id"
-    t.integer  "half_link_id"
-    t.integer  "handlebar_id"
-    t.integer  "headset_id"
-    t.integer  "pedal_id"
-    t.integer  "rear_brake_id"
-    t.integer  "rear_deraileur_id"
-    t.integer  "rear_lever_id"
-    t.integer  "rear_shifter_id"
-    t.integer  "rear_tire_id"
-    t.integer  "rear_tube_id"
-    t.integer  "rear_wheel_id"
-    t.integer  "rim_strip_id"
-    t.integer  "saddle_id"
-    t.integer  "seat_clamp_id"
-    t.integer  "seat_post_id"
-    t.integer  "stem_id"
     t.integer  "component_id"
     t.integer  "accessory_id"
     t.integer  "component_package_id"
-    t.integer  "frame_model"
+    t.integer  "frame_model_id"
+    t.boolean  "processing"
   end
 
   create_table "sessions", :force => true do |t|

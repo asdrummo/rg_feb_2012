@@ -1,13 +1,22 @@
 <% if @component.photos %>
+<table>
 <% @component.photos.each do |photo| %>
-<tr><td></td><td>
-  <%= link_to((image_tag photo.data.url(:thumb)), ("http://s3.amazonaws.com/roamandgauge/images/components/" + photo.id.to_s + "/original/"+photo.data_file_name), :class => 'lightview', :rel => ('gallery[' + @component.name + ']')) %><br />
 
-<%= link_to('delete', :url => {:action => 'remove_photo'}, :html => {:class => 'remove', :title => 'remove photo'},
- 			 :component_id => photo.component_id, :photo => photo.id)  %>
-	
-	<% photo = ("components/" + photo.id.to_s + "/original/"+ photo.data_file_name) %>
-	use as product icon: 
-	<%= f.radio_button :image_path, photo %>
-<% end %><br />
-<% end %>
+<tr>
+	<td>
+		 <%= link_to((image_tag photo.data.url(:thumb)), ("http://s3.amazonaws.com/roamandgauge/images/components/" + photo.id.to_s + "/original/"+photo.data_file_name), :class => 'lightview', "data-lightview-group" => ('gallery[' + @component.name + ']')) %>
+	</td>
+	<td>
+	<%= link_to('delete', {:action => 'remove_photo', :photo => photo.id, :component_id => @component.id},
+						  :title => 'remove photo', :class => 'remove_item') %><br />
+				<% photo_path = ("components/" + photo.id.to_s + "/original/"+ photo.data_file_name) %>
+				use as product icon: 
+				<%= f.radio_button :image_path, photo_path %>
+	</td>
+</tr>
+		<% end %><br />
+</table>
+		<% end %>
+
+
+
